@@ -45,8 +45,10 @@ body {
 .container {
     display: flex;
     width: 100%;
-    max-width: 1180px;
+    max-width: 1280px;
     position: relative;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* 侧边栏样式 */
@@ -149,6 +151,22 @@ footer {
 }
 
 /* 响应式设计 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    
+    .sidebar {
+        width: 240px;
+    }
+    
+    .main-content {
+        margin-left: 240px;
+        padding: 2rem 1rem;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
