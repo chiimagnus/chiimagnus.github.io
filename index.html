@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chii Magnus的个人网站</title>
+    <title>Chii Magnus's Blog</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -15,33 +15,102 @@
         .header {
             text-align: center;
             padding: 30px 0;
+            position: relative;
+        }
+        
+        .language-switch {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 8px 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .language-switch:hover {
+            background-color: #e0e0e0;
+        }
+
+        .zh {
+            display: block;
+        }
+        .en {
+            display: none;
+        }
+        
+        html[lang="en"] .zh {
+            display: none;
+        }
+        html[lang="en"] .en {
+            display: block;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>欢迎来到 Chii Magnus 的个人网站</h1>
-        <p>分享我的想法、经历和创作</p>
+        <button class="language-switch" onclick="toggleLanguage()">
+            <span class="zh">English</span>
+            <span class="en">中文</span>
+        </button>
+        
+        <h1>
+            <span class="zh">欢迎来到 Chii Magnus's Blog</span>
+            <span class="en">Welcome to Chii Magnus's Blog</span>
+        </h1>
+        <p>
+            <span class="zh">分享我的想法、经历和创作</span>
+            <span class="en">Sharing my thoughts, experiences and creations</span>
+        </p>
     </div>
     
     <main>
         <section>
-            <h2>关于我</h2>
-            <p>在这里写一些关于你自己的介绍...</p>
+            <h2>
+                <span class="zh">关于我</span>
+                <span class="en">About Me</span>
+            </h2>
+            <p>
+                <span class="zh">在这里写一些关于你自己的介绍...</span>
+                <span class="en">Write something about yourself here...</span>
+            </p>
         </section>
 
         <section>
-            <h2>最新博客</h2>
+            <h2>
+                <span class="zh">最新博客</span>
+                <span class="en">Latest Blog Posts</span>
+            </h2>
             <article>
-                <h3>文章标题</h3>
-                <p>这里是文章预览内容...</p>
+                <h3>
+                    <span class="zh">文章标题</span>
+                    <span class="en">Article Title</span>
+                </h3>
+                <p>
+                    <span class="zh">这里是文章预览内容...</span>
+                    <span class="en">Here is the article preview content...</span>
+                </p>
             </article>
         </section>
     </main>
 
     <footer>
-        <p>© 2024 Chii Magnus. 保留所有权利。</p>
+        <p>
+            <span class="zh">© 2024 Chii Magnus. 保留所有权利。</span>
+            <span class="en">© 2024 Chii Magnus. All rights reserved.</span>
+        </p>
     </footer>
+
+    <script>
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const currentLang = html.getAttribute('lang');
+            const newLang = currentLang === 'zh' ? 'en' : 'zh';
+            html.setAttribute('lang', newLang);
+        }
+    </script>
 </body>
 </html>
 
