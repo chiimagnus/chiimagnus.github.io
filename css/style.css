@@ -198,7 +198,7 @@ footer {
 
 /* 添加主题切换按钮样式 */
 .theme-switch {
-    position: fixed;
+    position: absolute;
     top: 20px;
     right: 20px;
     width: 40px;
