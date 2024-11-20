@@ -52,7 +52,7 @@ body {
 
 .avatar-container {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 30px;
 }
 
 .avatar {
@@ -69,9 +69,9 @@ body {
 }
 
 .blog-title {
-    font-size: 1.5rem;
+    margin: 15px 0 20px;
     color: var(--title-color);
-    margin-bottom: 1.5rem;
+    font-size: 1.5em;
 }
 
 .nav-menu {
@@ -244,4 +244,37 @@ footer {
 /* 暗黑模式样式 */
 [data-theme="dark"] .about-intro {
     color: #e1e1e1;  /* 浅灰色文字，确保在暗色背景上清晰可见 */
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+}
+
+.social-link {
+    color: #666;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+    padding: 8px;
+}
+
+.social-link:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.social-link svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .social-link {
+    color: #e1e1e1;
+}
+
+[data-theme="dark"] .social-link:hover {
+    color: #ffffff;
 }
