@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    loadArticles();
     // 平滑滚动
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -36,4 +37,35 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('theme', newTheme);
         themeSwitch.textContent = newTheme === 'dark' ? '🌜' : '🌞';
     });
-}); 
+});
+
+async function loadArticles() {
+    const articlesContainer = document.querySelector('.articles-container');
+    
+    // 这里可以维护一个文章列表配置文件，或者直接在代码中定义
+    const articles = [
+        {
+            path: 'articles/immersive-game-design.md',
+            slug: 'immersive-game-design'
+        }
+        // 可以继续添加更多文章
+    ];
+
+    for (const article of articles) {
+        const articleData = await loadArticle(article.path);
+        if (articleData) {
+            const { frontmatter } = articleData;
+            
+            const articleElement = document.createElement('article');
+            articleElement.className = 'article-preview';
+            articleElement.innerHTML = `
+                <h3>${frontmatter.title}</h3>
+                <p class="article-meta">发布于 ${frontmatter.date}</p>
+                <p class="article-excerpt">${frontmatter.description}</p>
+                <a href="articles/${article.slug}.html" class="read-more">阅读全文 →</a>
+            `;
+            
+            articlesContainer.appendChild(articleElement);
+        }
+    }
+} 
