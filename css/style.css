@@ -281,21 +281,23 @@ footer {
 
 .social-links {
     display: flex;
+    gap: 8px;
     justify-content: center;
-    gap: 30px;
-    margin-top: 15px;
+    align-items: center;
+    margin: 12px 0;
 }
 
 .social-link {
-    color: #666;
-    opacity: 0.8;
-    transition: all 0.3s ease;
-    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-color);
+    transition: color 0.2s ease;
+    padding: 4px;
 }
 
 .social-link:hover {
-    opacity: 1;
-    transform: translateY(-2px);
+    color: var(--primary-color);
 }
 
 .social-link svg {
