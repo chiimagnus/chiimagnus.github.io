@@ -386,3 +386,22 @@ footer {
         max-width: 100%;
     }
 }
+
+/* 添加项目状态标签样式 */
+.status-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 0.85em;
+    background-color: #fff3e0;
+    color: #ff9800;
+    margin-top: 1rem;
+    border: 1px solid #ffe0b2;
+}
+
+/* 暗色模式适配 */
+[data-theme="dark"] .status-badge {
+    background-color: rgba(255, 152, 0, 0.1);
+    border-color: rgba(255, 152, 0, 0.2);
+    color: #ffb74d;
+}
