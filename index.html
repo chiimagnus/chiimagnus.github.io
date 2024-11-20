@@ -49,25 +49,36 @@
         <div class="main-content">
             <main>
                 <section id="articles">
-                    <h2>文章</h2>
-                    <article class="article-preview">
-                        <h3>沉浸式游戏的设计思考，增加用户对下一个行动的期待</h3>
-                        <p class="article-meta">发布于 2024年11月18日 08:20</p>
-                        <p class="article-excerpt">
-                            最后，我想知道，为什么我会如此执着于「着急完成」呢？或许这只是一种对游戏着迷上头、对想法实现的无比投入？
-                            可能在我眼里，就没有缓慢享受，只有快速榨干的享受吧：）
-                        </p>
-                        <a href="pages/articles/immersive-game-design.html" class="read-more">阅读全文 →</a>
-                    </article>
-                    
-                    <article class="article-preview">
-                        <h3>键盘设计厂商们，别做你们该死的MacOS键盘了吧！</h3>
-                        <p class="article-meta">发布于 2024年11月11日 08:20</p>
-                        <p class="article-excerpt">
-                            我想写一篇公众号，关于键盘厂商门完全没必要开发适配macOS系统的键盘，因为其实已经有了一个统一的解决方案，那就是GitHub上的开源项目：karabiner-elements。
-                        </p>
-                        <a href="pages/articles/keyboard-for-macos.html" class="read-more">阅读全文 →</a>
-                    </article>
+                    <div class="section-header">
+                        <h2>文章</h2>
+                        <div class="sort-control">
+                            <button id="sortArticles" class="sort-button">
+                                排序: 最新优先 
+                                <span class="sort-icon">↓</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="articlesList">
+                        <!-- 文章列表会通过JavaScript动态排序 -->
+                        <article class="article-preview">
+                            <h3>沉浸式游戏的设计思考，增加用户对下一个行动的期待</h3>
+                            <p class="article-meta">发布于 2024年11月18日 08:20</p>
+                            <p class="article-excerpt">
+                                最后，我想知道，为什么我会如此执着于「着急完成」呢？或许这只是一种对游戏着迷上头、对想法实现的无比投入？
+                                可能在我眼里，就没有缓慢享受，只有快速榨干的享受吧：）
+                            </p>
+                            <a href="pages/articles/immersive-game-design.html" class="read-more">阅读全文 →</a>
+                        </article>
+                        
+                        <article class="article-preview">
+                            <h3>键盘设计厂商们，别做你们该死的MacOS键盘了吧！</h3>
+                            <p class="article-meta">发布于 2024年11月11日 08:20</p>
+                            <p class="article-excerpt">
+                                我想写一篇公众号，关于键盘厂商门完全没必要开发适配macOS系统的键盘，因为其实已经有了一个统一的解决方案，那就是GitHub上的开源项目：karabiner-elements。
+                            </p>
+                            <a href="pages/articles/keyboard-for-macos.html" class="read-more">阅读全文 →</a>
+                        </article>
+                    </div>
                 </section>
 
                 <section id="products">

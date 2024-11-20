@@ -631,3 +631,50 @@ footer {
 [data-theme="dark"] .article-links a:hover {
     color: #99ccff;
 }
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.sort-control {
+    display: flex;
+    align-items: center;
+}
+
+.sort-button {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.sort-button:hover {
+    background: var(--border-color);
+}
+
+.sort-icon {
+    transition: transform 0.3s ease;
+}
+
+.sort-button.descending .sort-icon {
+    transform: rotate(180deg);
+}
+
+/* 暗色模式适配 */
+[data-theme="dark"] .sort-button {
+    background: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .sort-button:hover {
+    background: var(--border-color);
+}
