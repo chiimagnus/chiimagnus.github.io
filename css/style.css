@@ -721,3 +721,16 @@ footer {
 #articlesList.collapsed article:nth-child(n+3) {
     display: none;
 }
+
+.search-container {
+    margin-top: 20px;
+    padding: 10px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+}

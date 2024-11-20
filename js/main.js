@@ -55,6 +55,42 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    const searchInput = document.getElementById('searchInput');
+
+    // 快捷键 cmd+k 触发搜索框聚焦
+    document.addEventListener('keydown', (e) => {
+        if (e.metaKey && e.key === 'k') {
+            e.preventDefault();
+            searchInput.focus();
+        }
+    });
+
+    // 搜索功能
+    searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase();
+        const articles = document.querySelectorAll('.article-preview');
+        const products = document.querySelectorAll('.product-card');
+        const about = document.querySelector('.about-content');
+
+        // 搜索文章
+        articles.forEach(article => {
+            const text = article.textContent.toLowerCase();
+            article.style.display = text.includes(query) ? 'block' : 'none';
+        });
+
+        // 搜索产品
+        products.forEach(product => {
+            const text = product.textContent.toLowerCase();
+            product.style.display = text.includes(query) ? 'block' : 'none';
+        });
+
+        // 搜索关于我
+        if (about) {
+            const text = about.textContent.toLowerCase();
+            about.style.display = text.includes(query) ? 'block' : 'none';
+        }
+    });
 });
 
 async function loadArticles() {
