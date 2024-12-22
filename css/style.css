@@ -143,11 +143,30 @@ h3 {
 
 /* 页脚样式 */
 footer {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border-color);
-    color: var(--nav-color);
-    font-size: 0.9rem;
+    padding: 20px 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.visit-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.visit-counter svg {
+    opacity: 0.7;
+}
+
+.visit-counter img {
+    height: 20px;
 }
 
 /* 响应式设计 */
