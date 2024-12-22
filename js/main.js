@@ -220,6 +220,184 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         return themes[theme] || themes.mint;
     }
+
+    // 更新颜色选择器功能
+    const colorWheel = document.querySelector('.color-wheel');
+    const dots = document.querySelectorAll('.color-dot');
+    const primaryInput = document.getElementById('primaryColor');
+    const secondaryInput = document.getElementById('secondaryColor');
+    const accentInput = document.getElementById('accentColor');
+    const previewGradient = document.querySelector('.preview-gradient');
+
+    // 计算颜色选择器上的位置对应的颜色
+    function getColorFromPosition(x, y, wheelRect) {
+        const centerX = wheelRect.width / 2;
+        const centerY = wheelRect.height / 2;
+        
+        // 计算相对于中心的位置
+        const deltaX = x - centerX;
+        const deltaY = y - centerY;
+        
+        // 计算角度（色相）
+        let hue = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+        if (hue < 0) hue += 360;
+        
+        // 计算距离中心的距离（饱和度）
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        const maxDistance = wheelRect.width / 2;
+        const saturation = Math.min(distance / maxDistance * 100, 100);
+        
+        // 根据距离计算明度
+        const lightness = Math.max(50 - (distance / maxDistance * 30), 20);
+        
+        return {
+            hue,
+            saturation,
+            lightness,
+            color: `hsl(${hue}, ${saturation}%, ${lightness}%)`
+        };
+    }
+
+    // 根据主色调计算和谐的配色方案
+    function calculateHarmoniousColors(primaryColor) {
+        // 计算次要颜色（120度角）
+        const secondaryHue = (primaryColor.hue + 120) % 360;
+        // 计算点缀色（240度角）
+        const accentHue = (primaryColor.hue + 240) % 360;
+        
+        return {
+            secondary: {
+                hue: secondaryHue,
+                saturation: primaryColor.saturation * 0.9, // 稍微降低饱和度
+                lightness: primaryColor.lightness * 1.1, // 稍微提高明度
+                color: `hsl(${secondaryHue}, ${primaryColor.saturation * 0.9}%, ${primaryColor.lightness * 1.1}%)`
+            },
+            accent: {
+                hue: accentHue,
+                saturation: primaryColor.saturation * 0.8, // 更低的饱和度
+                lightness: primaryColor.lightness * 1.2, // 更高的明度
+                color: `hsl(${accentHue}, ${primaryColor.saturation * 0.8}%, ${primaryColor.lightness * 1.2}%)`
+            }
+        };
+    }
+
+    // 更新颜色值和预览
+    function updateColors(primaryColor, secondaryColor, accentColor) {
+        document.documentElement.style.setProperty('--gradient-primary', primaryColor);
+        document.documentElement.style.setProperty('--gradient-secondary', secondaryColor);
+        document.documentElement.style.setProperty('--accent-color', accentColor);
+        
+        // 更新渐变预览
+        const gradient = `linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${accentColor})`;
+        previewGradient.style.background = gradient;
+        document.documentElement.style.setProperty('--bg-gradient', gradient);
+        
+        // 更新输入框
+        primaryInput.value = primaryColor;
+        secondaryInput.value = secondaryColor;
+        accentInput.value = accentColor;
+        
+        // 更新点的颜色
+        dots[0].style.backgroundColor = primaryColor;
+        dots[1].style.backgroundColor = secondaryColor;
+        dots[2].style.backgroundColor = accentColor;
+    }
+
+    // 更新点的位置
+    function updateDotPositions(primaryX, primaryY, wheelRect) {
+        const centerX = wheelRect.width / 2;
+        const centerY = wheelRect.height / 2;
+        const radius = wheelRect.width / 2 * 0.8; // 80% 的色轮半径
+        
+        // 设置主色调点的位置
+        dots[0].style.left = `${primaryX}px`;
+        dots[0].style.top = `${primaryY}px`;
+        
+        // 获取主色调的颜色信息
+        const primaryColorInfo = getColorFromPosition(primaryX, primaryY, wheelRect);
+        
+        // 计算和谐的配色方案
+        const harmoniousColors = calculateHarmoniousColors(primaryColorInfo);
+        
+        // 计算次要颜色点的位置
+        const secondaryAngle = (primaryColorInfo.hue + 120) * (Math.PI / 180);
+        const secondaryX = centerX + radius * Math.cos(secondaryAngle);
+        const secondaryY = centerY + radius * Math.sin(secondaryAngle);
+        dots[1].style.left = `${secondaryX}px`;
+        dots[1].style.top = `${secondaryY}px`;
+        
+        // 计算点缀色点的位置
+        const accentAngle = (primaryColorInfo.hue + 240) * (Math.PI / 180);
+        const accentX = centerX + radius * Math.cos(accentAngle);
+        const accentY = centerY + radius * Math.sin(accentAngle);
+        dots[2].style.left = `${accentX}px`;
+        dots[2].style.top = `${accentY}px`;
+        
+        // 更新所有颜色
+        updateColors(
+            primaryColorInfo.color,
+            harmoniousColors.secondary.color,
+            harmoniousColors.accent.color
+        );
+    }
+
+    // 拖拽功能
+    dots.forEach((dot, index) => {
+        let isDragging = false;
+        
+        dot.addEventListener('mousedown', (e) => {
+            // 只允许拖拽主色调点（最大的点）
+            if (index === 0) {
+                isDragging = true;
+                dot.style.cursor = 'grabbing';
+                e.preventDefault();
+            }
+        });
+        
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            
+            const wheelRect = colorWheel.getBoundingClientRect();
+            const x = e.clientX - wheelRect.left;
+            const y = e.clientY - wheelRect.top;
+            
+            // 限制在色轮范围内
+            const centerX = wheelRect.width / 2;
+            const centerY = wheelRect.height / 2;
+            const deltaX = x - centerX;
+            const deltaY = y - centerY;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            const maxDistance = wheelRect.width / 2;
+            
+            if (distance <= maxDistance) {
+                updateDotPositions(x, y, wheelRect);
+            }
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            dot.style.cursor = 'move';
+        });
+    });
+
+    // 点击色轮时更新颜色
+    colorWheel.addEventListener('click', (e) => {
+        const wheelRect = colorWheel.getBoundingClientRect();
+        const x = e.clientX - wheelRect.left;
+        const y = e.clientY - wheelRect.top;
+        
+        // 计算到中心的距离
+        const centerX = wheelRect.width / 2;
+        const centerY = wheelRect.height / 2;
+        const deltaX = x - centerX;
+        const deltaY = y - centerY;
+        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+        
+        // 如果点击在色轮范围内，更新所有点的位置
+        if (distance <= wheelRect.width / 2) {
+            updateDotPositions(x, y, wheelRect);
+        }
+    });
 });
 
 async function loadArticles() {

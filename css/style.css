@@ -1215,3 +1215,146 @@ a:hover {
         color: var(--text-color-light);
     }
 }
+
+/* 颜色选择器样式 */
+.color-picker {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.color-wheel {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 20px;
+    background: conic-gradient(
+        from 0deg,
+        hsl(0, 100%, 50%),
+        hsl(60, 100%, 50%),
+        hsl(120, 100%, 50%),
+        hsl(180, 100%, 50%),
+        hsl(240, 100%, 50%),
+        hsl(300, 100%, 50%),
+        hsl(360, 100%, 50%)
+    );
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.color-wheel::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(
+        circle,
+        white 0%,
+        transparent 70%
+    );
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.color-dot {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: move;
+    transform: translate(-50%, -50%);
+    transition: transform 0.2s ease;
+}
+
+.color-dot:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.color-dot.primary {
+    background-color: var(--gradient-primary);
+    top: 30%;
+    left: 30%;
+}
+
+.color-dot.secondary {
+    background-color: var(--gradient-secondary);
+    top: 50%;
+    left: 50%;
+}
+
+.color-dot.accent {
+    background-color: var(--accent-color);
+    top: 70%;
+    left: 70%;
+}
+
+.color-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.color-preview {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.preview-gradient {
+    width: 100%;
+    height: 100%;
+    background: var(--bg-gradient);
+}
+
+.color-values {
+    flex: 1;
+}
+
+.color-value {
+    margin-bottom: 8px;
+}
+
+.color-value label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-color-light);
+    margin-bottom: 4px;
+}
+
+.color-value input {
+    width: 100%;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-color-light);
+    font-family: monospace;
+}
+
+.palette-divider {
+    position: relative;
+    text-align: center;
+    margin: 20px 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.palette-divider span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card-bg);
+    padding: 0 10px;
+    color: var(--text-color-light);
+    font-size: 12px;
+}
