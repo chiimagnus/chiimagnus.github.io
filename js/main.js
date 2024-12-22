@@ -273,50 +273,81 @@ document.addEventListener('DOMContentLoaded', () => {
         dots[2].style.backgroundColor = accentColor;
     }
 
-    // 更新点的位置
-    function updateDotPositions(primaryX, primaryY, wheelRect) {
-        const centerX = wheelRect.width / 2;
-        const centerY = wheelRect.height / 2;
-        const radius = wheelRect.width / 2 * 0.8; // 80% 的色轮半径
-        
-        // 设置主色调点的位置
-        dots[0].style.left = `${primaryX}px`;
-        dots[0].style.top = `${primaryY}px`;
-        
-        // 获取主色调的颜色信息
-        const primaryColorInfo = getColorFromPosition(primaryX, primaryY, wheelRect);
-        
-        // 计算和谐的配色方案
-        const harmoniousColors = calculateHarmoniousColors(primaryColorInfo);
-        
-        // 计算次要颜色点的位置
-        const secondaryAngle = (primaryColorInfo.hue + 120) * (Math.PI / 180);
-        const secondaryX = centerX + radius * Math.cos(secondaryAngle);
-        const secondaryY = centerY + radius * Math.sin(secondaryAngle);
-        dots[1].style.left = `${secondaryX}px`;
-        dots[1].style.top = `${secondaryY}px`;
-        
-        // 计算点缀色点的位置
-        const accentAngle = (primaryColorInfo.hue + 240) * (Math.PI / 180);
-        const accentX = centerX + radius * Math.cos(accentAngle);
-        const accentY = centerY + radius * Math.sin(accentAngle);
-        dots[2].style.left = `${accentX}px`;
-        dots[2].style.top = `${accentY}px`;
-        
-        // 更新所有颜色
-        updateColors(
-            primaryColorInfo.color,
-            harmoniousColors.secondary.color,
-            harmoniousColors.accent.color
-        );
+    // 优化色轮性能
+    function updateDotPositions(x, y, wheelRect) {
+        // 使用 requestAnimationFrame 优化视觉更新
+        requestAnimationFrame(() => {
+            const centerX = wheelRect.width / 2;
+            const centerY = wheelRect.height / 2;
+            const radius = wheelRect.width / 2 * 0.8;
+            
+            // 批量更新样式
+            const updates = () => {
+                dots[0].style.left = `${x}px`;
+                dots[0].style.top = `${y}px`;
+                
+                const primaryColorInfo = getColorFromPosition(x, y, wheelRect);
+                const harmoniousColors = calculateHarmoniousColors(primaryColorInfo);
+                
+                // 计算次要颜色点的位置
+                const secondaryAngle = (primaryColorInfo.hue + 120) * (Math.PI / 180);
+                const secondaryX = centerX + radius * Math.cos(secondaryAngle);
+                const secondaryY = centerY + radius * Math.sin(secondaryAngle);
+                dots[1].style.left = `${secondaryX}px`;
+                dots[1].style.top = `${secondaryY}px`;
+                
+                // 计算点缀色点的位置
+                const accentAngle = (primaryColorInfo.hue + 240) * (Math.PI / 180);
+                const accentX = centerX + radius * Math.cos(accentAngle);
+                const accentY = centerY + radius * Math.sin(accentAngle);
+                dots[2].style.left = `${accentX}px`;
+                dots[2].style.top = `${accentY}px`;
+                
+                // 批量更新颜色
+                updateColors(
+                    primaryColorInfo.color,
+                    harmoniousColors.secondary.color,
+                    harmoniousColors.accent.color
+                );
+            };
+            
+            // 使用 requestAnimationFrame 进行批量更新
+            requestAnimationFrame(updates);
+        });
     }
 
-    // 拖拽功能
+    // 优化拖拽事件
     dots.forEach((dot, index) => {
         let isDragging = false;
+        let rafId = null;
+        
+        const handleDrag = (e) => {
+            if (!isDragging) return;
+            
+            // 取消之前的动画帧
+            if (rafId) cancelAnimationFrame(rafId);
+            
+            // 请求新的动画帧
+            rafId = requestAnimationFrame(() => {
+                const wheelRect = colorWheel.getBoundingClientRect();
+                const x = e.clientX - wheelRect.left;
+                const y = e.clientY - wheelRect.top;
+                
+                // 限制在色轮范围内
+                const centerX = wheelRect.width / 2;
+                const centerY = wheelRect.height / 2;
+                const deltaX = x - centerX;
+                const deltaY = y - centerY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                const maxDistance = wheelRect.width / 2;
+                
+                if (distance <= maxDistance) {
+                    updateDotPositions(x, y, wheelRect);
+                }
+            });
+        };
         
         dot.addEventListener('mousedown', (e) => {
-            // 只允许拖拽主色调点（最大的点）
             if (index === 0) {
                 isDragging = true;
                 dot.style.cursor = 'grabbing';
@@ -324,50 +355,37 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        document.addEventListener('mousemove', (e) => {
-            if (!isDragging) return;
-            
+        // 使用 passive 选项优化触摸事件
+        document.addEventListener('mousemove', handleDrag, { passive: true });
+        
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            dot.style.cursor = 'move';
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+                rafId = null;
+            }
+        });
+    });
+
+    // 优化色轮点击事件
+    colorWheel.addEventListener('click', (e) => {
+        requestAnimationFrame(() => {
             const wheelRect = colorWheel.getBoundingClientRect();
             const x = e.clientX - wheelRect.left;
             const y = e.clientY - wheelRect.top;
             
-            // 限制在色轮范围内
             const centerX = wheelRect.width / 2;
             const centerY = wheelRect.height / 2;
             const deltaX = x - centerX;
             const deltaY = y - centerY;
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-            const maxDistance = wheelRect.width / 2;
             
-            if (distance <= maxDistance) {
+            if (distance <= wheelRect.width / 2) {
                 updateDotPositions(x, y, wheelRect);
             }
         });
-        
-        document.addEventListener('mouseup', () => {
-            isDragging = false;
-            dot.style.cursor = 'move';
-        });
-    });
-
-    // 点击色轮时更新颜色
-    colorWheel.addEventListener('click', (e) => {
-        const wheelRect = colorWheel.getBoundingClientRect();
-        const x = e.clientX - wheelRect.left;
-        const y = e.clientY - wheelRect.top;
-        
-        // 计算到中心的距离
-        const centerX = wheelRect.width / 2;
-        const centerY = wheelRect.height / 2;
-        const deltaX = x - centerX;
-        const deltaY = y - centerY;
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        
-        // 如果点击在色轮范围内，更新所有点的位置
-        if (distance <= wheelRect.width / 2) {
-            updateDotPositions(x, y, wheelRect);
-        }
-    });
+    }, { passive: true });
 });
 
 async function loadArticles() {
