@@ -1125,6 +1125,17 @@ footer {
     );
 }
 
+/* 新增霓虹暗夜主题 */
+.theme-neon-noir {
+    background: linear-gradient(45deg,
+        #000000 0%,
+        #1a1a1a 30%,
+        #ff00ff 60%,
+        #00ffff 80%,
+        #000000 100%
+    );
+}
+
 /* 更新链接和交互元素的颜色 */
 a {
     color: var(--link-color);

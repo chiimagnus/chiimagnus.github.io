@@ -177,48 +177,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 secondary: '#dfe6e9',
                 gradient: 'linear-gradient(45deg, #e84393 0%, #fd79a8 30%, #fab1a0 60%, #dfe6e9 100%)'
             },
-            mint: { 
-                primary: '#00b894',
-                secondary: '#81ecec',
-                gradient: 'linear-gradient(45deg, #00b894 0%, #00cec9 50%, #81ecec 100%)'
-            },
-            ocean: {
-                primary: '#0984e3',
-                secondary: '#74b9ff',
-                gradient: 'linear-gradient(45deg, #0984e3 0%, #00cec9 50%, #74b9ff 100%)'
-            },
-            sunset: {
-                primary: '#d63031',
-                secondary: '#fab1a0',
-                gradient: 'linear-gradient(45deg, #d63031 0%, #e17055 50%, #fab1a0 100%)'
-            },
-            lavender: {
-                primary: '#6c5ce7',
-                secondary: '#dfe6e9',
-                gradient: 'linear-gradient(45deg, #6c5ce7 0%, #a29bfe 50%, #dfe6e9 100%)'
-            },
-            forest: {
-                primary: '#00b894',
-                secondary: '#81ecec',
-                gradient: 'linear-gradient(45deg, #00b894 0%, #55efc4 50%, #81ecec 100%)'
-            },
-            berry: {
-                primary: '#e84393',
-                secondary: '#fab1a0',
-                gradient: 'linear-gradient(45deg, #e84393 0%, #fd79a8 50%, #fab1a0 100%)'
-            },
             autumn: {
                 primary: '#d63031',
                 secondary: '#ffeaa7',
                 gradient: 'linear-gradient(45deg, #d63031 0%, #fdcb6e 50%, #ffeaa7 100%)'
             },
-            spring: {
-                primary: '#00b894',
-                secondary: '#74b9ff',
-                gradient: 'linear-gradient(45deg, #00b894 0%, #55efc4 33%, #81ecec 66%, #74b9ff 100%)'
+            'neon-noir': {
+                primary: '#ff00ff',
+                secondary: '#00ffff',
+                gradient: 'linear-gradient(45deg, #000000 0%, #1a1a1a 30%, #ff00ff 60%, #00ffff 80%, #000000 100%)'
             }
         };
-        return themes[theme] || themes.mint;
+        return themes[theme] || themes.rainbow;
     }
 
     // 更新颜色选择器功能
