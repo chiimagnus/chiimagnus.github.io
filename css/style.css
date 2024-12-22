@@ -742,3 +742,33 @@ footer {
     color: #ffa940;            /* 黄色文字 */
     border: 1px solid #ffd591; /* 黄色边框 */
 }
+
+.visit-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    margin: 16px 0;
+    background: var(--background-secondary);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.visit-counter svg {
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.visit-counter img {
+    height: 20px;  /* 调整计数器图片的高度 */
+    filter: opacity(0.8);  /* 稍微调整透明度使其与主题更协调 */
+    transition: filter 0.3s ease;  /* 添加过渡效果 */
+}
+
+.visit-counter:hover img {
+    filter: opacity(1);  /* 鼠标悬停时提高透明度 */
+}
+
+#visitCount {
+    font-weight: 500;
+}
