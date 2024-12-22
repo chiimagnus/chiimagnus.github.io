@@ -754,6 +754,13 @@ footer {
     border-radius: 4px;
     border: 1px solid var(--border-color);
     font-size: 1rem;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* 添加以下样式来处理搜索框的占位符文本颜色 */
+#searchInput::placeholder {
+    color: var(--nav-color);
 }
 
 .tag.status {
