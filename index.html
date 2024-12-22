@@ -11,7 +11,27 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <button class="theme-switch" id="themeSwitch" title="切换主题">🌞</button>
+    <button class="palette-button" id="paletteButton" title="主题颜色">🎨</button>
+    <div class="color-palette" id="colorPalette">
+        <div class="palette-header">
+            <span class="palette-title">选择主题颜色</span>
+            <button class="close-palette" id="closePalette">×</button>
+        </div>
+        <div class="color-options">
+            <div class="color-option theme-rainbow" data-theme="rainbow" title="彩虹"></div>
+            <div class="color-option theme-aurora" data-theme="aurora" title="极光"></div>
+            <div class="color-option theme-sunset-beach" data-theme="sunset-beach" title="日落海滩"></div>
+            <div class="color-option theme-cherry-blossom" data-theme="cherry-blossom" title="樱花"></div>
+            <div class="color-option theme-mint" data-theme="mint" title="薄荷"></div>
+            <div class="color-option theme-ocean" data-theme="ocean" title="海洋"></div>
+            <div class="color-option theme-sunset" data-theme="sunset" title="日落"></div>
+            <div class="color-option theme-lavender" data-theme="lavender" title="薰衣草"></div>
+            <div class="color-option theme-forest" data-theme="forest" title="森林"></div>
+            <div class="color-option theme-berry" data-theme="berry" title="浆果"></div>
+            <div class="color-option theme-autumn" data-theme="autumn" title="秋季"></div>
+            <div class="color-option theme-spring" data-theme="spring" title="春季"></div>
+        </div>
+    </div>
     <div class="container">
         <!-- 侧边栏 -->
         <aside class="sidebar">
