@@ -736,3 +736,9 @@ footer {
     border: 1px solid var(--border-color);
     font-size: 1rem;
 }
+
+.tag.status {
+    background-color: #fff3dc;  /* 浅黄色背景 */
+    color: #ffa940;            /* 黄色文字 */
+    border: 1px solid #ffd591; /* 黄色边框 */
+}
