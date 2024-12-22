@@ -37,7 +37,6 @@ body {
     justify-content: center;
     color: var(--text-color);
     background: var(--bg-gradient);
-    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -48,6 +47,7 @@ body {
     position: relative;
     margin: 0 auto;
     padding: 0 20px;
+    min-height: 100vh;
 }
 
 /* 侧边栏样式 */
@@ -58,12 +58,15 @@ body {
         rgba(var(--gradient-secondary-rgb), 0.1) 100%
     );
     backdrop-filter: blur(20px);
-    height: 100vh;
     position: fixed;
     padding: 2rem;
-    border-right: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 5px 0 15px rgba(var(--gradient-primary-rgb), 0.05);
+    margin: 2rem 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    box-shadow: 0 8px 32px rgba(var(--gradient-primary-rgb), 0.1);
     transition: all 0.3s ease;
+    overflow-y: auto;
+    max-height: calc(100vh - 4rem);
 }
 
 .avatar-container {
@@ -72,13 +75,11 @@ body {
     margin-bottom: 30px;
     padding: 20px;
     border-radius: 16px;
-    background: linear-gradient(135deg,
-        rgba(var(--gradient-primary-rgb), 0.05) 0%,
-        rgba(var(--gradient-secondary-rgb), 0.1) 100%
-    );
+    background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    isolation: isolate;
 }
 
 .avatar-container:hover {
@@ -93,6 +94,7 @@ body {
     margin-bottom: 1rem;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    mix-blend-mode: normal;
 }
 
 .avatar:hover {
@@ -145,6 +147,7 @@ body {
     padding: 2rem;
     flex-grow: 1;
     max-width: 900px;
+    min-height: 100vh;
 }
 
 /* 文章部分样式 */
@@ -229,15 +232,34 @@ footer {
 }
 
 @media (max-width: 768px) {
+    body {
+        background-attachment: scroll;
+        background-size: 200% 200%;
+        animation: gradientMove 15s ease infinite;
+    }
+    
+    @keyframes gradientMove {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }
+    
     .container {
         flex-direction: column;
     }
     
     .sidebar {
-        width: 100%;
-        height: auto;
         position: relative;
-        padding: 1rem;
+        width: 100%;
+        margin: 1rem 0;
+        border-radius: 16px;
+        max-height: none;
     }
     
     .main-content {
@@ -1134,7 +1156,7 @@ a:hover {
 
 /* 文字颜色自适应混合模式 */
 .sidebar, .article-card, .product-card, .color-palette, .search-container {
-    mix-blend-mode: luminosity;
+    mix-blend-mode: normal;
 }
 
 /* 更新标题和文字颜色 */
@@ -1357,4 +1379,23 @@ a:hover {
     padding: 0 10px;
     color: var(--text-color-light);
     font-size: 12px;
+}
+
+/* 添加滚动条样式 */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
 }
