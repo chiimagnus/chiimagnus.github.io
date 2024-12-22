@@ -37,7 +37,27 @@ body {
     justify-content: center;
     color: var(--text-color);
     background: var(--bg-gradient);
+    background-size: 200% 200%;
+    animation: gradientMove 20s ease infinite;
     min-height: 100vh;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% 0%;
+    }
+    25% {
+        background-position: 100% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    75% {
+        background-position: 0% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
 }
 
 .container {
@@ -231,21 +251,7 @@ footer {
 
 @media (max-width: 768px) {
     body {
-        background-attachment: scroll;
-        background-size: 200% 200%;
-        animation: gradientMove 15s ease infinite;
-    }
-    
-    @keyframes gradientMove {
-        0% {
-            background-position: 0% 0%;
-        }
-        50% {
-            background-position: 100% 100%;
-        }
-        100% {
-            background-position: 0% 0%;
-        }
+        animation-duration: 15s;
     }
     
     .container {
