@@ -1,0 +1,247 @@
+/**
+ * ArticleManager - 文章管理器
+ * 负责文章的加载、显示和交互
+ */
+import BaseModule from '../core/BaseModule.js';
+
+class ArticleManager extends BaseModule {
+    /**
+     * 构造函数
+     * @param {Object} options - 配置选项
+     */
+    constructor(options = {}) {
+        super(options);
+        
+        // 文章相关元素
+        this.articlesContainer = null;
+        this.toggleButton = null;
+        this.articlesList = null;
+        
+        // 文章配置
+        this.articlesConfig = options.articles || [];
+        this.articlesBasePath = options.articlesBasePath || 'articles/';
+        this.visibleArticlesCount = options.visibleArticlesCount || 2;
+        
+        // 当前状态
+        this.isCollapsed = true;
+    }
+
+    /**
+     * 初始化文章管理器
+     * @returns {ArticleManager} - 返回模块实例
+     */
+    init() {
+        if (this.initialized) return this;
+        
+        // 查找DOM元素
+        this.articlesContainer = document.querySelector('.articles-container');
+        this.toggleButton = document.getElementById('toggleArticles');
+        this.articlesList = document.getElementById('articlesList');
+        
+        // 加载文章
+        if (this.articlesContainer) {
+            this.loadArticles();
+        }
+        
+        // 设置初始状态
+        if (this.articlesList) {
+            this.articlesList.classList.add('collapsed');
+        }
+        
+        // 绑定事件
+        this._bindEvents();
+        
+        super.init();
+        return this;
+    }
+
+    /**
+     * 绑定事件处理函数
+     * @private
+     */
+    _bindEvents() {
+        if (this.toggleButton && this.articlesList) {
+            this.addEventListener(this.toggleButton, 'click', () => {
+                this.toggleArticles();
+            });
+        }
+    }
+
+    /**
+     * 切换文章展开/折叠状态
+     */
+    toggleArticles() {
+        if (!this.articlesList) return;
+        
+        this.isCollapsed = !this.isCollapsed;
+        
+        if (this.isCollapsed) {
+            this.articlesList.classList.add('collapsed');
+            if (this.toggleButton) {
+                this.toggleButton.innerHTML = '展开 ↓';
+            }
+        } else {
+            this.articlesList.classList.remove('collapsed');
+            if (this.toggleButton) {
+                this.toggleButton.innerHTML = '收起 ↑';
+            }
+        }
+        
+        // 添加平滑过渡效果
+        const articles = this.articlesList.getElementsByClassName('article-preview');
+        Array.from(articles).forEach((article, index) => {
+            if (index >= this.visibleArticlesCount) {
+                article.style.transition = 'opacity 0.3s ease';
+                article.style.opacity = this.isCollapsed ? '0' : '1';
+                setTimeout(() => {
+                    article.style.opacity = this.isCollapsed ? '1' : '0';
+                }, 50 * (index - 1));
+            }
+        });
+        
+        // 触发事件
+        this.emit('articles:toggle', { isCollapsed: this.isCollapsed });
+    }
+
+    /**
+     * 加载文章列表
+     * @returns {Promise} - 加载完成的Promise
+     */
+    async loadArticles() {
+        if (!this.articlesContainer) return;
+        
+        // 如果没有预先配置的文章，可以尝试从配置文件加载
+        if (this.articlesConfig.length === 0) {
+            try {
+                const response = await fetch('js/config/articles.json');
+                if (response.ok) {
+                    this.articlesConfig = await response.json();
+                }
+            } catch (error) {
+                console.error('加载文章配置失败:', error);
+                // 使用一些默认配置
+                this.articlesConfig = [
+                    {
+                        path: 'articles/immersive-game-design.md',
+                        slug: 'immersive-game-design'
+                    }
+                ];
+            }
+        }
+        
+        // 清空容器
+        this.articlesContainer.innerHTML = '';
+        
+        // 加载每篇文章
+        for (const article of this.articlesConfig) {
+            try {
+                const articleData = await this._loadArticle(article.path);
+                if (articleData) {
+                    const { frontmatter } = articleData;
+                    
+                    const articleElement = document.createElement('article');
+                    articleElement.className = 'article-preview';
+                    articleElement.innerHTML = `
+                        <h3>${frontmatter.title}</h3>
+                        <p class="article-meta">发布于 ${frontmatter.date}</p>
+                        <p class="article-excerpt">${frontmatter.description}</p>
+                        <a href="${this.articlesBasePath}${article.slug}.html" class="read-more">阅读全文 →</a>
+                    `;
+                    
+                    this.articlesContainer.appendChild(articleElement);
+                }
+            } catch (error) {
+                console.error(`加载文章 ${article.path} 失败:`, error);
+            }
+        }
+        
+        // 触发文章加载完成事件
+        this.emit('articles:loaded', { articlesCount: this.articlesConfig.length });
+    }
+
+    /**
+     * 加载单篇文章
+     * @param {string} path - 文章路径
+     * @returns {Promise<Object|null>} - 文章数据
+     * @private
+     */
+    async _loadArticle(path) {
+        try {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`HTTP error: ${response.status}`);
+            }
+            
+            const text = await response.text();
+            
+            // 解析frontmatter (YAML格式的元数据)
+            const frontmatterRegex = /^---\n([\s\S]*?)\n---/;
+            const match = text.match(frontmatterRegex);
+            
+            if (match) {
+                const frontmatterText = match[1];
+                const frontmatter = this._parseFrontmatter(frontmatterText);
+                const content = text.replace(frontmatterRegex, '').trim();
+                
+                return {
+                    frontmatter,
+                    content
+                };
+            }
+            
+            return null;
+        } catch (error) {
+            console.error('加载文章内容失败:', error);
+            return null;
+        }
+    }
+
+    /**
+     * 解析frontmatter
+     * @param {string} text - frontmatter文本
+     * @returns {Object} - 解析后的对象
+     * @private
+     */
+    _parseFrontmatter(text) {
+        const result = {};
+        const lines = text.split('\n');
+        
+        for (const line of lines) {
+            const colonIndex = line.indexOf(':');
+            if (colonIndex !== -1) {
+                const key = line.slice(0, colonIndex).trim();
+                let value = line.slice(colonIndex + 1).trim();
+                
+                // 删除值周围的引号
+                if ((value.startsWith('"') && value.endsWith('"')) || 
+                    (value.startsWith("'") && value.endsWith("'"))) {
+                    value = value.slice(1, -1);
+                }
+                
+                result[key] = value;
+            }
+        }
+        
+        return result;
+    }
+
+    /**
+     * 添加新文章
+     * @param {Object} article - 文章配置
+     */
+    addArticle(article) {
+        this.articlesConfig.push(article);
+        // 重新加载文章
+        this.loadArticles();
+    }
+
+    /**
+     * 获取文章列表
+     * @returns {Array} - 文章配置列表
+     */
+    getArticles() {
+        return [...this.articlesConfig];
+    }
+}
+
+export default ArticleManager; 
