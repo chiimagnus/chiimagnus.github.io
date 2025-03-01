@@ -34,13 +34,14 @@ class ArticleManager extends BaseModule {
         if (this.initialized) return this;
         
         // 查找DOM元素
-        this.articlesContainer = document.querySelector('.articles-container');
-        this.toggleButton = document.getElementById('toggleArticles');
         this.articlesList = document.getElementById('articlesList');
+        this.toggleButton = document.getElementById('toggleArticles');
         
         // 加载文章
-        if (this.articlesContainer) {
+        if (this.articlesList) {
             this.loadArticles();
+        } else {
+            console.error('未找到文章列表容器元素');
         }
         
         // 设置初始状态
@@ -108,7 +109,10 @@ class ArticleManager extends BaseModule {
      * @returns {Promise} - 加载完成的Promise
      */
     async loadArticles() {
-        if (!this.articlesContainer) return;
+        if (!this.articlesList) {
+            console.error('未找到文章列表容器');
+            return;
+        }
         
         // 如果没有预先配置的文章，可以尝试从配置文件加载
         if (this.articlesConfig.length === 0) {
