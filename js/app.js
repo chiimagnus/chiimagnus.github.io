@@ -54,7 +54,7 @@ class App {
             
             // 创建并初始化文章管理器
             const articleManager = this.modules.create('article', {
-                visibleArticlesCount: 2
+                visibleArticlesCount: 3
             });
             articleManager.init();
             

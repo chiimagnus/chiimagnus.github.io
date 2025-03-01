@@ -93,10 +93,15 @@ class ArticleManager extends BaseModule {
         Array.from(articles).forEach((article, index) => {
             if (index >= this.visibleArticlesCount) {
                 article.style.transition = 'opacity 0.3s ease';
-                article.style.opacity = this.isCollapsed ? '0' : '1';
-                setTimeout(() => {
-                    article.style.opacity = this.isCollapsed ? '1' : '0';
-                }, 50 * (index - 1));
+                // 设置初始透明度
+                article.style.opacity = this.isCollapsed ? '0' : '0';
+                
+                // 如果展开，则延迟一下后显示文章
+                if (!this.isCollapsed) {
+                    setTimeout(() => {
+                        article.style.opacity = '1';
+                    }, 50 * (index - this.visibleArticlesCount));
+                }
             }
         });
         
