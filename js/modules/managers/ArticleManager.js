@@ -153,7 +153,7 @@ class ArticleManager extends BaseModule {
                     articleElement.className = 'article-preview';
                     articleElement.innerHTML = `
                         <h3>${article.title}</h3>
-                        <p class="article-meta">发布于 ${article.date}</p>
+                        <p class="article-meta">${article.date}</p>
                         <p class="article-excerpt">${article.description}</p>
                         <a href="${article.url}" class="read-more" target="_blank">阅读全文 →</a>
                     `;
@@ -168,7 +168,7 @@ class ArticleManager extends BaseModule {
                     articleElement.className = 'article-preview';
                     articleElement.innerHTML = `
                         <h3>${frontmatter.title || article.title}</h3>
-                        <p class="article-meta">发布于 ${frontmatter.date || article.date}</p>
+                        <p class="article-meta">${frontmatter.date || article.date}</p>
                         <p class="article-excerpt">${frontmatter.description || article.description}</p>
                         <a href="${this.articlesBasePath}${article.slug}.html" class="read-more">阅读全文 →</a>
                     `;
