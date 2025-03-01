@@ -58,9 +58,6 @@ class App {
             });
             articleManager.init();
             
-            // 可以在这里添加模块间的事件监听和交互
-            this._setupModuleInteractions();
-            
             // 应用程序初始化完成
             console.log('应用程序初始化完成');
             
@@ -70,43 +67,6 @@ class App {
             });
             document.dispatchEvent(event);
         });
-    }
-
-    /**
-     * 设置模块间的交互
-     * @private
-     */
-    _setupModuleInteractions() {
-        const uiManager = this.modules.get('ui');
-        const themeManager = this.modules.get('theme');
-        const searchManager = this.modules.get('search');
-        const articleManager = this.modules.get('article');
-        
-        if (uiManager && themeManager) {
-            // 当主题变化时更新UI
-            document.addEventListener('theme:changed', (e) => {
-                uiManager.showNotification(`主题已更改为: ${e.detail.theme}`, 'success');
-            });
-        }
-        
-        if (uiManager && searchManager) {
-            // 当搜索完成时更新UI
-            document.addEventListener('search:complete', (e) => {
-                if (e.detail.matchCount === 0) {
-                    uiManager.showNotification(`未找到匹配 "${e.detail.query}" 的内容`, 'info');
-                }
-            });
-        }
-        
-        if (uiManager && articleManager) {
-            // 当文章加载完成时更新UI
-            document.addEventListener('articles:loaded', (e) => {
-                console.log(`已加载 ${e.detail.articlesCount} 篇文章`);
-                if (e.detail.articlesCount === 0) {
-                    uiManager.showNotification('没有可显示的文章', 'info');
-                }
-            });
-        }
     }
     
     /**
