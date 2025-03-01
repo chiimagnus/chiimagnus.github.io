@@ -171,27 +171,23 @@ class ThemeManager extends BaseModule {
      * @private
      */
     _initColorWheel() {
-        // 优化色轮点击事件
+        // 将色轮更改为色条的点击事件
         this.addEventListener(this.colorWheel, 'click', (e) => {
             requestAnimationFrame(() => {
-                const wheelRect = this.colorWheel.getBoundingClientRect();
-                const x = e.clientX - wheelRect.left;
-                const y = e.clientY - wheelRect.top;
+                const barRect = this.colorWheel.getBoundingClientRect();
+                const x = e.clientX - barRect.left;
                 
-                const centerX = wheelRect.width / 2;
-                const centerY = wheelRect.height / 2;
-                const deltaX = x - centerX;
-                const deltaY = y - centerY;
-                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                // 计算色调位置（只考虑x轴位置）
+                const huePosition = Math.max(0, Math.min(x, barRect.width));
+                const huePercentage = huePosition / barRect.width;
+                const hue = huePercentage * 360;
                 
-                if (distance <= wheelRect.width / 2) {
-                    this._updateDotPositions(x, y, wheelRect);
-                }
+                this._updateMainColorPosition(huePosition, hue);
             });
         }, { passive: true });
 
-        // 优化拖拽事件
-        this.colorDots.forEach((dot, index) => {
+        // 优化拖拽事件 - 只保留主色调圆点
+        if (this.colorDots && this.colorDots.length > 0) {
             let isDragging = false;
             let rafId = null;
             
@@ -203,43 +199,45 @@ class ThemeManager extends BaseModule {
                 
                 // 请求新的动画帧
                 rafId = requestAnimationFrame(() => {
-                    const wheelRect = this.colorWheel.getBoundingClientRect();
-                    const x = e.clientX - wheelRect.left;
-                    const y = e.clientY - wheelRect.top;
+                    const barRect = this.colorWheel.getBoundingClientRect();
+                    const x = e.clientX - barRect.left;
                     
-                    // 限制在色轮范围内
-                    const centerX = wheelRect.width / 2;
-                    const centerY = wheelRect.height / 2;
-                    const deltaX = x - centerX;
-                    const deltaY = y - centerY;
-                    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-                    const maxDistance = wheelRect.width / 2;
+                    // 限制在色条范围内
+                    const huePosition = Math.max(0, Math.min(x, barRect.width));
+                    const huePercentage = huePosition / barRect.width;
+                    const hue = huePercentage * 360;
                     
-                    if (distance <= maxDistance) {
-                        this._updateDotPositions(x, y, wheelRect);
-                    }
+                    this._updateMainColorPosition(huePosition, hue);
                 });
             };
             
-            this.addEventListener(dot, 'mousedown', (e) => {
-                if (index === 0) {
-                    isDragging = true;
-                    dot.style.cursor = 'grabbing';
-                    e.preventDefault();
-                }
+            // 只保留主色调圆点的拖拽功能
+            const mainDot = this.colorDots[0];
+            this.addEventListener(mainDot, 'mousedown', (e) => {
+                isDragging = true;
+                mainDot.style.cursor = 'grabbing';
+                e.preventDefault();
             });
             
             this.addEventListener(document, 'mousemove', handleDrag, { passive: true });
             
             this.addEventListener(document, 'mouseup', () => {
                 isDragging = false;
-                dot.style.cursor = 'move';
+                mainDot.style.cursor = 'grab';
                 if (rafId) {
                     cancelAnimationFrame(rafId);
                     rafId = null;
                 }
             });
-        });
+            
+            // 隐藏次色和点缀色圆点
+            if (this.colorDots.length > 1) {
+                this.colorDots[1].style.display = 'none';
+            }
+            if (this.colorDots.length > 2) {
+                this.colorDots[2].style.display = 'none';
+            }
+        }
 
         // 监听颜色输入框变化
         Object.keys(this.colorInputs).forEach(key => {
@@ -272,87 +270,63 @@ class ThemeManager extends BaseModule {
     }
 
     /**
-     * 更新颜色点的位置
-     * @param {number} x - X坐标
-     * @param {number} y - Y坐标
-     * @param {DOMRect} wheelRect - 色轮的矩形区域
+     * 更新主色调位置和计算配色
+     * @param {number} position - 主色在色条上的位置
+     * @param {number} hue - 计算出的色相值
      * @private
      */
-    _updateDotPositions(x, y, wheelRect) {
+    _updateMainColorPosition(position, hue) {
         // 使用 requestAnimationFrame 优化视觉更新
         requestAnimationFrame(() => {
-            const centerX = wheelRect.width / 2;
-            const centerY = wheelRect.height / 2;
-            const radius = wheelRect.width / 2 * 0.8;
+            // 更新主色调圆点位置 - 只调整水平位置
+            if (this.colorDots && this.colorDots.length > 0) {
+                const mainDot = this.colorDots[0];
+                mainDot.style.left = `${position}px`;
+                
+                // 保持垂直位置不变，若未设置则设为色条中心
+                if (!mainDot.style.top) {
+                    const barRect = this.colorWheel.getBoundingClientRect();
+                    mainDot.style.top = `${barRect.height / 2}px`;
+                }
+            }
             
-            // 批量更新样式
-            const updates = () => {
-                this.colorDots[0].style.left = `${x}px`;
-                this.colorDots[0].style.top = `${y}px`;
-                
-                const primaryColorInfo = this._getColorFromPosition(x, y, wheelRect);
-                const harmoniousColors = ColorUtils.calculateHarmoniousColors(primaryColorInfo);
-                
-                // 计算次要颜色点的位置
-                const secondaryAngle = (primaryColorInfo.hue + 120) * (Math.PI / 180);
-                const secondaryX = centerX + radius * Math.cos(secondaryAngle);
-                const secondaryY = centerY + radius * Math.sin(secondaryAngle);
-                this.colorDots[1].style.left = `${secondaryX}px`;
-                this.colorDots[1].style.top = `${secondaryY}px`;
-                
-                // 计算点缀色点的位置
-                const accentAngle = (primaryColorInfo.hue + 240) * (Math.PI / 180);
-                const accentX = centerX + radius * Math.cos(accentAngle);
-                const accentY = centerY + radius * Math.sin(accentAngle);
-                this.colorDots[2].style.left = `${accentX}px`;
-                this.colorDots[2].style.top = `${accentY}px`;
-                
-                // 批量更新颜色
-                this._updateColors(
-                    primaryColorInfo.color,
-                    harmoniousColors.secondary.color,
-                    harmoniousColors.accent.color
-                );
-            };
+            // 创建主色调
+            const saturation = 85; // 固定饱和度
+            const lightness = 60;  // 固定亮度
+            const primaryColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
             
-            // 使用 requestAnimationFrame 进行批量更新
-            requestAnimationFrame(updates);
+            // 使用三色理论计算配色
+            const harmonious = this._calculateTriadicColors(hue, saturation, lightness);
+            
+            // 更新颜色
+            this._updateColors(primaryColor, harmonious.secondary, harmonious.accent);
         });
     }
-
+    
     /**
-     * 计算颜色选择器上的位置对应的颜色
-     * @param {number} x - X坐标
-     * @param {number} y - Y坐标
-     * @param {DOMRect} wheelRect - 色轮的矩形区域
-     * @returns {Object} - 颜色信息对象
+     * 使用三色理论计算配色
+     * @param {number} hue - 主色调色相
+     * @param {number} saturation - 主色调饱和度
+     * @param {number} lightness - 主色调亮度
+     * @returns {Object} - 包含三种和谐颜色的对象
      * @private
      */
-    _getColorFromPosition(x, y, wheelRect) {
-        const centerX = wheelRect.width / 2;
-        const centerY = wheelRect.height / 2;
+    _calculateTriadicColors(hue, saturation, lightness) {
+        // 三色理论 - 相差120°
+        const secondaryHue = (hue + 120) % 360;
+        const accentHue = (hue + 240) % 360;
         
-        // 计算相对于中心的位置
-        const deltaX = x - centerX;
-        const deltaY = y - centerY;
+        // 优化亮度和饱和度
+        const secondarySaturation = Math.min(saturation * 0.9, 100);
+        const secondaryLightness = Math.min(lightness * 1.1, 70);
         
-        // 计算角度（色相）
-        let hue = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
-        if (hue < 0) hue += 360;
-        
-        // 计算距离中心的距离（饱和度）
-        const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-        const maxDistance = wheelRect.width / 2;
-        const saturation = Math.min(distance / maxDistance * 100, 100);
-        
-        // 根据距离计算明度
-        const lightness = Math.max(50 - (distance / maxDistance * 30), 20);
+        const accentSaturation = Math.min(saturation * 0.95, 100);
+        const accentLightness = Math.max(lightness * 0.9, 40);
         
         return {
-            hue,
-            saturation,
-            lightness,
-            color: `hsl(${hue}, ${saturation}%, ${lightness}%)`
+            primary: `hsl(${hue}, ${saturation}%, ${lightness}%)`,
+            secondary: `hsl(${secondaryHue}, ${secondarySaturation}%, ${secondaryLightness}%)`,
+            accent: `hsl(${accentHue}, ${accentSaturation}%, ${accentLightness}%)`
         };
     }
 
@@ -368,8 +342,8 @@ class ThemeManager extends BaseModule {
         document.documentElement.style.setProperty('--gradient-secondary', secondaryColor);
         document.documentElement.style.setProperty('--accent-color', accentColor);
         
-        // 更新渐变预览
-        const gradient = `linear-gradient(45deg, ${primaryColor}, ${secondaryColor}, ${accentColor})`;
+        // 创建更丰富的渐变
+        const gradient = `linear-gradient(45deg, ${primaryColor} 0%, ${secondaryColor} 50%, ${accentColor} 100%)`;
         if (this.previewGradient) {
             this.previewGradient.style.background = gradient;
         }
@@ -380,11 +354,9 @@ class ThemeManager extends BaseModule {
         if (this.colorInputs.secondary) this.colorInputs.secondary.value = secondaryColor;
         if (this.colorInputs.accent) this.colorInputs.accent.value = accentColor;
         
-        // 更新点的颜色
-        if (this.colorDots && this.colorDots.length >= 3) {
+        // 更新主色点的颜色
+        if (this.colorDots && this.colorDots.length > 0) {
             this.colorDots[0].style.backgroundColor = primaryColor;
-            this.colorDots[1].style.backgroundColor = secondaryColor;
-            this.colorDots[2].style.backgroundColor = accentColor;
         }
     }
 
@@ -429,8 +401,8 @@ class ThemeManager extends BaseModule {
         document.documentElement.style.setProperty('--link-color', primary);
         document.documentElement.style.setProperty('--hover-color', secondary);
         
-        // 设置渐变
-        const gradient = `linear-gradient(45deg, ${primary}, ${secondary}, ${accent})`;
+        // 设置更丰富的渐变
+        const gradient = `linear-gradient(45deg, ${primary} 0%, ${secondary} 50%, ${accent} 100%)`;
         document.documentElement.style.setProperty('--bg-gradient', gradient);
         
         // 设置RGB值用于透明度渐变
