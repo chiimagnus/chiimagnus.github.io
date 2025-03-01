@@ -6,6 +6,7 @@ import ModuleFactory from './modules/core/ModuleFactory.js';
 import ThemeManager from './modules/managers/ThemeManager.js';
 import SearchManager from './modules/managers/SearchManager.js';
 import ArticleManager from './modules/managers/ArticleManager.js';
+import ProductManager from './modules/managers/ProductManager.js';
 import UIManager from './modules/managers/UIManager.js';
 
 class App {
@@ -30,6 +31,7 @@ class App {
         this.modules.register('theme', ThemeManager);
         this.modules.register('search', SearchManager);
         this.modules.register('article', ArticleManager);
+        this.modules.register('product', ProductManager);
         this.modules.register('ui', UIManager);
     }
 
@@ -57,6 +59,10 @@ class App {
                 visibleArticlesCount: 3
             });
             articleManager.init();
+            
+            // 创建并初始化产品管理器
+            const productManager = this.modules.create('product', {});
+            productManager.init();
             
             // 应用程序初始化完成
             console.log('应用程序初始化完成');

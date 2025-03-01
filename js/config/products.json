@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Logseq-AI-Search 🔌",
+    "description": "一款基于AI的Logseq智能搜索插件，可以根据当前block内容进行全局文档搜索，并提供AI智能总结功能。支持自定义AI模型和参数，让您的笔记检索更加智能高效。",
+    "tags": ["TypeScript", "React", "Logseq Plugin", "AI"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/logseq-AIsearch"
+      },
+      {
+        "text": "功能介绍",
+        "url": "https://github.com/chiimagnus/logseq-AIsearch#-%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"
+      }
+    ]
+  },
+  {
+    "title": "VoiceVerse 🎯",
+    "description": "VoiceVerse是一款macOS平台的PDF阅读器，具有文本朗读功能，让您的阅读体验更加丰富。",
+    "tags": ["Swift", "macOS", "PDF", "read voice"],
+    "status": "🚧 开发中",
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/VoiceVerse"
+      }
+    ]
+  },
+  {
+    "title": "《咖波的咖啡仪式》📚",
+    "description": "一部AI生成的科幻小说，讲述了在遥远的未来，一位名为“咖波”的外星咖啡大师降临地球，致力于恢复人类对咖啡的敬畏之心。通过精心构建的故事情节，探讨了传统文化的传承与现代化之间的衡。",
+    "tags": ["AI创作", "科幻小说", "咖啡文化"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/Gabo-s-Coffee-Ceremony"
+      },
+      {
+        "text": "阅读简介",
+        "url": "https://github.com/chiimagnus/Gabo-s-Coffee-Ceremony#%E8%83%8C%E6%99%AF"
+      }
+    ]
+  }
+] 
