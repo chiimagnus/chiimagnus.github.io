@@ -225,15 +225,51 @@ footer {
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
     padding: 0 20px;
 }
 
-.visit-counter {
+.footer-info {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 15px;
+    margin-top: 15px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.update-date {
+    margin: 0;
+    padding: 5px 0;
+}
+
+.visit-counter {
+    padding: 5px 0;
+}
+
+.visit-counter img {
+    height: 20px;
+    vertical-align: middle;
+}
+
+@media screen and (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .footer-info {
+        flex-direction: row;
+        margin-top: 0;
+    }
+
+    .update-date {
+        margin-right: 20px;
+    }
 }
 
 .visit-counter svg {
@@ -1263,6 +1299,24 @@ a:hover {
 /* 更新页脚样式 */
 .footer-content {
     color: var(--text-color-light);
+}
+
+.footer-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.update-date {
+    margin-right: 20px;
+}
+
+.visit-counter img {
+    height: 20px;
+    vertical-align: middle;
 }
 
 /* 适配深色主题的渐变背景 */
