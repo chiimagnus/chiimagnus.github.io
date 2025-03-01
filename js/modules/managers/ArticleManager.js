@@ -116,42 +116,60 @@ class ArticleManager extends BaseModule {
                 const response = await fetch('js/config/articles.json');
                 if (response.ok) {
                     this.articlesConfig = await response.json();
+                    console.log('从配置文件加载了文章列表');
                 }
             } catch (error) {
                 console.error('加载文章配置失败:', error);
                 // 使用一些默认配置
-                this.articlesConfig = [
-                    {
-                        path: 'articles/immersive-game-design.md',
-                        slug: 'immersive-game-design'
-                    }
-                ];
+                this.articlesConfig = [];
             }
         }
         
         // 清空容器
-        this.articlesContainer.innerHTML = '';
+        if (this.articlesList) {
+            // 保留原有DOM，仅清空内容
+            while (this.articlesList.firstChild) {
+                this.articlesList.removeChild(this.articlesList.firstChild);
+            }
+        }
         
         // 加载每篇文章
         for (const article of this.articlesConfig) {
             try {
-                const articleData = await this._loadArticle(article.path);
-                if (articleData) {
-                    const { frontmatter } = articleData;
-                    
-                    const articleElement = document.createElement('article');
+                let articleElement;
+                
+                if (article.external) {
+                    // 处理外部链接的文章
+                    articleElement = document.createElement('article');
                     articleElement.className = 'article-preview';
                     articleElement.innerHTML = `
-                        <h3>${frontmatter.title}</h3>
-                        <p class="article-meta">发布于 ${frontmatter.date}</p>
-                        <p class="article-excerpt">${frontmatter.description}</p>
+                        <h3>${article.title}</h3>
+                        <p class="article-meta">发布于 ${article.date}</p>
+                        <p class="article-excerpt">${article.description}</p>
+                        <a href="${article.url}" class="read-more" target="_blank">阅读全文 →</a>
+                    `;
+                } else {
+                    // 处理本地文章
+                    const articleData = await this._loadArticle(article.path || `${this.articlesBasePath}${article.slug}.md`);
+                    if (!articleData) continue;
+                    
+                    const { frontmatter } = articleData;
+                    
+                    articleElement = document.createElement('article');
+                    articleElement.className = 'article-preview';
+                    articleElement.innerHTML = `
+                        <h3>${frontmatter.title || article.title}</h3>
+                        <p class="article-meta">发布于 ${frontmatter.date || article.date}</p>
+                        <p class="article-excerpt">${frontmatter.description || article.description}</p>
                         <a href="${this.articlesBasePath}${article.slug}.html" class="read-more">阅读全文 →</a>
                     `;
-                    
-                    this.articlesContainer.appendChild(articleElement);
+                }
+                
+                if (this.articlesList && articleElement) {
+                    this.articlesList.appendChild(articleElement);
                 }
             } catch (error) {
-                console.error(`加载文章 ${article.path} 失败:`, error);
+                console.error(`加载文章 ${article.title || article.slug} 失败:`, error);
             }
         }
         
