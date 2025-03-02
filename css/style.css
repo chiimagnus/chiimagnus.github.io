@@ -345,6 +345,58 @@ footer {
         right: 10px;
         background: var(--primary-color);
     }
+
+    .nav-menu a {
+        background: linear-gradient(135deg, 
+            rgba(var(--gradient-primary-rgb), 0.1) 0%,
+            rgba(var(--gradient-secondary-rgb), 0.1) 100%
+        );
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-color-light);
+        transition: all 0.3s ease;
+    }
+
+    .nav-menu a:hover {
+        background: linear-gradient(135deg, 
+            rgba(var(--gradient-primary-rgb), 0.2) 0%,
+            rgba(var(--gradient-secondary-rgb), 0.2) 100%
+        );
+        transform: translateX(5px);
+    }
+
+    .search-container {
+        background: linear-gradient(135deg,
+            rgba(var(--gradient-primary-rgb), 0.1) 0%,
+            rgba(var(--gradient-secondary-rgb), 0.1) 100%
+        );
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #searchInput {
+        background: linear-gradient(135deg,
+            rgba(var(--gradient-primary-rgb), 0.05) 0%,
+            rgba(var(--gradient-secondary-rgb), 0.05) 100%
+        );
+        color: var(--text-color-light);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #searchInput::placeholder {
+        color: var(--text-color-light);
+        opacity: 0.7;
+    }
+
+    #searchInput:focus {
+        background: linear-gradient(135deg,
+            rgba(var(--gradient-primary-rgb), 0.1) 0%,
+            rgba(var(--gradient-secondary-rgb), 0.1) 100%
+        );
+        border-color: rgba(var(--gradient-primary-rgb), 0.3);
+    }
 }
 
 /* 添加主题切换按钮样式 */
