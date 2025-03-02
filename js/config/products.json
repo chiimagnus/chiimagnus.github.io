@@ -2,7 +2,7 @@
   {
     "title": "Logseq-AI-Search 🔌",
     "description": "一款基于AI的Logseq智能搜索插件，可以根据当前block内容进行全局文档搜索，并提供AI智能总结功能。支持自定义AI模型和参数，让您的笔记检索更加智能高效。",
-    "tags": ["TypeScript", "React", "Logseq Plugin", "AI"],
+    "tags": ["Plugin", "AI", "TypeScript"],
     "links": [
       {
         "text": "GitHub",
@@ -15,9 +15,9 @@
     ]
   },
   {
-    "title": "VoiceVerse 🎯",
-    "description": "VoiceVerse是一款macOS平台的PDF阅读器，具有文本朗读功能，让您的阅读体验更加丰富。",
-    "tags": ["Swift", "macOS", "PDF", "read voice"],
+    "title": "Vniverse 🎯",
+    "description": "一款macOS平台的markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
+    "tags": ["macOS", "语音合成", "PDF", "Markdown", "ChatHistory"],
     "status": "🚧 开发中",
     "links": [
       {
@@ -27,18 +27,43 @@
     ]
   },
   {
-    "title": "《咖波的咖啡仪式》📚",
-    "description": "一部AI生成的科幻小说，讲述了在遥远的未来，一位名为“咖波”的外星咖啡大师降临地球，致力于恢复人类对咖啡的敬畏之心。通过精心构建的故事情节，探讨了传统文化的传承与现代化之间的衡。",
-    "tags": ["AI创作", "科幻小说", "咖啡文化"],
+    "title": "ChatHistoryBox 📦",
+    "description": "一个简单的Chrome扩展，帮助你保存各个AI Chat对话记录为JSON文件。",
+    "tags": ["Plugin", "AI", "TypeScript"],
+    "status": "🚧 开发中",
     "links": [
       {
         "text": "GitHub",
-        "url": "https://github.com/chiimagnus/Gabo-s-Coffee-Ceremony"
-      },
+        "url": "https://github.com/chiimagnus/ChatHistoryBoxChromePlugin"
+      }
+    ]
+  },
+  {
+    "title": "LightYears ✨",
+    "description": "记录你的ideas。Tana",
+    "tags": ["macOS", "iOS", "笔记软件"],
+    "status": "🚧 开发中"
+  },
+  {
+    "title": "File-Path-to-Embed-Converter 🔗",
+    "description": "Logseq 插件，用于快速将文件路径转换为 Logseq 的嵌入语法",
+    "tags": ["Plugin", "JavaScript", "文件处理"],
+    "links": [
       {
-        "text": "阅读简介",
-        "url": "https://github.com/chiimagnus/Gabo-s-Coffee-Ceremony#%E8%83%8C%E6%99%AF"
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/File-Path-to-Embed-Converter"
+      }
+    ]
+  },
+  {
+    "title": "StreamVoice 🎙️",
+    "description": "StreamVoice 是一个基于 SwiftUI 的 macOS 应用，为 GPT-SoVITS 语音合成引擎提供图形界面，支持实时语音合成和流式音频输出。",
+    "tags": ["macOS", "AI", "语音合成"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/StreamVoice"
       }
     ]
   }
-] 
+]
