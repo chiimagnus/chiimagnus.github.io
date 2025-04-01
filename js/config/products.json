@@ -1,5 +1,17 @@
 [
   {
+    "title": "LifeWealth 💰",
+    "description": "智能投资管理工具，帮助用户在多样化的投资市场中做出明智决策。通过AI驱动的分析引擎，为您提供个性化的投资建议。",
+    "tags": ["投资管理", "财富增长", "AI分析"],
+    "status": "🚀 正式发布",
+    "links": [
+      {
+        "text": "详细介绍",
+        "url": "/LifeWealth"
+      }
+    ]
+  },
+  {
     "title": "Logseq-AI-Search 🔌",
     "description": "一款基于AI的Logseq智能搜索插件，可以根据当前block内容进行全局文档搜索，并提供AI智能总结功能。支持自定义AI模型和参数，让您的笔记检索更加智能高效。",
     "tags": ["Plugin", "AI", "TypeScript"],
@@ -63,18 +75,6 @@
       {
         "text": "GitHub",
         "url": "https://github.com/chiimagnus/StreamVoice"
-      }
-    ]
-  },
-  {
-    "title": "LifeWealth 💰",
-    "description": "智能投资管理工具，帮助用户在多样化的投资市场中做出明智决策。通过AI驱动的分析引擎，为您提供个性化的投资建议。",
-    "tags": ["投资管理", "财富增长", "AI分析"],
-    "status": "🚀 正式发布",
-    "links": [
-      {
-        "text": "详细介绍",
-        "url": "/LifeWealth"
       }
     ]
   }
