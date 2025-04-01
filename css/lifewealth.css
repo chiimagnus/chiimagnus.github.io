@@ -1,16 +1,21 @@
-/* LifeWealth - 智能投资管理平台样式 */
+/* LifeWealth - 五种财富理念应用样式 */
 
 :root {
-    --primary-color: #2e5bff; 
+    --primary-color: #4a6fff; 
     --primary-light: #e0e7ff;
     --secondary-color: #6c63ff;
-    --accent-color: #19d4a2;
+    --accent-color: #ff7373;
+    --time-color: #00a2ff;
+    --social-color: #ff7373;
+    --mental-color: #ae66ff;
+    --material-color: #4caf50;
+    --experience-color: #ffa000;
     --text-color: #333;
     --text-light: #666;
     --bg-color: #fff;
     --bg-light: #f8f9fa;
     --bg-dark: #1a2b4e;
-    --border-radius: 8px;
+    --border-radius: 12px;
     --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
 }
@@ -23,7 +28,7 @@
 }
 
 body {
-    font-family: 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--bg-color);
@@ -87,7 +92,7 @@ ul {
     background-color: var(--secondary-color);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(46, 91, 255, 0.2);
+    box-shadow: 0 6px 12px rgba(74, 111, 255, 0.2);
 }
 
 .secondary-button {
@@ -155,6 +160,56 @@ nav ul li a:hover {
     color: var(--primary-color);
 }
 
+/* 移动菜单样式 */
+.mobile-menu-toggle {
+    display: none;
+    width: 30px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: var(--primary-color);
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: var(--transition);
+}
+
+.mobile-menu-toggle span:nth-child(1) {
+    top: 0;
+}
+
+.mobile-menu-toggle span:nth-child(2) {
+    top: 10px;
+}
+
+.mobile-menu-toggle span:nth-child(3) {
+    top: 20px;
+}
+
+.mobile-menu-toggle.active span:nth-child(1) {
+    top: 10px;
+    transform: rotate(135deg);
+}
+
+.mobile-menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+    left: -30px;
+}
+
+.mobile-menu-toggle.active span:nth-child(3) {
+    top: 10px;
+    transform: rotate(-135deg);
+}
+
 /* 英雄区域样式 */
 .hero {
     padding: 5rem 0;
@@ -207,21 +262,12 @@ nav ul li a:hover {
     box-shadow: var(--box-shadow);
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.dashboard-placeholder {
-    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    color: var(--text-light);
-    background-color: var(--primary-light);
-    padding: 2rem;
-    text-align: center;
 }
 
-/* 特性区域样式 */
+/* 财富类型特性区域样式 */
 .features {
     padding: 5rem 0;
     background-color: white;
@@ -233,17 +279,42 @@ nav ul li a:hover {
     gap: 2.5rem;
 }
 
+.features-grid.two-columns {
+    grid-template-columns: repeat(2, 1fr);
+}
+
 .feature-card {
     background-color: white;
     border-radius: var(--border-radius);
     padding: 2rem;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    border-top: 4px solid var(--primary-color);
 }
 
 .feature-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card:nth-child(1) {
+    border-top-color: var(--time-color);
+}
+
+.feature-card:nth-child(2) {
+    border-top-color: var(--social-color);
+}
+
+.feature-card:nth-child(3) {
+    border-top-color: var(--mental-color);
+}
+
+.feature-card:nth-child(4) {
+    border-top-color: var(--material-color);
+}
+
+.feature-card:nth-child(5) {
+    border-top-color: var(--experience-color);
 }
 
 .feature-icon {
@@ -262,122 +333,40 @@ nav ul li a:hover {
     line-height: 1.7;
 }
 
-/* 工作原理区域样式 */
+/* 关于理念部分样式 */
 .how-it-works {
     padding: 5rem 0;
     background-color: var(--bg-light);
 }
 
-.steps {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1000px;
+.about-content {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--box-shadow);
+    max-width: 900px;
     margin: 0 auto;
-    position: relative;
 }
 
-.steps:before {
-    content: '';
-    position: absolute;
-    top: 40px;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background-color: var(--primary-light);
-    z-index: 1;
+.wealth-principles {
+    padding-left: 1.5rem;
 }
 
-.step {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    flex: 1;
-    padding: 0 15px;
+.wealth-principles li {
+    margin-bottom: 1rem;
+    padding-left: 0.5rem;
 }
 
-.step-number {
-    width: 60px;
-    height: 60px;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: 0 auto 1.5rem;
-    position: relative;
-    z-index: 3;
-}
-
-.step-title {
-    font-size: 1.25rem;
-    margin-bottom: 0.75rem;
-    color: var(--bg-dark);
-}
-
-.step-description {
-    color: var(--text-light);
-}
-
-/* 用户评价区域样式 */
-.testimonials {
+/* 应用功能展示区域 */
+.app-features {
     padding: 5rem 0;
     background-color: white;
 }
 
-.testimonial-card {
-    background-color: white;
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--box-shadow);
-    margin-bottom: 2rem;
-    position: relative;
-}
-
-.testimonial-card:after {
-    content: '';
-    position: absolute;
-    left: 2rem;
-    bottom: -10px;
-    width: 20px;
-    height: 20px;
-    background-color: white;
-    transform: rotate(45deg);
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
-}
-
-.testimonial-content {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    line-height: 1.8;
-    font-style: italic;
-    margin-bottom: 1.5rem;
-}
-
-.testimonial-author {
-    display: flex;
-    align-items: center;
-}
-
-.author-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin-right: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.author-name {
-    font-weight: 600;
-    color: var(--bg-dark);
-}
-
-.author-title {
-    font-size: 0.9rem;
-    color: var(--text-light);
+.app-screenshot {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    text-align: center;
 }
 
 /* CTA区域样式 */
@@ -485,6 +474,27 @@ footer {
     margin-right: 5px;
 }
 
+/* 动画样式 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated {
+    animation-duration: 0.8s;
+    animation-fill-mode: both;
+}
+
+.fade-in {
+    animation-name: fadeIn;
+}
+
 /* 响应式设计 */
 @media (max-width: 992px) {
     .hero-container {
@@ -501,36 +511,48 @@ footer {
         justify-content: center;
     }
     
-    .steps {
-        flex-wrap: wrap;
-    }
-    
-    .steps:before {
-        display: none;
-    }
-    
-    .step {
-        flex: 0 0 50%;
-        margin-bottom: 2rem;
+    .features-grid.two-columns {
+        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 768px) {
     .header-container {
-        flex-direction: column;
+        padding: 1rem;
     }
     
-    .logo {
-        margin-bottom: 1rem;
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background-color: white;
+        padding-top: 80px;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 100;
+    }
+    
+    nav.mobile-menu-open {
+        transform: translateX(0);
     }
     
     nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
     
     nav ul li {
-        margin: 0.5rem 1rem;
+        margin: 1rem 0;
+    }
+    
+    nav ul li a {
+        font-size: 1.2rem;
     }
     
     .hero-title {
@@ -541,8 +563,8 @@ footer {
         font-size: 2rem;
     }
     
-    .step {
-        flex: 0 0 100%;
+    .about-content {
+        padding: 1.5rem;
     }
 }
 
@@ -558,4 +580,4 @@ footer {
     .feature-card {
         padding: 1.5rem;
     }
-} 
+}
