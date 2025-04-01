@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeWealth - 智能投资管理平台</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/hat.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/hat.svg">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/hat.svg">
+    <style>
+        :root {
+            --primary-color: #2e5bff;
+            --primary-light: #e0e7ff;
+            --secondary-color: #0f2b5a;
+            --accent-color: #f7ab35;
+            --text-color: #333;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #495057;
+            --white: #ffffff;
+            --success: #28a745;
+            --shadow: 0 10px 30px rgba(46, 91, 255, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--secondary-color);
+        }
+        
+        .logo-icon {
+            background-color: var(--primary-color);
+            color: var(--white);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 20px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--secondary-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 91, 255, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 140px;
+            padding-bottom: 80px;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--white) 100%);
+        }
+        
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-content {
+            width: 50%;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--dark-gray);
+            margin-bottom: 40px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .secondary-button {
+            background-color: var(--white);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .secondary-button:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .hero-image {
+            width: 45%;
+            position: relative;
+        }
+        
+        .dashboard-preview {
+            width: 100%;
+            height: 400px;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .dashboard-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .dashboard-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--primary-light), var(--white));
+            color: var(--primary-color);
+            font-size: 24px;
+            font-weight: 500;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--dark-gray);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+        
+        .feature-description {
+            color: var(--dark-gray);
+            line-height: 1.7;
+        }
+        
+        /* How it works */
+        .how-it-works {
+            padding: 100px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 45px;
+            left: 65px;
+            right: 65px;
+            height: 2px;
+            background-color: var(--medium-gray);
+            z-index: 1;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .step-description {
+            text-align: center;
+            color: var(--dark-gray);
+            font-size: 14px;
+            padding: 0 15px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background-color: var(--white);
+        }
+        
+        .testimonial-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 30px auto;
+            max-width: 800px;
+        }
+        
+        .testimonial-content {
+            font-size: 18px;
+            font-style: italic;
+            color: var(--dark-gray);
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--medium-gray);
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .author-title {
+            font-size: 14px;
+            color: var(--dark-gray);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .cta-description {
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button-white {
+            background-color: var(--white);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .cta-button-white:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            color: var(--primary-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+        
+        .footer-section {
+            width: 23%;
+        }
+        
+        .footer-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .footer-links a {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: var(--white);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Back to Main Site Button */
+        .back-to-main {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--accent-color);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .back-to-main:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            color: var(--white);
+        }
+        
+        .back-icon {
+            margin-right: 8px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-container {
+                flex-direction: column;
+            }
+            
+            .hero-content, .hero-image {
+                width: 100%;
+            }
+            
+            .hero-content {
+                margin-bottom: 50px;
+            }
+            
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                flex-wrap: wrap;
+            }
+            
+            .footer-section {
+                width: 48%;
+                margin-bottom: 30px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+            }
+            
+            nav ul li {
+                margin: 0 15px;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .steps::before {
+                display: none;
+            }
+            
+            .step {
+                width: 100%;
+                margin-bottom: 40px;
+            }
+            
+            .footer-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">💰</div>
+                <span>LifeWealth</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">功能</a></li>
+                    <li><a href="#how-it-works">工作原理</a></li>
+                    <li><a href="#testimonials">用户评价</a></li>
+                    <li><a href="#" class="cta-button">立即体验</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">智能投资管理，<br>让财富稳健增长</h1>
+                <p class="hero-subtitle">LifeWealth利用AI技术为您提供个性化投资建议，帮助您在多样化市场中做出明智决策，轻松实现财务目标。</p>
+                <div class="hero-buttons">
+                    <a href="#" class="cta-button">开始使用</a>
+                    <a href="#how-it-works" class="secondary-button">了解更多</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="dashboard-preview">
+                    <div class="dashboard-placeholder">
+                        投资仪表盘演示界面
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">智能投资功能</h2>
+            <p class="section-subtitle">LifeWealth提供全方位的投资管理工具，帮助您做出数据驱动的投资决策</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">智能资产分配</h3>
+                    <p class="feature-description">基于您的风险偏好和投资目标，运用先进算法为您提供最优的资产配置方案，平衡风险与收益。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">市场趋势分析</h3>
+                    <p class="feature-description">利用人工智能实时分析市场动态，捕捉投资机会，帮助您在市场波动中保持领先。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">投资组合追踪</h3>
+                    <p class="feature-description">全面监控您的投资组合表现，提供详细的分析报告，让您清晰了解投资状况。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">⚠️</div>
+                    <h3 class="feature-title">风险评估与控制</h3>
+                    <p class="feature-description">全面评估投资组合的潜在风险，提供风险规避建议，确保您的投资安全稳健。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">财务目标规划</h3>
+                    <p class="feature-description">设定并追踪您的长期财务目标，系统会自动调整投资策略，确保目标达成。</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 class="feature-title">安全与隐私保障</h3>
+                    <p class="feature-description">采用银行级加密技术保护您的个人和财务数据，确保您的投资信息安全无忧。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">如何开始使用</h2>
+            <p class="section-subtitle">只需简单几步，即可开启智能投资之旅</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">创建账户</h3>
+                    <p class="step-description">注册LifeWealth账户，完成简单的个人信息设置</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">设置投资偏好</h3>
+                    <p class="step-description">告诉我们您的投资目标、风险承受能力和偏好</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">获取投资方案</h3>
+                    <p class="step-description">系统为您生成个性化的投资组合建议</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">开始智能投资</h3>
+                    <p class="step-description">执行投资计划并持续监控优化您的投资组合</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">用户评价</h2>
+            <p class="section-subtitle">听听已经使用LifeWealth的用户怎么说</p>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-content">"作为一位初入职场的年轻人，我对投资一无所知。LifeWealth不仅提供了清晰易懂的投资指导，还帮我在第一年获得了15%的投资回报！比银行存款高太多了。"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <div style="width:100%;height:100%;background-color:#e0e7ff;display:flex;align-items:center;justify-content:center;color:#2e5bff;">小王</div>
+                    </div>
+                    <div>
+                        <div class="author-name">小王</div>
+                        <div class="author-title">软件工程师，26岁</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-content">"我是有经验的投资者，但工作繁忙让我没有时间研究市场。LifeWealth的自动化分析为我节省了大量时间，同时通过AI优化的投资组合，我的投资效率显著提升。"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">
+                        <div style="width:100%;height:100%;background-color:#e0e7ff;display:flex;align-items:center;justify-content:center;color:#2e5bff;">张女士</div>
+                    </div>
+                    <div>
+                        <div class="author-name">张女士</div>
+                        <div class="author-title">财务总监，38岁</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">开启您的智能投资之旅</h2>
+            <p class="cta-description">加入成千上万的LifeWealth用户，开始科学规划您的财富增长</p>
+            <a href="#" class="cta-button-white">立即注册，免费体验</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">LifeWealth</h3>
+                    <p style="color:rgba(255,255,255,0.7);margin-bottom:20px;">
+                        智能投资管理平台，让您的财富增长更加轻松、高效。
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">产品</h3>
+                    <div class="footer-links">
+                        <a href="#">智能投资</a>
+                        <a href="#">财富管理</a>
+                        <a href="#">市场分析</a>
+                        <a href="#">个人理财</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">资源</h3>
+                    <div class="footer-links">
+                        <a href="#">投资指南</a>
+                        <a href="#">用户手册</a>
+                        <a href="#">常见问题</a>
+                        <a href="#">博客</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">联系我们</h3>
+                    <div class="footer-links">
+                        <a href="mailto:chii_magnus@outlook.com">邮箱: chii_magnus@outlook.com</a>
+                        <a href="https://github.com/chiimagnus">GitHub</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2025 LifeWealth by Chii Magnus. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+    
+    <a href="/" class="back-to-main">
+        <span class="back-icon">←</span>
+        返回主站
+    </a>
+</body>
+</html> 
