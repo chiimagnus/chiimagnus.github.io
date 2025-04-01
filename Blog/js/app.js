@@ -8,6 +8,7 @@ import SearchManager from './modules/managers/SearchManager.js';
 import ArticleManager from './modules/managers/ArticleManager.js';
 import ProductManager from './modules/managers/ProductManager.js';
 import UIManager from './modules/managers/UIManager.js';
+import PerformanceOptimizer from './modules/utils/PerformanceOptimizer.js';
 
 class App {
     /**
@@ -20,6 +21,9 @@ class App {
         
         // 注册模块
         this._registerModules();
+        
+        // 性能优化器实例
+        this.performanceOptimizer = null;
     }
 
     /**
@@ -64,6 +68,9 @@ class App {
             const productManager = this.modules.create('product', {});
             productManager.init();
             
+            // 初始化性能优化器
+            this._initPerformanceOptimizer();
+            
             // 应用程序初始化完成
             console.log('应用程序初始化完成');
             
@@ -72,6 +79,18 @@ class App {
                 detail: { app: this }
             });
             document.dispatchEvent(event);
+        });
+    }
+    
+    /**
+     * 初始化性能优化器
+     * @private
+     */
+    _initPerformanceOptimizer() {
+        // 创建性能优化器实例
+        this.performanceOptimizer = new PerformanceOptimizer({
+            scrollThrottleDelay: 50,
+            scrollEndDelay: 150
         });
     }
     

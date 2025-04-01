@@ -28,6 +28,13 @@
     box-sizing: border-box;
 }
 
+/* 预加载元素，提高初始渲染速度 */
+.sidebar, article, .product-card, footer, .main-content, .container {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     line-height: 1.6;
@@ -42,6 +49,9 @@ body {
     min-height: 100vh;
     will-change: background-position;
     -webkit-font-smoothing: antialiased;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
 }
 
 @keyframes gradientMove {
@@ -176,6 +186,49 @@ body {
     flex-grow: 1;
     max-width: 900px;
     min-height: 100vh;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transform: translateZ(0);
+}
+
+/* 滚动时优化样式 - 增强版 */
+body.is-scrolling {
+    pointer-events: none;
+}
+
+body.is-scrolling {
+    /* 滚动时简化背景以提高性能 */
+    background: var(--gradient-primary) !important;
+    animation: none !important;
+}
+
+body.is-scrolling .container {
+    animation-play-state: paused;
+}
+
+body.is-scrolling .sidebar {
+    /* 滚动时简化侧边栏效果 */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
+}
+
+body.is-scrolling article, 
+body.is-scrolling .product-card,
+body.is-scrolling .avatar-container {
+    /* 滚动时简化卡片效果 */
+    transition: none !important;
+    transform: translateZ(0);
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+body.is-scrolling * {
+    animation-play-state: paused;
+    text-shadow: none !important;
+    box-shadow: none !important;
 }
 
 /* 文章部分样式 */
@@ -193,6 +246,8 @@ article, .product-card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
     transform: translateZ(0);
+    will-change: transform, opacity;
+    backface-visibility: hidden;
 }
 
 article:hover, .product-card:hover {

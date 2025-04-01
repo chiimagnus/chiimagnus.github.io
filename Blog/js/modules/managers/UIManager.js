@@ -23,6 +23,11 @@ class UIManager extends BaseModule {
         
         // 动画帧请求ID
         this.animationFrame = null;
+        
+        // 滚动节流
+        this.lastScrollTime = 0;
+        this.scrollThrottleDelay = 100; // 滚动节流延迟时间(ms)
+        this.isScrolling = false;
     }
 
     /**
@@ -71,8 +76,39 @@ class UIManager extends BaseModule {
         // 监听移动端媒体查询变化
         this.mobileMediaQuery.addEventListener('change', this._handleMediaQueryChange.bind(this));
         
-        // 监听页面滚动，添加阴影效果
-        this.addEventListener(window, 'scroll', this._handleScroll.bind(this));
+        // 监听页面滚动，添加阴影效果 - 使用被动事件监听提高性能
+        window.addEventListener('scroll', this._handleScroll.bind(this), { 
+            passive: true 
+        });
+        
+        // 初始化滚动性能优化
+        this._initScrollOptimization();
+    }
+
+    /**
+     * 初始化滚动性能优化
+     * @private
+     */
+    _initScrollOptimization() {
+        // 预先设置transform以激活GPU加速
+        const elementsToOptimize = [
+            document.body,
+            document.querySelector('.container'),
+            document.querySelector('.main-content'),
+            document.querySelector('.sidebar')
+        ];
+        
+        // 应用GPU加速
+        elementsToOptimize.forEach(el => {
+            if (el) {
+                // 强制GPU渲染
+                el.style.transform = 'translateZ(0)';
+                el.style.backfaceVisibility = 'hidden';
+            }
+        });
+        
+        // 设置滚动节流延迟
+        this.scrollThrottleDelay = 50; // 降低到50ms以提高响应性
     }
 
     /**
@@ -126,6 +162,42 @@ class UIManager extends BaseModule {
      * @private
      */
     _handleScroll() {
+        // 使用时间戳节流滚动事件处理
+        const now = Date.now();
+        
+        if (!this.isScrolling) {
+            this.isScrolling = true;
+            document.body.classList.add('is-scrolling');
+            // 强制重新计算样式，确保滚动优化立即生效
+            window.requestAnimationFrame(() => {
+                document.body.offsetHeight; // 触发重排
+            });
+        }
+        
+        // 清除之前的滚动结束检查定时器
+        if (this.scrollEndTimer) {
+            clearTimeout(this.scrollEndTimer);
+        }
+        
+        // 设置滚动结束检查
+        this.scrollEndTimer = setTimeout(() => {
+            this.isScrolling = false;
+            document.body.classList.remove('is-scrolling');
+            // 滚动结束后延迟一帧再恢复样式，避免卡顿
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    // 双重requestAnimationFrame确保平滑过渡
+                });
+            });
+        }, 150); // 增加到150ms，提供更好的缓冲
+        
+        // 应用滚动节流 - 更严格的节流
+        if (now - this.lastScrollTime < this.scrollThrottleDelay) {
+            return;
+        }
+        
+        this.lastScrollTime = now;
+        
         // 使用 requestAnimationFrame 优化性能
         if (this.animationFrame) {
             cancelAnimationFrame(this.animationFrame);
