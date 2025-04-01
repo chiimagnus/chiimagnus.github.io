@@ -163,51 +163,64 @@ nav ul li a:hover {
 
 /* 移动菜单样式 */
 .mobile-menu-toggle {
-    display: none;
-    width: 30px;
-    height: 24px;
+    display: none; /* 默认不显示 */
+    width: 40px;
+    height: 40px;
     position: relative;
     cursor: pointer;
     z-index: 101;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.mobile-menu-toggle:hover {
+    background-color: rgba(74, 111, 255, 0.15);
 }
 
 .mobile-menu-toggle span {
     display: block;
     position: absolute;
-    height: 3px;
-    width: 100%;
+    height: 2px;
+    width: 20px;
     background: var(--primary-color);
     border-radius: 3px;
     opacity: 1;
-    left: 0;
+    left: 10px;
     transform: rotate(0deg);
     transition: var(--transition);
 }
 
 .mobile-menu-toggle span:nth-child(1) {
-    top: 0;
+    top: 14px;
 }
 
 .mobile-menu-toggle span:nth-child(2) {
-    top: 10px;
-}
-
-.mobile-menu-toggle span:nth-child(3) {
     top: 20px;
 }
 
+.mobile-menu-toggle span:nth-child(3) {
+    top: 26px;
+}
+
+.mobile-menu-toggle.active {
+    background-color: var(--primary-light);
+}
+
 .mobile-menu-toggle.active span:nth-child(1) {
-    top: 10px;
+    top: 20px;
     transform: rotate(135deg);
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
-    left: -30px;
+    left: -20px;
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    top: 10px;
+    top: 20px;
     transform: rotate(-135deg);
 }
 
@@ -551,11 +564,20 @@ section {
 
 @media (max-width: 768px) {
     .header-container {
-        padding: 1rem;
+        padding: 0.8rem 1rem;
     }
     
     .mobile-menu-toggle {
-        display: block;
+        display: flex; /* 仅在移动端显示 */
+        margin-left: auto;
+    }
+    
+    .logo {
+        font-size: 1.3rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.6rem;
     }
     
     nav {
@@ -567,7 +589,7 @@ section {
         background-color: white;
         box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
         transition: all 0.3s ease;
-        padding: 6rem 2rem 2rem;
+        padding: 5rem 2rem 2rem;
         z-index: 100;
     }
     
@@ -730,5 +752,45 @@ section {
     
     .footer-bottom {
         text-align: center;
+    }
+    
+    .header-container {
+        padding: 0.7rem;
+    }
+    
+    .mobile-menu-toggle {
+        width: 36px;
+        height: 36px;
+    }
+    
+    .mobile-menu-toggle span {
+        width: 18px;
+        left: 9px;
+    }
+    
+    .mobile-menu-toggle span:nth-child(1) {
+        top: 12px;
+    }
+    
+    .mobile-menu-toggle span:nth-child(2) {
+        top: 18px;
+    }
+    
+    .mobile-menu-toggle span:nth-child(3) {
+        top: 24px;
+    }
+    
+    .mobile-menu-toggle.active span:nth-child(1),
+    .mobile-menu-toggle.active span:nth-child(3) {
+        top: 18px;
+    }
+    
+    .logo {
+        font-size: 1.2rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.4rem;
+        margin-right: 0.3rem;
     }
 } 

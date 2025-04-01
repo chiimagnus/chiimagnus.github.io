@@ -56,58 +56,84 @@ function initSmoothScrolling() {
  * 初始化移动端菜单
  */
 function initMobileMenu() {
-    // 创建汉堡菜单按钮
-    const menuToggle = document.createElement('div');
-    menuToggle.className = 'mobile-menu-toggle';
-    menuToggle.innerHTML = '<span></span><span></span><span></span>';
+    // 检查是否是移动设备视图
+    const isMobileView = window.innerWidth <= 768;
     
-    // 创建背景遮罩
-    const backdrop = document.createElement('div');
-    backdrop.className = 'menu-backdrop';
-    
-    // 获取header和nav元素
-    const header = document.querySelector('header');
-    const nav = document.querySelector('nav');
-    
-    if (header && nav) {
-        // 添加菜单按钮和背景遮罩到DOM
-        header.appendChild(menuToggle);
-        document.body.appendChild(backdrop);
+    // 只有在移动设备视图下才创建和添加菜单按钮
+    if (isMobileView) {
+        // 创建汉堡菜单按钮
+        const menuToggle = document.createElement('div');
+        menuToggle.className = 'mobile-menu-toggle';
+        menuToggle.setAttribute('aria-label', '菜单');
+        menuToggle.innerHTML = '<span></span><span></span><span></span>';
         
-        // 点击汉堡菜单切换导航显示
-        menuToggle.addEventListener('click', function() {
-            toggleMobileMenu();
-        });
+        // 创建背景遮罩
+        const backdrop = document.createElement('div');
+        backdrop.className = 'menu-backdrop';
         
-        // 点击背景遮罩关闭菜单
-        backdrop.addEventListener('click', function() {
-            toggleMobileMenu(false);
-        });
+        // 获取header和nav元素
+        const headerContainer = document.querySelector('.header-container');
+        const nav = document.querySelector('nav');
         
-        // 监听窗口调整大小，在大屏幕上自动关闭移动菜单
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768 && nav.classList.contains('mobile-menu-open')) {
+        if (headerContainer && nav) {
+            // 添加菜单按钮到header-container和背景遮罩到body
+            headerContainer.appendChild(menuToggle);
+            document.body.appendChild(backdrop);
+            
+            // 点击汉堡菜单切换导航显示
+            menuToggle.addEventListener('click', function() {
+                toggleMobileMenu();
+            });
+            
+            // 点击背景遮罩关闭菜单
+            backdrop.addEventListener('click', function() {
                 toggleMobileMenu(false);
-            }
-        });
-    }
-    
-    // 切换移动菜单显示状态
-    function toggleMobileMenu(show) {
-        const shouldShow = show !== undefined ? show : !nav.classList.contains('mobile-menu-open');
+            });
+            
+            // 监听窗口调整大小
+            window.addEventListener('resize', handleResize);
+        }
         
-        if (shouldShow) {
-            nav.classList.add('mobile-menu-open');
-            menuToggle.classList.add('active');
-            backdrop.classList.add('active');
-            document.body.style.overflow = 'hidden'; // 防止背景滚动
-        } else {
-            nav.classList.remove('mobile-menu-open');
-            menuToggle.classList.remove('active');
-            backdrop.classList.remove('active');
-            document.body.style.overflow = '';
+        // 切换移动菜单显示状态
+        function toggleMobileMenu(show) {
+            const shouldShow = show !== undefined ? show : !nav.classList.contains('mobile-menu-open');
+            
+            if (shouldShow) {
+                nav.classList.add('mobile-menu-open');
+                menuToggle.classList.add('active');
+                backdrop.classList.add('active');
+                document.body.style.overflow = 'hidden'; // 防止背景滚动
+            } else {
+                nav.classList.remove('mobile-menu-open');
+                menuToggle.classList.remove('active');
+                backdrop.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+        
+        // 处理窗口大小变化
+        function handleResize() {
+            // 如果进入桌面视图，自动关闭移动菜单
+            if (window.innerWidth > 768) {
+                if (nav.classList.contains('mobile-menu-open')) {
+                    toggleMobileMenu(false);
+                }
+                
+                // 如果从移动视图转到桌面视图，可选择性地删除菜单按钮
+                // menuToggle.remove();
+                // backdrop.remove();
+                // window.removeEventListener('resize', handleResize);
+            }
         }
     }
+    
+    // 在窗口大小变化时重新评估是否需要菜单按钮
+    window.addEventListener('resize', function() {
+        // 如果没有菜单按钮但当前是移动视图，重新初始化
+        if (window.innerWidth <= 768 && !document.querySelector('.mobile-menu-toggle')) {
+            initMobileMenu();
+        }
+    });
 }
 
 /**
