@@ -55,7 +55,7 @@ class ProductManager extends BaseModule {
         // 如果没有预先配置的产品，可以尝试从配置文件加载
         if (this.productsConfig.length === 0) {
             try {
-                const response = await fetch('js/config/products.json');
+                const response = await fetch('Blog/js/config/products.json');
                 if (response.ok) {
                     this.productsConfig = await response.json();
                     console.log('从配置文件加载了产品列表');

@@ -19,7 +19,7 @@ class ArticleManager extends BaseModule {
         
         // 文章配置
         this.articlesConfig = options.articles || [];
-        this.articlesBasePath = options.articlesBasePath || 'articles/';
+        this.articlesBasePath = options.articlesBasePath || 'Blog/articles/';
         this.visibleArticlesCount = options.visibleArticlesCount || 2;
         
         // 当前状态
@@ -122,7 +122,7 @@ class ArticleManager extends BaseModule {
         // 如果没有预先配置的文章，可以尝试从配置文件加载
         if (this.articlesConfig.length === 0) {
             try {
-                const response = await fetch('js/config/articles.json');
+                const response = await fetch('Blog/js/config/articles.json');
                 if (response.ok) {
                     this.articlesConfig = await response.json();
                     console.log('从配置文件加载了文章列表');
