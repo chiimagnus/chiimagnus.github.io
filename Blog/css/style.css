@@ -193,30 +193,25 @@ body {
 }
 
 /* 滚动时优化样式 - 增强版 */
-body.is-scrolling {
+body[data-scrolling="true"] {
     pointer-events: none;
 }
 
-body.is-scrolling {
-    /* 滚动时简化背景以提高性能 */
-    background: var(--gradient-primary) !important;
-    animation: none !important;
+body[data-scrolling="true"] .container {
+    /* 保持动画运行，但可以暂停其他不重要的动画 */
+    /* animation-play-state: paused; */
 }
 
-body.is-scrolling .container {
-    animation-play-state: paused;
-}
-
-body.is-scrolling .sidebar {
+body[data-scrolling="true"] .sidebar {
     /* 滚动时简化侧边栏效果 */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-shadow: none !important;
 }
 
-body.is-scrolling article, 
-body.is-scrolling .product-card,
-body.is-scrolling .avatar-container {
+body[data-scrolling="true"] article, 
+body[data-scrolling="true"] .product-card,
+body[data-scrolling="true"] .avatar-container {
     /* 滚动时简化卡片效果 */
     transition: none !important;
     transform: translateZ(0);
@@ -225,8 +220,9 @@ body.is-scrolling .avatar-container {
     -webkit-backdrop-filter: none !important;
 }
 
-body.is-scrolling * {
-    animation-play-state: paused;
+body[data-scrolling="true"] * {
+    /* 保持背景动画，但可以暂停其他动画 */
+    /* animation-play-state: paused; */
     text-shadow: none !important;
     box-shadow: none !important;
 }

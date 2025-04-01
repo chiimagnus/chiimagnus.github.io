@@ -63,15 +63,14 @@ class PerformanceOptimizer {
         
         this.lastScrollTime = now;
         
-        // 标记滚动状态
+        // 标记滚动状态，但不应用影响背景颜色的class
         if (!this.isScrolling) {
             this.isScrolling = true;
-            document.body.classList.add('is-scrolling');
+            // 不再添加会影响背景颜色的class
+            // document.body.classList.add('is-scrolling');
             
-            // 强制重新计算样式，确保滚动优化立即生效
-            window.requestAnimationFrame(() => {
-                document.body.offsetHeight; // 触发重排
-            });
+            // 可以用自定义属性标记滚动状态，而不影响样式
+            document.body.setAttribute('data-scrolling', 'true');
         }
         
         // 清除之前的定时器
@@ -82,7 +81,8 @@ class PerformanceOptimizer {
         // 设置滚动结束检测
         this.scrollTimer = setTimeout(() => {
             this.isScrolling = false;
-            document.body.classList.remove('is-scrolling');
+            // document.body.classList.remove('is-scrolling');
+            document.body.removeAttribute('data-scrolling');
             
             // 滚动结束后延迟一帧再恢复样式，避免卡顿
             window.requestAnimationFrame(() => {
