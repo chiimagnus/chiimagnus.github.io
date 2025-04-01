@@ -2,7 +2,9 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4a6fff">
+    <meta name="description" content="基于萨希尔·布卢姆的五种财富理念，帮助你平衡生活中的时间、社交、精神、物质和经验财富。">
     <title>LifeWealth - 五种财富理念</title>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/lifewealth-logo.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/lifewealth-logo.svg">
@@ -24,6 +26,7 @@
                     <li><a href="#records">活动记录</a></li>
                 </ul>
             </nav>
+            <!-- 移动菜单按钮会由JS动态添加 -->
         </div>
     </header>
     
@@ -39,7 +42,7 @@
             </div>
             <div class="hero-image">
                 <div class="dashboard-preview">
-                    <img src="assets/lifewealth-logo.svg" alt="LifeWealth Logo" style="max-width: 100%; height: auto;">
+                    <img src="assets/lifewealth-logo.svg" alt="LifeWealth Logo" loading="eager" width="280" height="280">
                 </div>
             </div>
         </div>
@@ -51,31 +54,31 @@
             <p class="section-subtitle">真正的富足需要在这五个关键维度上取得平衡</p>
             
             <div class="features-grid">
-                <div class="feature-card">
+                <div class="feature-card" data-color="time">
                     <div class="feature-icon">⏱️</div>
                     <h3 class="feature-title">时间财富</h3>
                     <p class="feature-description">拥有支配自己时间的自由，能够按照自己的意愿和优先事项安排生活。时间财富是最稀缺和最宝贵的资源。</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-color="social">
                     <div class="feature-icon">👥</div>
                     <h3 class="feature-title">社交财富</h3>
                     <p class="feature-description">拥有充满爱和支持的关系网络，包括家人、朋友和社区。社交关系的质量和深度对幸福感有重大影响。</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-color="mental">
                     <div class="feature-icon">🧠</div>
                     <h3 class="feature-title">精神财富</h3>
                     <p class="feature-description">活在当下的能力，内心的平静和满足感，以及能够感受和表达喜悦与感激的能力。精神财富是一种内在的富足。</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-color="material">
                     <div class="feature-icon">💰</div>
                     <h3 class="feature-title">物质财富</h3>
                     <p class="feature-description">拥有足够的金钱和物质资源，确保基本需求得到满足，并能够实现个人目标和愿望。</p>
                 </div>
                 
-                <div class="feature-card">
+                <div class="feature-card" data-color="experience">
                     <div class="feature-icon">🌟</div>
                     <h3 class="feature-title">经验财富</h3>
                     <p class="feature-description">通过丰富多样的生活经历和体验积累的记忆和智慧。这包括旅行、学习、冒险和个人成长的经历。</p>
@@ -109,7 +112,7 @@
             <p class="section-subtitle">记录并珍视与重要人物共度的时光</p>
             
             <div class="app-screenshot">
-                <img src="assets/contacts-screenshot.png" alt="联系人管理界面" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+                <img src="assets/contacts-screenshot.png" alt="联系人管理界面" loading="lazy" width="800" height="450">
             </div>
             
             <div class="features-grid two-columns">
@@ -134,7 +137,7 @@
             <p class="section-subtitle">记录生活中的重要活动，积累你的经验财富</p>
             
             <div class="app-screenshot">
-                <img src="assets/records-screenshot.png" alt="活动记录界面" style="max-width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1);">
+                <img src="assets/records-screenshot.png" alt="活动记录界面" loading="lazy" width="800" height="450">
             </div>
             
             <div class="features-grid two-columns">
@@ -211,6 +214,5 @@
 
     <script src="js/lifewealth.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/performance.js"></script>
 </body>
 </html> 

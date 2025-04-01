@@ -127,6 +127,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    position: relative;
 }
 
 .logo {
@@ -254,17 +255,16 @@ nav ul li a:hover {
 }
 
 .dashboard-preview {
-    width: 100%;
-    max-width: 500px;
-    height: 300px;
-    background-color: white;
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    max-width: 280px;
+    margin: 0 auto;
+}
+
+.dashboard-preview img {
+    max-width: 100%;
+    height: auto;
 }
 
 /* 财富类型特性区域样式 */
@@ -289,7 +289,11 @@ nav ul li a:hover {
     padding: 2rem;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
-    border-top: 4px solid var(--primary-color);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 4px solid transparent;
 }
 
 .feature-card:hover {
@@ -297,23 +301,24 @@ nav ul li a:hover {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.feature-card:nth-child(1) {
+/* 为每种财富类型的卡片添加不同的边框颜色 */
+.feature-card[data-color="time"] {
     border-top-color: var(--time-color);
 }
 
-.feature-card:nth-child(2) {
+.feature-card[data-color="social"] {
     border-top-color: var(--social-color);
 }
 
-.feature-card:nth-child(3) {
+.feature-card[data-color="mental"] {
     border-top-color: var(--mental-color);
 }
 
-.feature-card:nth-child(4) {
+.feature-card[data-color="material"] {
     border-top-color: var(--material-color);
 }
 
-.feature-card:nth-child(5) {
+.feature-card[data-color="experience"] {
     border-top-color: var(--experience-color);
 }
 
@@ -364,9 +369,19 @@ nav ul li a:hover {
 }
 
 .app-screenshot {
-    max-width: 800px;
-    margin: 0 auto 3rem;
     text-align: center;
+    margin-bottom: 3rem;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    background-color: #f8f9fa;
+}
+
+.app-screenshot img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 12px;
 }
 
 /* CTA区域样式 */
@@ -416,30 +431,30 @@ footer {
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-    margin-bottom: 3rem;
+    gap: 3rem;
+    margin-bottom: 2rem;
 }
 
 .footer-title {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
     color: white;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .footer-links {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 .footer-links a {
     color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 0.75rem;
     transition: var(--transition);
 }
 
 .footer-links a:hover {
     color: white;
-    transform: translateX(3px);
+    transform: translateX(5px);
 }
 
 .footer-bottom {
@@ -495,16 +510,16 @@ footer {
     animation-name: fadeIn;
 }
 
-/* 响应式设计 */
+/* 改进的响应式设计 */
 @media (max-width: 992px) {
     .hero-container {
         flex-direction: column;
+        text-align: center;
     }
     
     .hero-content {
-        margin-bottom: 3rem;
-        text-align: center;
         max-width: 100%;
+        margin-bottom: 3rem;
     }
     
     .hero-buttons {
@@ -528,56 +543,223 @@ footer {
     nav {
         position: fixed;
         top: 0;
-        left: 0;
-        width: 100%;
+        right: -100%;
+        width: 80%;
         height: 100vh;
         background-color: white;
-        padding-top: 80px;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
+        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        padding: 6rem 2rem 2rem;
         z-index: 100;
     }
     
     nav.mobile-menu-open {
-        transform: translateX(0);
+        right: 0;
     }
     
     nav ul {
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
     }
     
     nav ul li {
-        margin: 1rem 0;
+        margin: 0 0 1.5rem 0;
+        width: 100%;
     }
     
     nav ul li a {
+        display: block;
+        padding: 0.5rem 0;
         font-size: 1.2rem;
+    }
+    
+    .hero {
+        padding: 3rem 0;
     }
     
     .hero-title {
         font-size: 2.5rem;
     }
     
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+    
     .section-title {
         font-size: 2rem;
     }
     
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
     .about-content {
+        padding: 0;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .app-screenshot {
+        margin-bottom: 2rem;
+    }
+    
+    .cta-section {
+        padding: 3rem 0;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .wealth-principles li {
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-card {
         padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .cta-button, .secondary-button, .cta-button-white {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .feature-title {
+        font-size: 1.3rem;
+    }
+    
+    .app-screenshot {
+        margin-bottom: 2rem;
+    }
+    
+    section {
+        scroll-margin-top: 70px;
+    }
+    
+    .wealth-principles {
+        padding-left: 1.5rem;
+    }
+    
+    /* 改进的触摸区域 */
+    nav ul li a, .footer-links a {
+        padding: 12px 8px;
+        display: block;
+    }
+    
+    /* 增强触摸反馈 */
+    .feature-card:active {
+        transform: scale(0.98);
+    }
+    
+    .cta-button:active, .secondary-button:active, .cta-button-white:active {
+        transform: scale(0.95);
     }
 }
 
 @media (max-width: 480px) {
     .hero-buttons {
         flex-direction: column;
+        width: 100%;
     }
     
     .secondary-button {
         margin: 1rem 0 0 0;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .cta-button {
+        width: 100%;
     }
     
     .feature-card {
         padding: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .how-it-works, .features, .app-features {
+        padding: 3rem 0;
+    }
+    
+    .back-to-main {
+        bottom: 1rem;
+        left: 1rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+    }
+}
+
+/* 添加深色背景遮罩，当移动菜单打开时显示 */
+.menu-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-backdrop.active {
+    display: block;
+    opacity: 1;
+}
+
+/* 平滑滚动的顶部填充，确保导航到section时不被header遮挡 */
+section {
+    scroll-margin-top: 80px;
+}
+
+/* 修复iOS Safari的一些特定问题 */
+@supports (-webkit-touch-callout: none) {
+    /* 修复iOS Safari底部安全区域问题 */
+    body {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    
+    /* 修复iOS Safari的固定元素问题 */
+    header {
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    /* 改进iOS Safari的点击反馈 */
+    a, button {
+        -webkit-tap-highlight-color: transparent;
     }
 } 
