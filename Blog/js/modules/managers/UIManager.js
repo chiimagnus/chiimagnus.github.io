@@ -15,7 +15,6 @@ class UIManager extends BaseModule {
         // UI元素
         this.container = null;
         this.content = null;
-        this.sidebar = null;
         this.navItems = null;
         
         // 媒体查询
@@ -40,7 +39,6 @@ class UIManager extends BaseModule {
         // 查找DOM元素
         this.container = document.querySelector('.container');
         this.content = document.querySelector('.content');
-        this.sidebar = document.querySelector('.sidebar');
         this.navItems = document.querySelectorAll('.nav-item');
         
         // 绑定事件
@@ -94,8 +92,7 @@ class UIManager extends BaseModule {
         const elementsToOptimize = [
             document.body,
             document.querySelector('.container'),
-            document.querySelector('.main-content'),
-            document.querySelector('.sidebar')
+            document.querySelector('.main-content')
         ];
         
         // 应用GPU加速

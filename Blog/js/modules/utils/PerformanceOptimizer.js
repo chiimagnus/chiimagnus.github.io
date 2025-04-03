@@ -103,7 +103,6 @@ class PerformanceOptimizer {
             document.body,
             document.querySelector('.container'),
             document.querySelector('.main-content'),
-            document.querySelector('.sidebar'),
             ...Array.from(document.querySelectorAll('article, .product-card, .avatar-container'))
         ];
         

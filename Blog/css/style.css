@@ -29,7 +29,7 @@
 }
 
 /* 预加载元素，提高初始渲染速度 */
-.sidebar, article, .product-card, footer, .main-content, .container {
+.article-card, .product-card, footer, .main-content, .container {
     will-change: transform;
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -88,32 +88,63 @@ body {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* 侧边栏样式 */
-.sidebar {
-    width: 280px;
+/* 主内容区样式 */
+.main-content {
+    padding: 2rem;
+    flex-grow: 1;
+    max-width: 1280px;
+    min-height: 100vh;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: subpixel-antialiased;
+    transform: translateZ(0);
+}
+
+.main-content.full-width {
+    margin-left: 0;
+    width: 100%;
+}
+
+/* 站点头部样式 */
+.site-header {
+    margin-bottom: 2rem;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
     background: linear-gradient(165deg, 
         rgba(var(--gradient-primary-rgb), 0.05) 0%,
         rgba(var(--gradient-secondary-rgb), 0.1) 100%
     );
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    position: fixed;
-    padding: 2rem;
-    margin: 2rem 0;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     box-shadow: 0 8px 32px rgba(var(--gradient-primary-rgb), 0.1);
-    transition: transform 0.3s ease;
-    overflow-y: auto;
-    max-height: calc(100vh - 4rem);
-    transform: translateZ(0);
-    will-change: transform;
+}
+
+.main-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.main-navigation .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .avatar-container {
     position: relative;
     text-align: center;
-    margin-bottom: 30px;
     padding: 20px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.1);
@@ -177,19 +208,6 @@ body {
     transform: translateX(5px);
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-/* 主内容区样式 */
-.main-content {
-    margin-left: 280px;
-    padding: 2rem;
-    flex-grow: 1;
-    max-width: 900px;
-    min-height: 100vh;
-    will-change: transform;
-    backface-visibility: hidden;
-    -webkit-font-smoothing: subpixel-antialiased;
-    transform: translateZ(0);
 }
 
 /* 滚动时优化样式 - 增强版 */
@@ -334,120 +352,62 @@ footer {
 /* 响应式设计 */
 @media (min-width: 769px) and (max-width: 1024px) {
     .container {
-        max-width: 100%;
-        padding: 0 20px;
-    }
-    
-    .sidebar {
-        width: 240px;
+        padding: 0 15px;
     }
     
     .main-content {
-        margin-left: 240px;
-        padding: 2rem 1rem;
+        padding: 1.5rem;
     }
 }
 
 @media (max-width: 768px) {
     body {
-        animation-duration: 15s;
-        animation-timing-function: linear;
-        background: var(--bg-gradient);
+        padding: 0;
+        background-size: 300% 300%;
     }
     
     .container {
         flex-direction: column;
     }
     
-    .sidebar {
-        position: relative;
-        width: 100%;
-        margin: 1rem 0;
-        border-radius: 16px;
-        max-height: none;
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        background: linear-gradient(135deg, 
-            rgba(var(--gradient-primary-rgb), 0.1) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.1) 100%
-        );
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-color-light);
-    }
-    
     .main-content {
         margin-left: 0;
         padding: 1rem;
         width: 100%;
-        background: linear-gradient(135deg, 
-            rgba(var(--gradient-primary-rgb), 0.05) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.05) 100%
-        );
+    }
+    
+    .header-content {
+        padding: 1rem;
+    }
+    
+    .main-navigation .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
     .avatar {
-        width: 80px;
-        height: 80px;
-        border: 2px solid var(--primary-color);
+        width: 90px;
+        height: 90px;
     }
-    
-    .theme-switch {
-        top: 10px;
-        right: 10px;
-        background: var(--primary-color);
-    }
+}
 
-    .nav-menu a {
-        background: linear-gradient(135deg, 
-            rgba(var(--gradient-primary-rgb), 0.1) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.1) 100%
-        );
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-color-light);
-        transition: all 0.3s ease;
-    }
+.search-container {
+    position: relative;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 500px;
+}
 
-    .nav-menu a:hover {
-        background: linear-gradient(135deg, 
-            rgba(var(--gradient-primary-rgb), 0.2) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.2) 100%
-        );
-        transform: translateX(5px);
-    }
-
-    .search-container {
-        background: linear-gradient(135deg,
-            rgba(var(--gradient-primary-rgb), 0.1) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.1) 100%
-        );
-        backdrop-filter: blur(6px);
-        -webkit-backdrop-filter: blur(6px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    #searchInput {
-        background: linear-gradient(135deg,
-            rgba(var(--gradient-primary-rgb), 0.05) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.05) 100%
-        );
-        color: var(--text-color-light);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    #searchInput::placeholder {
-        color: var(--text-color-light);
-        opacity: 0.7;
-    }
-
-    #searchInput:focus {
-        background: linear-gradient(135deg,
-            rgba(var(--gradient-primary-rgb), 0.1) 0%,
-            rgba(var(--gradient-secondary-rgb), 0.1) 100%
-        );
-        border-color: rgba(var(--gradient-primary-rgb), 0.3);
-    }
+#searchInput {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
 }
 
 /* 添加主题切换按钮样式 */
@@ -1347,7 +1307,7 @@ a:hover {
 }
 
 /* 文字颜色自适应混合模式 */
-.sidebar, .article-card, .product-card, .color-palette, .search-container {
+.article-card, .product-card, .color-palette, .search-container {
     mix-blend-mode: normal;
 }
 
