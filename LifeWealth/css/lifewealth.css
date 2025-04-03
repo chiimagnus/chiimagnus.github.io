@@ -189,6 +189,12 @@ header {
     line-height: 1; /* Align icon better */
 }
 
+.logo-image {
+    height: 1.8rem; /* 设置图标高度与文字行高相近 */
+    width: auto; /* 保持图标比例 */
+    max-width: 100%; /* 确保图标在不同设备上都能清晰显示 */
+}
+
 nav ul {
     display: flex;
     align-items: center;
