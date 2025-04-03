@@ -203,9 +203,22 @@
 
     <!-- 语言切换按钮 -->
     <div class="language-switcher">
-        <button class="language-btn" id="languageToggle">
-            <span class="lang-text">English</span>
-        </button>
+        <div class="language-dropdown" id="languageDropdown">
+            <div class="selected-language" id="selectedLanguage">
+                <span class="lang-text">English</span>
+                <span class="checkmark">✓</span>
+            </div>
+            <div class="language-options">
+                <div class="language-option" data-lang="en">
+                    <span class="lang-text">English</span>
+                    <span class="checkmark">✓</span>
+                </div>
+                <div class="language-option" data-lang="zh">
+                    <span class="lang-text">简体中文</span>
+                    <span class="checkmark">✓</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/lifewealth.js"></script>

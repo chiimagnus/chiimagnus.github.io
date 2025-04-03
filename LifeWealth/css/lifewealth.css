@@ -1075,6 +1075,77 @@ body.mobile-nav-active {
     transform: translateY(0);
 }
 
+/* 新增语言下拉菜单样式 */
+.language-dropdown {
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+}
+
+.selected-language {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #b74c82; /* 紫色背景 */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 8px;
+    min-width: 120px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.selected-language:hover {
+    background-color: #a3457a;
+}
+
+.language-options {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    margin-bottom: 8px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    color: white;
+    transition: background-color 0.2s ease;
+}
+
+.language-option:hover {
+    background-color: #3a3a3a;
+}
+
+.language-option.active {
+    background-color: #b74c82;
+}
+
+.checkmark {
+    display: none;
+    font-weight: bold;
+}
+
+.language-option.active .checkmark,
+.selected-language .checkmark {
+    display: inline-block;
+}
+
+/* 显示下拉菜单的类 */
+.language-dropdown.open .language-options {
+    display: block;
+}
+
 /* 响应式调整 */
 @media (max-width: 480px) {
     .language-switcher {
@@ -1082,8 +1153,14 @@ body.mobile-nav-active {
         right: 15px;
     }
     
-    .language-btn {
+    .selected-language {
         padding: 6px 12px;
-        font-size: 0.8rem;
+        font-size: 0.9rem;
+        min-width: 100px;
+    }
+    
+    .language-option {
+        padding: 8px 12px;
+        font-size: 0.9rem;
     }
 }

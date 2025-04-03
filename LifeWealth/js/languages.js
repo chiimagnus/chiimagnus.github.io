@@ -143,34 +143,96 @@ let currentLanguage = 'zh';
 
 // 在页面加载时初始化语言切换功能
 document.addEventListener('DOMContentLoaded', function() {
-    // 获取语言切换按钮
-    const languageToggle = document.getElementById('languageToggle');
-    
-    // 添加点击事件
-    if (languageToggle) {
-        languageToggle.addEventListener('click', function() {
-            // 切换语言
-            currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
-            
-            // 更新页面文本
-            updatePageLanguage();
-            
-            // 更新语言按钮文本
-            updateLanguageButton();
-            
-            // 保存语言偏好到本地存储
-            localStorage.setItem('preferredLanguage', currentLanguage);
-        });
-    }
+    // 初始化下拉菜单
+    initLanguageDropdown();
     
     // 检查本地存储中的语言偏好
     const savedLanguage = localStorage.getItem('preferredLanguage');
     if (savedLanguage) {
         currentLanguage = savedLanguage;
         updatePageLanguage();
-        updateLanguageButton();
+        updateLanguageDisplay();
+    } else {
+        // 默认显示中文
+        setActiveLanguage('zh');
     }
 });
+
+// 初始化语言下拉菜单
+function initLanguageDropdown() {
+    const dropdown = document.getElementById('languageDropdown');
+    const options = document.querySelectorAll('.language-option');
+    
+    // 点击下拉菜单标题切换展开/折叠状态
+    const selectedLanguage = document.getElementById('selectedLanguage');
+    if (selectedLanguage) {
+        selectedLanguage.addEventListener('click', function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            dropdown.classList.toggle('open');
+        });
+    }
+    
+    // 点击语言选项切换语言
+    options.forEach(option => {
+        option.addEventListener('click', function(e) {
+            e.stopPropagation(); // 阻止事件冒泡
+            const lang = this.getAttribute('data-lang');
+            
+            // 切换语言
+            currentLanguage = lang;
+            
+            // 更新页面文本
+            updatePageLanguage();
+            
+            // 更新显示
+            setActiveLanguage(lang);
+            
+            // 关闭下拉菜单
+            dropdown.classList.remove('open');
+            
+            // 保存语言偏好到本地存储
+            localStorage.setItem('preferredLanguage', currentLanguage);
+        });
+    });
+    
+    // 点击页面其他位置关闭下拉菜单
+    document.addEventListener('click', function() {
+        dropdown.classList.remove('open');
+    });
+    
+    // 阻止点击下拉菜单内部元素时关闭菜单（除非是选择了语言选项）
+    dropdown.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // 初始设置活动语言
+    setActiveLanguage(currentLanguage);
+}
+
+// 设置激活状态的语言
+function setActiveLanguage(lang) {
+    // 移除所有语言选项的活动状态
+    document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.remove('active');
+    });
+    
+    // 给当前语言添加活动状态
+    const activeOption = document.querySelector(`.language-option[data-lang="${lang}"]`);
+    if (activeOption) {
+        activeOption.classList.add('active');
+    }
+    
+    // 更新选中的语言显示
+    updateLanguageDisplay();
+}
+
+// 更新选中的语言显示
+function updateLanguageDisplay() {
+    const selectedText = document.querySelector('#selectedLanguage .lang-text');
+    if (selectedText) {
+        selectedText.textContent = currentLanguage === 'zh' ? '简体中文' : 'English';
+    }
+}
 
 // 更新页面上的所有文本
 function updatePageLanguage() {
@@ -220,13 +282,5 @@ function updatePageLanguage() {
     const emailLink = document.querySelector('.footer-link-email');
     if (emailLink) {
         emailLink.textContent = languageData[currentLanguage]['footer-link-email'];
-    }
-}
-
-// 更新语言切换按钮的文本
-function updateLanguageButton() {
-    const langText = document.querySelector('.lang-text');
-    if (langText) {
-        langText.textContent = languageData[currentLanguage]['lang-text'];
     }
 } 
