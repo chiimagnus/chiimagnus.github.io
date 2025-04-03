@@ -68,7 +68,7 @@ const languageData = {
         'footer-contact': '联系我们',
         'footer-link-email': '邮箱: chii_magnus@outlook.com',
         'footer-link-github': 'GitHub',
-        'footer-copyright': '© 2025 Who Matters by Chii Magnus. All rights reserved.'
+        'footer-copyright': '© 2025 𝕎𝕙𝕠 𝕄𝕒𝕥𝕥𝕖𝕣𝕤 by Chii Magnus. All rights reserved.'
     },
     
     en: {
@@ -76,7 +76,7 @@ const languageData = {
         'meta-description': 'Time and relationship management tool, helping you cherish the time spent with important people.',
         
         // Navigation
-        'logo-text': 'Who Matters',
+        'logo-text': '𝕎𝕙𝕠 𝕄𝕒𝕥𝕥𝕖𝕣𝕤',
         'nav-about': 'About',
         'nav-contacts': 'Important People',
         'nav-records': 'Activity Records',
@@ -86,7 +86,7 @@ const languageData = {
         
         // Hero section
         'hero-tagline': 'Cherish Time, Value Relationships',
-        'hero-subtitle': 'Connect with who matters - they define your life\'s value.',
+        'hero-subtitle': 'Connect with 𝕎𝕙𝕠 𝕄𝕒𝕥𝕥𝕖𝕣𝕤 - they define your life\'s value.',
         'manage-contacts-btn': 'Manage Important People',
         
         // About concept
@@ -134,7 +134,7 @@ const languageData = {
         'footer-contact': 'Contact Us',
         'footer-link-email': 'Email: chii_magnus@outlook.com',
         'footer-link-github': 'GitHub',
-        'footer-copyright': '© 2025 Who Matters by Chii Magnus. All rights reserved.'
+        'footer-copyright': '© 2025 𝕎𝕙𝕠 𝕄𝕒𝕥𝕥𝕖𝕣𝕤 by Chii Magnus. All rights reserved.'
     }
 };
 
@@ -151,11 +151,20 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedLanguage) {
         currentLanguage = savedLanguage;
         updatePageLanguage();
-        updateLanguageDisplay();
+        updateLanguageDisplay(); // 确保更新标题和选中语言显示
     } else {
         // 默认显示中文
         setActiveLanguage('zh');
+        
+        // 在页面加载完成后，手动更新一次标题显示
+        setTimeout(updateLanguageDisplay, 100);
     }
+    
+    // 在页面加载完成后，确保语言菜单显示正确
+    setTimeout(function() {
+        // 再次触发一次更新，确保所有元素都正确显示
+        updateLanguageDisplay();
+    }, 500);
 });
 
 // 初始化语言下拉菜单
@@ -228,6 +237,13 @@ function setActiveLanguage(lang) {
 
 // 更新选中的语言显示
 function updateLanguageDisplay() {
+    // 不再需要更新顶部标题，因为已经移除
+    // const headerText = document.querySelector('.dropdown-header .header-text');
+    // if (headerText) {
+    //     headerText.textContent = currentLanguage === 'zh' ? '简体中文' : 'English';
+    // }
+    
+    // 更新选中的语言
     const selectedText = document.querySelector('#selectedLanguage .lang-text');
     if (selectedText) {
         selectedText.textContent = currentLanguage === 'zh' ? '简体中文' : 'English';
