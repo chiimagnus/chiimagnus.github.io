@@ -82,7 +82,7 @@ const languageData = {
         'nav-records': 'Activity Records',
         
         // Language button text
-        'lang-text': '中文',
+        'lang-text': '简体中文',
         
         // Hero section
         'hero-tagline': 'Cherish Time, Value Relationships',
@@ -138,7 +138,7 @@ const languageData = {
     }
 };
 
-// 当前语言，默认为中文
+// 当前语言，默认为简体中文
 let currentLanguage = 'zh';
 
 // 在页面加载时初始化语言切换功能
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updatePageLanguage();
         updateLanguageDisplay(); // 确保更新标题和选中语言显示
     } else {
-        // 默认显示中文
+        // 默认显示简体中文
         setActiveLanguage('zh');
         
         // 在页面加载完成后，手动更新一次标题显示
@@ -237,17 +237,13 @@ function setActiveLanguage(lang) {
 
 // 更新选中的语言显示
 function updateLanguageDisplay() {
-    // 不再需要更新顶部标题，因为已经移除
-    // const headerText = document.querySelector('.dropdown-header .header-text');
-    // if (headerText) {
-    //     headerText.textContent = currentLanguage === 'zh' ? '简体中文' : 'English';
-    // }
-    
     // 更新选中的语言
     const selectedText = document.querySelector('#selectedLanguage .lang-text');
     if (selectedText) {
         selectedText.textContent = currentLanguage === 'zh' ? '简体中文' : 'English';
     }
+    
+    // 注意：不再更新选项中的文本，只更新活动状态
 }
 
 // 更新页面上的所有文本
@@ -268,8 +264,8 @@ function updatePageLanguage() {
     const heroTagline = document.querySelector('.hero-tagline');
     if (heroTagline) heroTagline.textContent = languageData[currentLanguage]['hero-tagline'];
     
-    // 处理其他元素
-    const languageItems = document.querySelectorAll('[class*="-text"], [class*="-title"], [class*="-subtitle"], [class*="-desc"], [class*="-btn"], [class*="caption-"], [class*="feature-"], [class*="footer-link-"], .meta-description');
+    // 处理其他元素，但排除下拉菜单中的静态文本元素
+    const languageItems = document.querySelectorAll('[class*="-text"]:not(.lang-text-static), [class*="-title"], [class*="-subtitle"], [class*="-desc"], [class*="-btn"], [class*="caption-"], [class*="feature-"], [class*="footer-link-"], .meta-description');
     
     languageItems.forEach(element => {
         // 获取元素的类名，查找匹配的翻译键
