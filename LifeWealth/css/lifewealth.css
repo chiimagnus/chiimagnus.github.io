@@ -1,4 +1,4 @@
-/* LifeWealth - 五种财富理念应用样式 */
+/* LifeWealth - 时间与关系管理应用样式 */
 
 :root {
     --primary-color: #007aff; /* Apple Blue */
@@ -6,12 +6,9 @@
     --secondary-color: #5ac8fa; /* Lighter Accent Blue */
     --accent-color: #ff3b30; /* Apple Red for accents */
     
-    /* Wealth Colors - Adjusted for harmony */
-    --time-color: #007aff; /* Primary Blue */
-    --social-color: #ff9500; /* Apple Orange */
-    --mental-color: #af52de; /* Apple Purple */
-    --material-color: #34c759; /* Apple Green */
-    --experience-color: #ffcc00; /* Apple Yellow */
+    /* 删除五种财富颜色 */
+    --time-color: #007aff; /* 时间蓝 */
+    --social-color: #ff9500; /* 关系橙 */
     
     /* Text Colors - Using grays */
     --text-color: #1d1d1f; /* Near Black */
@@ -79,19 +76,20 @@ section { /* Add default vertical spacing for sections */
 }
 
 .section-title {
-    font-size: 2.2rem; /* Slightly smaller */
+    font-size: 2.5rem; /* 更大的标题 */
     font-weight: 700;
-    margin-bottom: 1rem; /* Increased bottom margin */
+    margin-bottom: 1rem;
     text-align: center;
-    color: var(--text-color); /* Adjusted from bg-dark */
+    color: var(--text-color);
 }
 
 .section-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.2rem; /* 更大的副标题 */
     color: var(--text-light);
-    max-width: 650px; /* Slightly narrower */
-    margin: 0 auto 4rem; /* Increased bottom margin */
+    max-width: 700px; /* 稍宽的容器 */
+    margin: 0 auto 4rem;
     text-align: center;
+    line-height: 1.6; /* 增加行高 */
 }
 
 /* 按钮样式 */
@@ -299,58 +297,62 @@ nav ul li a:hover::after {
 
 /* 英雄区域样式 */
 .hero {
-    padding: 4rem 0 5rem; /* Adjusted vertical padding */
+    padding: 6rem 0 7rem; /* 增加垂直空间 */
     background-color: var(--bg-light);
     position: relative;
     overflow: hidden;
-    border-bottom: 1px solid var(--border-color); /* Subtle separation */
+    border-bottom: 1px solid var(--border-color);
 }
 
 .hero-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 3rem; /* Use gap for spacing */
+    gap: 4rem; /* 增加组件之间的间距 */
 }
 
 .hero-content {
-    max-width: 520px; /* Adjusted max-width */
+    max-width: 540px;
 }
 
-.hero-title {
-    font-size: 3rem; /* Adjusted font size */
+.hero-tagline {
+    font-size: 3.5rem; /* 更大的标题 */
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: var(--text-color); /* Use standard text color */
-    line-height: 1.2; /* Adjusted line height */
+    color: var(--text-color);
+    line-height: 1.1; /* 减小行高，更紧凑 */
+    letter-spacing: -0.02em; /* 轻微调整字间距 */
 }
 
 .hero-subtitle {
-    font-size: 1.15rem; /* Slightly larger subtitle */
+    font-size: 1.25rem; /* 更大的副标题 */
     color: var(--text-light);
-    margin-bottom: 2rem; /* Increased bottom margin */
+    margin-bottom: 2.5rem; /* 增加到按钮的间距 */
+    line-height: 1.6;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 1rem; /* Use gap for button spacing */
-}
-
-.hero-buttons .secondary-button {
-    margin-left: 0; /* Remove margin, use gap */
+    gap: 1rem;
 }
 
 .hero-image {
-    flex-shrink: 0; /* Prevent image from shrinking too much */
+    flex-shrink: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative; /* 相对定位 */
 }
 
-.dashboard-preview img { /* Style the logo image */
-    width: 250px; /* Adjust size as needed */
-    height: 250px;
+.dashboard-preview img {
+    width: 320px; /* 稍大一点的图片 */
+    height: 320px;
     object-fit: contain;
+    transition: transform 0.5s ease; /* 添加过渡效果 */
+}
+
+.dashboard-preview img:hover {
+    transform: scale(1.05); /* 悬停时轻微放大 */
 }
 
 /* 财富类型特性区域样式 */
@@ -365,78 +367,64 @@ nav ul li a:hover::after {
 }
 
 .feature-card {
-    background-color: var(--bg-color); /* White background for cards */
+    background-color: var(--bg-color);
     border-radius: var(--border-radius);
-    padding: 2rem 1.5rem; /* Increased padding */
+    padding: 2.5rem 2rem;
     text-align: center;
-    border: 1px solid var(--border-color); /* Subtle border */
-    transition: var(--transition);
-    box-shadow: none; /* Remove default shadow, maybe add on hover */
+    border: 1px solid var(--border-color);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .feature-card:hover {
-    transform: translateY(-4px); /* Lift effect on hover */
-    box-shadow: var(--box-shadow); /* Add shadow on hover */
+    transform: translateY(-8px);
+    box-shadow: var(--box-shadow);
 }
 
-/* Assign specific border colors for hover effect */
-.feature-card[data-color="time"]:hover { border-top: 3px solid var(--time-color); }
-.feature-card[data-color="social"]:hover { border-top: 3px solid var(--social-color); }
-.feature-card[data-color="mental"]:hover { border-top: 3px solid var(--mental-color); }
-.feature-card[data-color="material"]:hover { border-top: 3px solid var(--material-color); }
-.feature-card[data-color="experience"]:hover { border-top: 3px solid var(--experience-color); }
+/* 添加顶部彩色条 */
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+/* 仅保留时间和社交相关的颜色 */
+.feature-card:hover::before { background-color: var(--primary-color); }
 
 .feature-icon {
-    font-size: 2.5rem; /* Larger icons */
-    margin-bottom: 1rem;
-    line-height: 1;
+    font-size: 2.8rem;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
 }
 
 .feature-title {
-    font-size: 1.25rem; /* Adjusted title size */
-    margin-bottom: 0.75rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
     color: var(--text-color);
 }
 
 .feature-description {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-light);
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
-/* 关于理念部分样式 */
-.how-it-works {
+/* 关于理念部分样式 - 简化为更符合时间管理主题 */
+.intro {
     background-color: var(--bg-light); /* Light background */
     border-top: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
-}
-
-.about-content {
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left; /* Align text left for readability */
-    font-size: 1.05rem;
-    color: var(--text-light);
-}
-
-.about-content p:first-child {
-    text-align: center; /* Center the introductory paragraph */
-    margin-bottom: 2rem;
-}
-
-.wealth-principles {
-    list-style: decimal inside; /* Use decimal list style */
-    margin-left: 1rem;
-    line-height: 1.8; /* Increase line height for list */
-}
-
-.wealth-principles li {
-    margin-bottom: 1rem; /* Space between list items */
-}
-
-.wealth-principles li strong {
-    color: var(--text-color); /* Darker color for emphasis */
-    font-weight: 600;
+    padding: 5rem 0;
 }
 
 /* 应用功能展示区域 */
@@ -590,16 +578,29 @@ footer {
     .features-grid.two-columns {
         max-width: 100%;
     }
+    
+    /* 主题展示响应式 */
+    .themes-showcase {
+        gap: 1.5rem;
+    }
+    .theme-card {
+        width: 180px;
+    }
+    .theme-preview {
+        height: 240px;
+    }
 }
 
 @media (max-width: 768px) {
     .header-container {
-        padding: 0.8rem 1rem; /* Reduced padding */
+        padding: 0.8rem 1rem;
     }
+    
+    /* 导航响应式 */
     nav ul {
-        display: none; /* Hide desktop nav */
+        display: none;
         position: absolute;
-        top: 100%; /* Position below header */
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: white;
@@ -607,34 +608,35 @@ footer {
         padding: 1rem 0;
         box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
         border-top: 1px solid var(--border-color);
-        gap: 0; /* Reset gap */
+        gap: 0;
     }
     nav ul.active {
-        display: flex; /* Show when active */
+        display: flex;
     }
     nav ul li {
-        margin: 0; /* Reset margin */
+        margin: 0;
         width: 100%;
         text-align: center;
     }
     nav ul li a {
         display: block;
-        padding: 0.8rem 1rem; /* Full width links */
-        color: var(--text-color); /* Standard text color */
+        padding: 0.8rem 1rem;
+        color: var(--text-color);
         font-size: 1rem;
     }
-     nav ul li a:hover {
+    nav ul li a:hover {
         background-color: var(--primary-light);
         color: var(--primary-color);
     }
-    nav ul li a::after { /* Hide underline on mobile */
+    nav ul li a::after {
         display: none;
     }
     
     .mobile-menu-toggle {
-        display: flex; /* Show mobile toggle */
+        display: flex;
     }
 
+    /* 标题响应式 */
     .section-title {
         font-size: 1.8rem;
     }
@@ -642,22 +644,26 @@ footer {
         font-size: 1rem;
         margin-bottom: 2.5rem;
     }
-    .hero-title {
-        font-size: 2.5rem;
+    .hero-tagline {
+        font-size: 2.8rem;
     }
     .hero-subtitle {
         font-size: 1.1rem;
     }
+    
+    /* 按钮响应式 */
     .cta-button, .secondary-button, .cta-button-white {
-        padding: 9px 18px; /* Smaller padding */
+        padding: 9px 18px;
         font-size: 0.9rem;
     }
     
+    /* 卡片布局响应式 */
     .features-grid {
-        grid-template-columns: 1fr; /* Single column */
+        grid-template-columns: 1fr;
         gap: 1.5rem;
     }
     
+    /* 截图样式响应式 */
     .app-screenshot {
         padding: 1rem;
     }
@@ -666,8 +672,9 @@ footer {
         padding: 1rem;
     }
     
+    /* 页脚响应式 */
     .footer-content {
-        grid-template-columns: 1fr; /* Single column */
+        grid-template-columns: 1fr;
         text-align: center;
     }
     .footer-section p {
@@ -676,25 +683,53 @@ footer {
     .footer-links {
         align-items: center;
     }
+    
+    /* 计算器响应式 */
+    .calculator-demo {
+        padding: 1.5rem;
+    }
+    
+    .time-blocks {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+    }
+    
+    .time-blocks.mini {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    
+    /* 主题展示响应式 */
+    .themes-showcase {
+        gap: 1rem;
+    }
+    
+    .theme-card {
+        width: 140px;
+    }
+    
+    .theme-preview {
+        height: 180px;
+    }
 }
 
 @media (max-width: 480px) {
     .container {
-        padding: 0 16px; /* Further reduced padding */
+        padding: 0 16px;
     }
-    .hero-title {
-        font-size: 2rem;
+    .hero-tagline {
+        font-size: 2.2rem;
     }
     .hero-subtitle {
         font-size: 1rem;
     }
     .hero-buttons {
         flex-direction: column;
-        align-items: stretch; /* Make buttons full width */
+        align-items: stretch;
+        width: 100%;
     }
     .hero-buttons .secondary-button {
         margin-left: 0;
-        margin-top: 0.5rem;
+        margin-top: 0.75rem;
     }
     .section-title {
         font-size: 1.6rem;
@@ -708,9 +743,356 @@ footer {
     .cta-description {
         font-size: 1rem;
     }
+    
+    /* 主题展示超小屏幕响应式 */
+    .themes-showcase {
+        justify-content: center;
+    }
+    .theme-card {
+        width: 130px;
+    }
+    .theme-preview {
+        height: 160px;
+    }
+    
+    /* 计算器超小屏幕响应式 */
+    .feature-box {
+        flex-direction: column;
+    }
+    .calculator-demo {
+        padding: 1rem;
+    }
+    .time-blocks {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .time-blocks.mini {
+        grid-template-columns: repeat(5, 1fr);
+    }
+    .calc-item h4 {
+        font-size: 1.1rem;
+    }
+    .time-result {
+        font-size: 0.9rem;
+    }
 }
 
 /* 添加必要的JS控制样式 */
 body.mobile-nav-active {
     overflow: hidden; /* Prevent scrolling when mobile menu is open */
+}
+
+/* 引用框样式 */
+.quote-box {
+    background-color: var(--bg-light);
+    border-left: 4px solid var(--primary-color);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.quote-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    text-align: right;
+}
+
+.insight-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* 时间计算器可视化样式 */
+.time-calculator {
+    background-color: var(--bg-light);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 5rem 0;
+}
+
+.calculator-demo {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.calc-item {
+    margin-bottom: 2rem;
+}
+
+.calc-item:last-child {
+    margin-bottom: 0;
+}
+
+.calc-item h4 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.time-visual {
+    background-color: var(--bg-light);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+}
+
+.time-blocks {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.time-blocks.mini {
+    grid-template-columns: repeat(10, 1fr);
+    gap: 5px;
+}
+
+.time-block {
+    width: 100%;
+    padding-bottom: 100%;
+    background-color: var(--primary-color);
+    border-radius: 4px;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.time-blocks.mini .time-block {
+    padding-bottom: 100%;
+}
+
+.time-block.empty {
+    background-color: var(--border-color);
+    opacity: 0.5;
+}
+
+.time-block:hover {
+    transform: scale(1.1);
+    z-index: 1;
+}
+
+.time-result {
+    font-size: 1rem;
+    color: var(--text-color);
+    text-align: center;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+.time-result strong {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+}
+
+/* 截图样式增强 */
+.image-content.screenshot {
+    background-color: var(--bg-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--box-shadow);
+    position: relative;
+}
+
+.screenshot-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+}
+
+.screenshot-caption {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-top: 1rem;
+}
+
+/* 主题展示区域样式 */
+.theme-section {
+    background-color: var(--bg-color);
+    padding: 5rem 0;
+}
+
+.themes-showcase {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.theme-card {
+    width: 220px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.theme-card:hover {
+    transform: translateY(-8px);
+}
+
+.theme-preview {
+    width: 100%;
+    height: 280px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+}
+
+.theme-preview-content {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.preview-header {
+    height: 30px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.preview-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.preview-item {
+    height: 50px;
+    border-radius: 8px;
+}
+
+.theme-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* 主题预览模拟 */
+.light-theme {
+    background-color: #ffffff;
+}
+
+.light-theme .preview-header {
+    background-color: #f5f5f7;
+}
+
+.light-theme .preview-item {
+    background-color: #f5f5f7;
+}
+
+.sepia-theme {
+    background-color: #f8f1e3;
+}
+
+.sepia-theme .preview-header {
+    background-color: #e9e1d1;
+}
+
+.sepia-theme .preview-item {
+    background-color: #e9e1d1;
+}
+
+.dark-theme {
+    background-color: #282828;
+}
+
+.dark-theme .preview-header {
+    background-color: #3a3a3a;
+}
+
+.dark-theme .preview-item {
+    background-color: #3a3a3a;
+}
+
+.night-theme {
+    background-color: #000000;
+}
+
+.night-theme .preview-header {
+    background-color: #1c1c1e;
+}
+
+.night-theme .preview-item {
+    background-color: #1c1c1e;
+}
+
+/* 内容框和特性部分 */
+.feature-box {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    margin: 3rem 0;
+}
+
+.feature-box.reverse {
+    flex-direction: row-reverse;
+}
+
+.text-content, .image-content {
+    flex: 1;
+}
+
+.image-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.image-content img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.feature-item .icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    color: var(--primary-color);
+}
+
+.feature-item h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.feature-item p {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    line-height: 1.5;
 } 

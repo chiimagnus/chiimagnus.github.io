@@ -1,5 +1,5 @@
 /**
- * LifeWealth - 五种财富理念应用脚本
+ * LifeWealth - 时间与关系管理应用脚本
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -166,53 +166,9 @@ function initAnimations() {
     window.addEventListener('scroll', addAnimationClass);
 }
 
-// 跟踪5种财富平衡度的简单示例功能
-class WealthBalance {
-    constructor() {
-        this.wealthTypes = {
-            time: 0,
-            social: 0,
-            mental: 0,
-            material: 0,
-            experience: 0
-        };
-    }
-    
-    // 更新某类财富的平衡度
-    updateBalance(type, value) {
-        if (this.wealthTypes.hasOwnProperty(type)) {
-            this.wealthTypes[type] = Math.max(0, Math.min(100, value));
-            return true;
-        }
-        return false;
-    }
-    
-    // 获取总体平衡度
-    getOverallBalance() {
-        const sum = Object.values(this.wealthTypes).reduce((a, b) => a + b, 0);
-        return sum / Object.keys(this.wealthTypes).length;
-    }
-    
-    // 获取最弱的财富类型
-    getWeakestArea() {
-        let weakestType = null;
-        let lowestValue = 101;
-        
-        for (const [type, value] of Object.entries(this.wealthTypes)) {
-            if (value < lowestValue) {
-                lowestValue = value;
-                weakestType = type;
-            }
-        }
-        
-        return {
-            type: weakestType,
-            value: lowestValue
-        };
-    }
-}
-
-// 导出功能，以便将来使用
+// 导出函数，以便将来使用
 window.LifeWealth = {
-    WealthBalance: WealthBalance
+    initSmoothScrolling,
+    initMobileMenu,
+    initAnimations
 }; 
