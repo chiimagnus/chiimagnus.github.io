@@ -30,7 +30,7 @@
     "title": "Vniverse 🎯",
     "description": "一款macOS平台的markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
     "tags": ["macOS", "语音合成", "PDF", "Markdown", "ChatHistory"],
-    "status": "🚧 开发中",
+    "status": "📁 已归档",
     "links": [
       {
         "text": "GitHub",
@@ -42,7 +42,7 @@
     "title": "ChatHistoryBox 📦",
     "description": "一个简单的Chrome扩展，帮助你保存各个AI Chat对话记录为JSON文件。",
     "tags": ["Plugin", "AI", "TypeScript"],
-    "status": "🚧 开发中",
+    "status": "📁 已归档",
     "links": [
       {
         "text": "GitHub",
@@ -54,7 +54,7 @@
     "title": "LightYears ✨",
     "description": "记录你的ideas。Tana",
     "tags": ["macOS", "iOS", "笔记软件"],
-    "status": "🚧 开发中"
+    "status": "📁 已归档"
   },
   {
     "title": "File-Path-to-Embed-Converter 🔗",
