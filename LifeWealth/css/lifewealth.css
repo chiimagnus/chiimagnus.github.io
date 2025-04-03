@@ -1,23 +1,34 @@
 /* LifeWealth - 五种财富理念应用样式 */
 
 :root {
-    --primary-color: #4a6fff; 
-    --primary-light: #e0e7ff;
-    --secondary-color: #6c63ff;
-    --accent-color: #ff7373;
-    --time-color: #00a2ff;
-    --social-color: #ff7373;
-    --mental-color: #ae66ff;
-    --material-color: #4caf50;
-    --experience-color: #ffa000;
-    --text-color: #333;
-    --text-light: #666;
-    --bg-color: #fff;
-    --bg-light: #f8f9fa;
-    --bg-dark: #1a2b4e;
-    --border-radius: 12px;
-    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --primary-color: #007aff; /* Apple Blue */
+    --primary-light: #e5f2ff; /* Lighter Blue */
+    --secondary-color: #5ac8fa; /* Lighter Accent Blue */
+    --accent-color: #ff3b30; /* Apple Red for accents */
+    
+    /* Wealth Colors - Adjusted for harmony */
+    --time-color: #007aff; /* Primary Blue */
+    --social-color: #ff9500; /* Apple Orange */
+    --mental-color: #af52de; /* Apple Purple */
+    --material-color: #34c759; /* Apple Green */
+    --experience-color: #ffcc00; /* Apple Yellow */
+    
+    /* Text Colors - Using grays */
+    --text-color: #1d1d1f; /* Near Black */
+    --text-light: #6e6e73; /* Medium Gray */
+    --text-lighter: #8e8e93; /* Lighter Gray */
+    
+    /* Background Colors */
+    --bg-color: #ffffff; /* White */
+    --bg-light: #f5f5f7; /* Off-white/Light Gray */
+    --bg-medium: #ebebf0; /* Medium Background */
+    --bg-dark: #1d1d1f; /* Near Black (for contrast/footer) */
+    
+    /* UI Elements */
+    --border-color: #d1d1d6; /* Border Gray */
+    --border-radius: 10px; /* Slightly smaller radius */
+    --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Softer Shadow */
+    --transition: all 0.25s ease-in-out; /* Slightly faster transition */
 }
 
 /* 全局样式 */
@@ -28,22 +39,25 @@
 }
 
 body {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif; /* Prioritize system fonts */
     color: var(--text-color);
-    line-height: 1.6;
+    line-height: 1.65; /* Slightly increased line-height */
     background-color: var(--bg-color);
+    -webkit-font-smoothing: antialiased; /* Better font rendering on WebKit */
+    -moz-osx-font-smoothing: grayscale; /* Better font rendering on Firefox */
 }
 
 .container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px; /* Slightly narrower for better focus */
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 24px; /* Increased side padding */
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: 600; /* Keep font weight */
     line-height: 1.3;
+    color: var(--text-color); /* Ensure consistent text color */
 }
 
 a {
@@ -53,70 +67,100 @@ a {
 }
 
 a:hover {
-    color: var(--secondary-color);
+    color: var(--secondary-color); /* Use lighter accent blue for hover */
 }
 
 ul {
     list-style: none;
 }
 
+section { /* Add default vertical spacing for sections */
+    padding: 60px 0; /* Default vertical padding */
+}
+
 .section-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.2rem; /* Slightly smaller */
+    font-weight: 700;
+    margin-bottom: 1rem; /* Increased bottom margin */
     text-align: center;
-    color: var(--bg-dark);
+    color: var(--text-color); /* Adjusted from bg-dark */
 }
 
 .section-subtitle {
     font-size: 1.1rem;
     color: var(--text-light);
-    max-width: 700px;
-    margin: 0 auto 3rem;
+    max-width: 650px; /* Slightly narrower */
+    margin: 0 auto 4rem; /* Increased bottom margin */
     text-align: center;
 }
 
 /* 按钮样式 */
-.cta-button {
+.cta-button,
+.secondary-button {
     display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
     font-weight: 500;
-    padding: 12px 24px;
+    font-size: 0.95rem;
+    padding: 10px 22px; /* Adjusted padding */
     border-radius: var(--border-radius);
-    border: none;
+    border: 1.5px solid transparent; /* Prepare for border */
     transition: var(--transition);
     cursor: pointer;
+    text-align: center;
+    line-height: 1.4; /* Ensure text vertical alignment */
+}
+
+.cta-button {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 122, 255, 0.2); /* Subtle shadow */
 }
 
 .cta-button:hover {
-    background-color: var(--secondary-color);
+    background-color: #006adc; /* Slightly darker blue on hover */
     color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(74, 111, 255, 0.2);
+    transform: translateY(-1px); /* Subtle lift */
+    box-shadow: 0 4px 8px rgba(0, 122, 255, 0.25); /* Slightly stronger shadow */
 }
 
 .secondary-button {
-    display: inline-block;
     background-color: transparent;
     color: var(--primary-color);
-    font-weight: 500;
-    padding: 12px 24px;
-    border-radius: var(--border-radius);
-    border: 1px solid var(--primary-color);
-    transition: var(--transition);
-    cursor: pointer;
-    margin-left: 12px;
+    border-color: var(--primary-color);
+    margin-left: 10px; /* Slightly reduced margin */
 }
 
 .secondary-button:hover {
     background-color: var(--primary-light);
-    transform: translateY(-2px);
+    color: var(--primary-color); /* Keep color consistent */
+    border-color: var(--primary-color); /* Keep border color */
+    transform: translateY(-1px); /* Subtle lift */
+}
+
+.cta-button-white { /* Style for button on dark background (footer/CTA) */
+    display: inline-block;
+    background-color: white;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 10px 22px;
+    border-radius: var(--border-radius);
+    border: 1.5px solid white;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.cta-button-white:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
 }
 
 /* 页头样式 */
 header {
-    background-color: white;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent background */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: none; /* Remove default shadow */
+    border-bottom: 1px solid var(--border-color); /* Add subtle border */
     position: sticky;
     top: 0;
     z-index: 100;
@@ -126,671 +170,541 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
+    padding: 0.8rem 1.5rem; /* Adjusted padding */
+    height: 60px; /* Fixed header height */
     position: relative;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem; /* Slightly smaller logo text */
     font-weight: 600;
-    color: var(--bg-dark);
+    color: var(--text-color); /* Use standard text color */
 }
 
 .logo-icon {
     margin-right: 0.5rem;
-    font-size: 1.8rem;
+    font-size: 1.6rem; /* Slightly smaller icon */
+    line-height: 1; /* Align icon better */
 }
 
 nav ul {
     display: flex;
     align-items: center;
+    gap: 1.5rem; /* Use gap for spacing */
 }
 
 nav ul li {
-    margin-left: 2rem;
+    margin-left: 0; /* Remove margin, use gap */
 }
 
 nav ul li a {
-    color: var(--text-color);
+    color: var(--text-light); /* Use lighter text for nav */
     font-weight: 500;
+    font-size: 0.9rem;
+    padding: 5px 0; /* Add padding for easier clicking */
+    position: relative;
+}
+
+nav ul li a::after { /* Add hover indicator */
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1.5px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease;
 }
 
 nav ul li a:hover {
     color: var(--primary-color);
 }
 
+nav ul li a:hover::after {
+    width: 100%;
+}
+
 /* 移动菜单样式 */
 .mobile-menu-toggle {
-    display: none; /* 默认不显示 */
-    width: 40px;
-    height: 40px;
+    display: none; /* Keep hidden by default */
+    width: 36px; /* Slightly smaller */
+    height: 36px;
     position: relative;
     cursor: pointer;
     z-index: 101;
-    border-radius: 50%;
-    background-color: var(--primary-light);
+    border-radius: 8px; /* Match button radius */
+    background-color: transparent; /* Transparent background */
     justify-content: center;
     align-items: center;
     transition: var(--transition);
+    border: none; /* Remove default button border */
+    padding: 0; /* Remove default button padding */
 }
 
 .mobile-menu-toggle:hover {
-    background-color: rgba(74, 111, 255, 0.15);
+    background-color: var(--primary-light); /* Light blue background on hover */
 }
 
 .mobile-menu-toggle span {
     display: block;
     position: absolute;
     height: 2px;
-    width: 20px;
+    width: 18px; /* Smaller lines */
     background: var(--primary-color);
-    border-radius: 3px;
+    border-radius: 2px;
     opacity: 1;
-    left: 10px;
+    left: 9px; /* Centered */
     transform: rotate(0deg);
     transition: var(--transition);
 }
 
 .mobile-menu-toggle span:nth-child(1) {
-    top: 14px;
+    top: 12px; /* Adjusted positions */
 }
 
 .mobile-menu-toggle span:nth-child(2) {
-    top: 20px;
+    top: 17px;
 }
 
 .mobile-menu-toggle span:nth-child(3) {
-    top: 26px;
+    top: 22px;
 }
 
 .mobile-menu-toggle.active {
-    background-color: var(--primary-light);
+    background-color: var(--primary-light); /* Keep background on active */
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
-    top: 20px;
+    top: 17px; /* Position for X */
     transform: rotate(135deg);
 }
 
 .mobile-menu-toggle.active span:nth-child(2) {
     opacity: 0;
-    left: -20px;
+    left: -18px;
 }
 
 .mobile-menu-toggle.active span:nth-child(3) {
-    top: 20px;
+    top: 17px; /* Position for X */
     transform: rotate(-135deg);
 }
 
 /* 英雄区域样式 */
 .hero {
-    padding: 5rem 0;
+    padding: 4rem 0 5rem; /* Adjusted vertical padding */
     background-color: var(--bg-light);
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--border-color); /* Subtle separation */
 }
 
 .hero-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 3rem; /* Use gap for spacing */
 }
 
 .hero-content {
-    max-width: 550px;
+    max-width: 520px; /* Adjusted max-width */
 }
 
 .hero-title {
-    font-size: 3.5rem;
+    font-size: 3rem; /* Adjusted font size */
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: var(--bg-dark);
-    line-height: 1.1;
+    color: var(--text-color); /* Use standard text color */
+    line-height: 1.2; /* Adjusted line height */
 }
 
 .hero-subtitle {
-    font-size: 1.25rem;
+    font-size: 1.15rem; /* Slightly larger subtitle */
     color: var(--text-light);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem; /* Increased bottom margin */
 }
 
 .hero-buttons {
     display: flex;
-    align-items: center;
+    gap: 1rem; /* Use gap for button spacing */
+}
+
+.hero-buttons .secondary-button {
+    margin-left: 0; /* Remove margin, use gap */
 }
 
 .hero-image {
-    flex: 0 0 50%;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.dashboard-preview {
+    flex-shrink: 0; /* Prevent image from shrinking too much */
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 280px;
-    margin: 0 auto;
 }
 
-.dashboard-preview img {
-    max-width: 100%;
-    height: auto;
+.dashboard-preview img { /* Style the logo image */
+    width: 250px; /* Adjust size as needed */
+    height: 250px;
+    object-fit: contain;
 }
 
 /* 财富类型特性区域样式 */
 .features {
-    padding: 5rem 0;
-    background-color: white;
+    background-color: var(--bg-color); /* White background */
 }
 
 .features-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 2.5rem;
-}
-
-.features-grid.two-columns {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 2rem; /* Gap between cards */
 }
 
 .feature-card {
-    background-color: white;
+    background-color: var(--bg-color); /* White background for cards */
     border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--box-shadow);
+    padding: 2rem 1.5rem; /* Increased padding */
+    text-align: center;
+    border: 1px solid var(--border-color); /* Subtle border */
     transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border-top: 4px solid transparent;
+    box-shadow: none; /* Remove default shadow, maybe add on hover */
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px); /* Lift effect on hover */
+    box-shadow: var(--box-shadow); /* Add shadow on hover */
 }
 
-/* 为每种财富类型的卡片添加不同的边框颜色 */
-.feature-card[data-color="time"] {
-    border-top-color: var(--time-color);
-}
-
-.feature-card[data-color="social"] {
-    border-top-color: var(--social-color);
-}
-
-.feature-card[data-color="mental"] {
-    border-top-color: var(--mental-color);
-}
-
-.feature-card[data-color="material"] {
-    border-top-color: var(--material-color);
-}
-
-.feature-card[data-color="experience"] {
-    border-top-color: var(--experience-color);
-}
+/* Assign specific border colors for hover effect */
+.feature-card[data-color="time"]:hover { border-top: 3px solid var(--time-color); }
+.feature-card[data-color="social"]:hover { border-top: 3px solid var(--social-color); }
+.feature-card[data-color="mental"]:hover { border-top: 3px solid var(--mental-color); }
+.feature-card[data-color="material"]:hover { border-top: 3px solid var(--material-color); }
+.feature-card[data-color="experience"]:hover { border-top: 3px solid var(--experience-color); }
 
 .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 2.5rem; /* Larger icons */
+    margin-bottom: 1rem;
+    line-height: 1;
 }
 
 .feature-title {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    color: var(--bg-dark);
+    font-size: 1.25rem; /* Adjusted title size */
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
 }
 
 .feature-description {
+    font-size: 0.95rem;
     color: var(--text-light);
-    line-height: 1.7;
+    line-height: 1.5;
 }
 
 /* 关于理念部分样式 */
 .how-it-works {
-    padding: 5rem 0;
-    background-color: var(--bg-light);
+    background-color: var(--bg-light); /* Light background */
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .about-content {
-    background-color: white;
-    border-radius: var(--border-radius);
-    padding: 2.5rem;
-    box-shadow: var(--box-shadow);
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
+    text-align: left; /* Align text left for readability */
+    font-size: 1.05rem;
+    color: var(--text-light);
+}
+
+.about-content p:first-child {
+    text-align: center; /* Center the introductory paragraph */
+    margin-bottom: 2rem;
 }
 
 .wealth-principles {
-    padding-left: 1.5rem;
+    list-style: decimal inside; /* Use decimal list style */
+    margin-left: 1rem;
+    line-height: 1.8; /* Increase line height for list */
 }
 
 .wealth-principles li {
-    margin-bottom: 1rem;
-    padding-left: 0.5rem;
+    margin-bottom: 1rem; /* Space between list items */
+}
+
+.wealth-principles li strong {
+    color: var(--text-color); /* Darker color for emphasis */
+    font-weight: 600;
 }
 
 /* 应用功能展示区域 */
 .app-features {
-    padding: 5rem 0;
-    background-color: white;
+    background-color: var(--bg-color); /* White background */
 }
 
 .app-screenshot {
     text-align: center;
     margin-bottom: 3rem;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    background-color: #f8f9fa;
+    background-color: var(--bg-light); /* Light background for screenshot */
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    overflow: hidden; /* Ensure image fits */
 }
 
 .app-screenshot img {
     max-width: 100%;
     height: auto;
     display: block;
-    border-radius: 12px;
+    margin: 0 auto;
+    border-radius: 8px; /* Slight radius for image */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.features-grid.two-columns {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust minmax for two columns */
+    max-width: 900px; /* Limit width for two columns */
+    margin: 0 auto; /* Center the two-column grid */
+}
+
+.app-features .feature-card {
+    text-align: left; /* Left align text */
+    display: flex; /* Use flex for icon alignment */
+    align-items: flex-start; /* Align items to top */
+    gap: 1rem; /* Gap between icon and text */
+    padding: 1.5rem; /* Adjust padding */
+}
+
+.app-features .feature-icon {
+    font-size: 1.8rem; /* Smaller icon */
+    margin-bottom: 0; /* Remove bottom margin */
+    margin-top: 0.2rem; /* Align icon slightly lower */
+    flex-shrink: 0; /* Prevent icon shrinking */
+    width: 40px; /* Fixed width for icon container */
+    text-align: center;
+}
+
+.app-features .feature-content { /* Wrapper for title and description */
+    flex-grow: 1;
+}
+
+.app-features .feature-title {
+    font-size: 1.15rem; /* Adjust title size */
+    margin-bottom: 0.5rem;
+}
+
+.app-features .feature-description {
+    font-size: 0.9rem; /* Adjust description size */
 }
 
 /* CTA区域样式 */
 .cta-section {
-    padding: 5rem 0;
-    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    background-color: var(--primary-color); /* Use primary color */
     color: white;
     text-align: center;
+    padding: 4rem 1rem; /* Adjusted padding */
 }
 
 .cta-title {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Adjusted font size */
+    font-weight: 700;
     margin-bottom: 1rem;
+    color: white; /* Explicitly set color */
 }
 
 .cta-description {
-    font-size: 1.25rem;
-    opacity: 0.9;
-    max-width: 700px;
-    margin: 0 auto 2rem;
-}
-
-.cta-button-white {
-    display: inline-block;
-    background-color: white;
-    color: var(--primary-color);
-    font-weight: 600;
-    padding: 14px 30px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-}
-
-.cta-button-white:hover {
-    background-color: var(--bg-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0.9; /* Slight transparency */
 }
 
 /* 页脚样式 */
 footer {
-    background-color: var(--bg-dark);
-    color: white;
-    padding: 4rem 0 2rem;
+    background-color: var(--bg-dark); /* Dark background */
+    color: rgba(255, 255, 255, 0.7); /* Light text on dark */
+    padding: 4rem 0 2rem; /* Adjusted padding */
 }
 
 .footer-content {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    margin-bottom: 2rem;
+    gap: 2rem;
+    margin-bottom: 3rem; /* Space before bottom bar */
 }
 
-.footer-title {
-    color: white;
-    margin-bottom: 1.2rem;
-    font-size: 1.2rem;
+.footer-section .footer-title {
+    font-size: 1rem; /* Smaller title */
+    font-weight: 600;
+    color: white; /* White title */
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem; /* Space below description */
 }
 
 .footer-links {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.5rem; /* Space between links */
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.7); /* Link color */
+    font-size: 0.9rem;
     transition: var(--transition);
 }
 
 .footer-links a:hover {
-    color: white;
-    transform: translateX(5px);
+    color: white; /* White on hover */
 }
 
 .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    padding-top: 1.5rem; /* Space above copyright */
     text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5); /* Dimmed copyright text */
 }
 
-/* 添加深色背景遮罩，当移动菜单打开时显示 */
-.menu-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.menu-backdrop.active {
-    display: block;
-    opacity: 1;
-}
-
-/* 平滑滚动的顶部填充，确保导航到section时不被header遮挡 */
-section {
-    scroll-margin-top: 80px;
-}
-
-/* 修复iOS Safari的一些特定问题 */
-@supports (-webkit-touch-callout: none) {
-    /* 修复iOS Safari底部安全区域问题 */
-    body {
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-    
-    /* 修复iOS Safari的固定元素问题 */
-    header {
-        -webkit-backdrop-filter: blur(10px);
-    }
-    
-    /* 改进iOS Safari的点击反馈 */
-    a, button {
-        -webkit-tap-highlight-color: transparent;
-    }
-}
-
-/* 动画样式 */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.animated {
-    animation-duration: 0.8s;
-    animation-fill-mode: both;
-}
-
-.fade-in {
-    animation-name: fadeIn;
-}
-
-/* 改进的响应式设计 */
+/* 响应式设计 */
 @media (max-width: 992px) {
     .hero-container {
         flex-direction: column;
         text-align: center;
     }
-    
     .hero-content {
         max-width: 100%;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
-    
-    .hero-buttons {
-        justify-content: center;
+    .hero-image {
+        margin-top: 2rem;
     }
-    
     .features-grid.two-columns {
-        grid-template-columns: 1fr;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 768px) {
     .header-container {
-        padding: 0.8rem 1rem;
+        padding: 0.8rem 1rem; /* Reduced padding */
+    }
+    nav ul {
+        display: none; /* Hide desktop nav */
+        position: absolute;
+        top: 100%; /* Position below header */
+        left: 0;
+        width: 100%;
+        background-color: white;
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        border-top: 1px solid var(--border-color);
+        gap: 0; /* Reset gap */
+    }
+    nav ul.active {
+        display: flex; /* Show when active */
+    }
+    nav ul li {
+        margin: 0; /* Reset margin */
+        width: 100%;
+        text-align: center;
+    }
+    nav ul li a {
+        display: block;
+        padding: 0.8rem 1rem; /* Full width links */
+        color: var(--text-color); /* Standard text color */
+        font-size: 1rem;
+    }
+     nav ul li a:hover {
+        background-color: var(--primary-light);
+        color: var(--primary-color);
+    }
+    nav ul li a::after { /* Hide underline on mobile */
+        display: none;
     }
     
     .mobile-menu-toggle {
-        display: flex; /* 仅在移动端显示 */
-        margin-left: auto;
+        display: flex; /* Show mobile toggle */
     }
-    
-    .logo {
-        font-size: 1.3rem;
+
+    .section-title {
+        font-size: 1.8rem;
     }
-    
-    .logo-icon {
-        font-size: 1.6rem;
+    .section-subtitle {
+        font-size: 1rem;
+        margin-bottom: 2.5rem;
     }
-    
-    nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 80%;
-        height: 100vh;
-        background-color: white;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        padding: 5rem 2rem 2rem;
-        z-index: 100;
-    }
-    
-    nav.mobile-menu-open {
-        right: 0;
-    }
-    
-    nav ul {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    nav ul li {
-        margin: 0 0 1.5rem 0;
-        width: 100%;
-    }
-    
-    nav ul li a {
-        display: block;
-        padding: 0.5rem 0;
-        font-size: 1.2rem;
-    }
-    
-    .hero {
-        padding: 3rem 0;
-    }
-    
     .hero-title {
         font-size: 2.5rem;
     }
-    
     .hero-subtitle {
         font-size: 1.1rem;
-        margin-bottom: 2rem;
     }
-    
-    .section-title {
-        font-size: 2rem;
-    }
-    
-    .section-subtitle {
-        font-size: 1rem;
-        margin-bottom: 2rem;
-    }
-    
-    .about-content {
-        padding: 0;
+    .cta-button, .secondary-button, .cta-button-white {
+        padding: 9px 18px; /* Smaller padding */
+        font-size: 0.9rem;
     }
     
     .features-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Single column */
         gap: 1.5rem;
     }
     
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+    .app-screenshot {
+        padding: 1rem;
     }
     
-    .footer-section {
+    .app-features .feature-card {
+        padding: 1rem;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr; /* Single column */
         text-align: center;
     }
-    
+    .footer-section p {
+        text-align: center;
+    }
     .footer-links {
-        display: flex;
-        flex-direction: column;
         align-items: center;
-    }
-    
-    .app-screenshot {
-        margin-bottom: 2rem;
-    }
-    
-    .cta-section {
-        padding: 3rem 0;
-    }
-    
-    .cta-title {
-        font-size: 1.8rem;
-    }
-    
-    .wealth-principles li {
-        margin-bottom: 1.5rem;
-    }
-    
-    .feature-card {
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-    }
-    
-    .feature-icon {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-    }
-    
-    .cta-button, .secondary-button, .cta-button-white {
-        padding: 12px 20px;
-        font-size: 1rem;
-    }
-    
-    .feature-title {
-        font-size: 1.3rem;
-    }
-    
-    .app-screenshot {
-        margin-bottom: 2rem;
-    }
-    
-    section {
-        scroll-margin-top: 70px;
-    }
-    
-    .wealth-principles {
-        padding-left: 1.5rem;
-    }
-    
-    /* 改进的触摸区域 */
-    nav ul li a, .footer-links a {
-        padding: 12px 8px;
-        display: block;
-    }
-    
-    /* 增强触摸反馈 */
-    .feature-card:active {
-        transform: scale(0.98);
-    }
-    
-    .cta-button:active, .secondary-button:active, .cta-button-white:active {
-        transform: scale(0.95);
     }
 }
 
 @media (max-width: 480px) {
-    .hero-buttons {
-        flex-direction: column;
-        width: 100%;
+    .container {
+        padding: 0 16px; /* Further reduced padding */
     }
-    
-    .secondary-button {
-        margin: 1rem 0 0 0;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .cta-button {
-        width: 100%;
-    }
-    
-    .feature-card {
-        padding: 1.5rem;
-    }
-    
     .hero-title {
         font-size: 2rem;
     }
-    
-    .how-it-works, .features, .app-features {
-        padding: 3rem 0;
+    .hero-subtitle {
+        font-size: 1rem;
     }
-    
-    .footer-bottom {
-        text-align: center;
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch; /* Make buttons full width */
     }
-    
-    .header-container {
-        padding: 0.7rem;
+    .hero-buttons .secondary-button {
+        margin-left: 0;
+        margin-top: 0.5rem;
     }
-    
-    .mobile-menu-toggle {
-        width: 36px;
-        height: 36px;
+    .section-title {
+        font-size: 1.6rem;
     }
-    
-    .mobile-menu-toggle span {
-        width: 18px;
-        left: 9px;
+    .section-subtitle {
+        font-size: 0.95rem;
     }
-    
-    .mobile-menu-toggle span:nth-child(1) {
-        top: 12px;
+    .cta-title {
+        font-size: 1.6rem;
     }
-    
-    .mobile-menu-toggle span:nth-child(2) {
-        top: 18px;
+    .cta-description {
+        font-size: 1rem;
     }
-    
-    .mobile-menu-toggle span:nth-child(3) {
-        top: 24px;
-    }
-    
-    .mobile-menu-toggle.active span:nth-child(1),
-    .mobile-menu-toggle.active span:nth-child(3) {
-        top: 18px;
-    }
-    
-    .logo {
-        font-size: 1.2rem;
-    }
-    
-    .logo-icon {
-        font-size: 1.4rem;
-        margin-right: 0.3rem;
-    }
+}
+
+/* 添加必要的JS控制样式 */
+body.mobile-nav-active {
+    overflow: hidden; /* Prevent scrolling when mobile menu is open */
 } 
