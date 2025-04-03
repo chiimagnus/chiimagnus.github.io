@@ -311,7 +311,7 @@ nav ul li a:hover::after {
 /* 英雄区域样式 */
 .hero {
     padding: 6rem 0 7rem; /* 增加垂直空间 */
-    background-color: var(--bg-light);
+    background-color: var(--bg-color);
     position: relative;
     overflow: hidden;
     border-bottom: 1px solid var(--border-color);
@@ -382,7 +382,7 @@ nav ul li a:hover::after {
 
 /* 财富类型特性区域样式 */
 .features {
-    background-color: var(--bg-color); /* White background */
+    background-color: var(--bg-light); /* Light background */
 }
 
 .features-grid {
@@ -454,7 +454,10 @@ nav ul li a:hover::after {
 
 /* 应用功能展示区域 */
 .app-features {
-    background-color: var(--bg-color); /* White background */
+    background-color: var(--bg-light); /* 灰色背景 */
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 5rem 0;
 }
 
 .app-screenshot {
@@ -1023,4 +1026,17 @@ body.mobile-nav-active {
     .screenshot-wrapper {
         width: 240px;
     }
-} 
+}
+
+/* 关系管理部分样式 */
+.relationship-management {
+    background-color: var(--bg-color); /* 白色背景 */
+    padding: 5rem 0;
+}
+
+/* 添加边框和内边距 */
+.app-features {
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 5rem 0;
+}
