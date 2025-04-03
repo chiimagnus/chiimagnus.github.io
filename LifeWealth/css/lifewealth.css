@@ -491,9 +491,7 @@ nav ul li a:hover::after {
 }
 
 .features-grid.two-columns {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjust minmax for two columns */
-    max-width: 900px; /* Limit width for two columns */
-    margin: 0 auto; /* Center the two-column grid */
+    max-width: 100%;
 }
 
 .app-features .feature-card {
@@ -617,17 +615,6 @@ footer {
     .features-grid.two-columns {
         max-width: 100%;
     }
-    
-    /* 主题展示响应式 */
-    .themes-showcase {
-        gap: 1.5rem;
-    }
-    .theme-card {
-        width: 180px;
-    }
-    .theme-preview {
-        height: 240px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -737,19 +724,6 @@ footer {
         grid-template-columns: repeat(5, 1fr);
     }
     
-    /* 主题展示响应式 */
-    .themes-showcase {
-        gap: 1rem;
-    }
-    
-    .theme-card {
-        width: 140px;
-    }
-    
-    .theme-preview {
-        height: 180px;
-    }
-    
     /* 在小屏幕上调整图片布局 */
     .feature-box {
         flex-direction: column;
@@ -807,17 +781,6 @@ footer {
     }
     .cta-description {
         font-size: 1rem;
-    }
-    
-    /* 主题展示超小屏幕响应式 */
-    .themes-showcase {
-        justify-content: center;
-    }
-    .theme-card {
-        width: 130px;
-    }
-    .theme-preview {
-        height: 160px;
     }
     
     /* 计算器超小屏幕响应式 */
@@ -1010,119 +973,6 @@ body.mobile-nav-active {
     .image-content img {
         width: 95%;
     }
-}
-
-/* 主题展示区域样式 */
-.theme-section {
-    background-color: var(--bg-color);
-    padding: 5rem 0;
-}
-
-.themes-showcase {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.theme-card {
-    width: 220px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.theme-card:hover {
-    transform: translateY(-8px);
-}
-
-.theme-preview {
-    width: 100%;
-    height: 280px;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: var(--box-shadow);
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-}
-
-.theme-preview-content {
-    width: 100%;
-    height: 100%;
-    padding: 1rem;
-}
-
-.preview-header {
-    height: 30px;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.preview-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
-}
-
-.preview-item {
-    height: 50px;
-    border-radius: 8px;
-}
-
-.theme-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-color);
-}
-
-/* 主题预览模拟 */
-.light-theme {
-    background-color: #ffffff;
-}
-
-.light-theme .preview-header {
-    background-color: #f5f5f7;
-}
-
-.light-theme .preview-item {
-    background-color: #f5f5f7;
-}
-
-.sepia-theme {
-    background-color: #f8f1e3;
-}
-
-.sepia-theme .preview-header {
-    background-color: #e9e1d1;
-}
-
-.sepia-theme .preview-item {
-    background-color: #e9e1d1;
-}
-
-.dark-theme {
-    background-color: #282828;
-}
-
-.dark-theme .preview-header {
-    background-color: #3a3a3a;
-}
-
-.dark-theme .preview-item {
-    background-color: #3a3a3a;
-}
-
-.night-theme {
-    background-color: #000000;
-}
-
-.night-theme .preview-header {
-    background-color: #1c1c1e;
-}
-
-.night-theme .preview-item {
-    background-color: #1c1c1e;
 }
 
 /* 布局容器 - 使用网格代替flex */
