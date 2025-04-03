@@ -1125,54 +1125,120 @@ body.mobile-nav-active {
     background-color: #1c1c1e;
 }
 
-/* 内容框和特性部分 */
+/* 布局容器 - 使用网格代替flex */
 .feature-box {
-    display: flex;
-    align-items: center;
-    gap: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 320px; /* 左侧自适应，右侧固定宽度 */
+    gap: 2rem;
     margin: 3rem 0;
+    align-items: center;
 }
 
 .feature-box.reverse {
-    flex-direction: row-reverse;
+    grid-template-columns: 1fr 320px; /* 保持相同的布局，文字左侧，图片右侧 */
 }
 
-.text-content, .image-content {
-    flex: 1;
+/* 文本内容和图片内容样式调整 */
+.text-content, .feature-list {
+    min-width: 0; /* 防止内容溢出 */
+    padding: 10px;
+    grid-column: 1; /* 始终在第一列（左侧）*/
 }
 
-.image-content img {
-    max-width: 100%;
-    width: 100%; /* 默认占满容器宽度 */
-    height: auto; /* 保持图片比例 */
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
+.image-content {
+    justify-self: center; /* 在网格单元格中居中 */
+    width: 100%; /* 占满整个网格单元格 */
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    grid-column: 2; /* 始终在第二列（右侧）*/
 }
 
-/* 中等屏幕上的图片尺寸 */
-@media (min-width: 769px) {
-    .image-content img {
-        width: 90%; /* 稍微减小，不完全占满 */
-        max-width: 500px; /* 限制最大宽度 */
-        display: block;
-        margin: 0 auto;
+/* 响应式调整 */
+@media (max-width: 992px) {
+    .feature-box,
+    .feature-box.reverse {
+        grid-template-columns: 1fr; /* 在中等屏幕上切换为单列 */
+    }
+    
+    .text-content, 
+    .feature-list {
+        grid-column: 1;
+        grid-row: 2; /* 文字始终在下方 */
+    }
+    
+    .image-content {
+        grid-column: 1;
+        grid-row: 1; /* 图片始终在上方 */
     }
 }
 
-/* 大屏幕上的图片尺寸 */
-@media (min-width: 1200px) {
-    .image-content img {
-        width: 80%; /* 在大屏幕上更小比例 */
-        max-width: 450px; /* 限制最大宽度 */
+@media (max-width: 768px) {
+    .screenshot-wrapper {
+        width: 280px;
     }
 }
 
-.image-content img:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+@media (max-width: 480px) {
+    .screenshot-wrapper {
+        width: 240px;
+    }
 }
 
+/* 统一所有section标题样式 */
+.app-features h2,
+.relationship-management h2,
+.intro h2,
+.time-calculator h2 {
+    font-size: 2.5rem; /* 更大的标题 */
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.app-features .section-subtitle,
+.relationship-management .feature-desc,
+.intro .lead-text,
+.time-calculator .feature-desc {
+    font-size: 1.2rem; /* 更大的副标题 */
+    color: var(--text-light);
+    max-width: 700px; /* 稍宽的容器 */
+    margin: 0 auto 2rem;
+    text-align: center;
+    line-height: 1.6; /* 增加行高 */
+}
+
+/* iOS设备截图的统一样式 */
+.ios-screenshot {
+    width: 320px; /* 固定宽度，不使用百分比 */
+    max-width: 100%; /* 确保在小屏幕上不溢出 */
+    height: auto;
+    border-radius: 18px; /* iOS风格的圆角 */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 0 auto; /* 水平居中 */
+}
+
+.ios-screenshot:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.ios-screenshot-caption {
+    text-align: center;
+    font-size: 0.95rem;
+    color: var(--text-light);
+    margin-top: 0.5rem;
+    width: 320px; /* 与图片宽度一致 */
+    max-width: 100%; /* 确保在小屏幕上不溢出 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 特性项目样式 */
 .feature-list {
     display: flex;
     flex-direction: column;
@@ -1207,80 +1273,6 @@ body.mobile-nav-active {
     font-size: 0.95rem;
     color: var(--text-light);
     line-height: 1.5;
-}
-
-/* iOS设备截图的统一样式 */
-.ios-screenshot {
-    width: 320px; /* 固定宽度，不使用百分比 */
-    max-width: 100%; /* 确保在小屏幕上不溢出 */
-    height: auto;
-    border-radius: 18px; /* iOS风格的圆角 */
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: block;
-    margin: 0 auto; /* 水平居中 */
-}
-
-.ios-screenshot:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-}
-
-.ios-screenshot-caption {
-    text-align: center;
-    font-size: 0.95rem;
-    color: var(--text-light);
-    margin-top: 0.5rem;
-    width: 320px; /* 与图片宽度一致 */
-    max-width: 100%; /* 确保在小屏幕上不溢出 */
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 图片容器统一样式 */
-.image-content {
-    display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center; /* 垂直居中 */
-    padding: 20px; /* 统一内边距 */
-}
-
-/* 响应式调整 */
-@media (max-width: 768px) {
-    .ios-screenshot, .ios-screenshot-caption {
-        width: 280px; /* 中小屏幕稍微缩小但保持一致 */
-    }
-}
-
-@media (max-width: 480px) {
-    .ios-screenshot, .ios-screenshot-caption {
-        width: 240px; /* 超小屏幕进一步缩小但保持一致 */
-    }
-}
-
-/* 统一所有section标题样式 */
-.app-features h2,
-.relationship-management h2,
-.intro h2,
-.time-calculator h2 {
-    font-size: 2.5rem; /* 更大的标题 */
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-align: center;
-    color: var(--text-color);
-}
-
-.app-features .section-subtitle,
-.relationship-management .feature-desc,
-.intro .lead-text,
-.time-calculator .feature-desc {
-    font-size: 1.2rem; /* 更大的副标题 */
-    color: var(--text-light);
-    max-width: 700px; /* 稍宽的容器 */
-    margin: 0 auto 2rem;
-    text-align: center;
-    line-height: 1.6; /* 增加行高 */
 }
 
 /* 截图包装容器 */
