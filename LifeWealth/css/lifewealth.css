@@ -308,6 +308,25 @@ nav ul li a:hover::after {
     transform: rotate(-135deg);
 }
 
+/* 菜单背景遮罩 */
+.menu-backdrop {
+    display: none;
+    position: fixed;
+    top: 60px; /* 与头部高度一致 */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 60px);
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.menu-backdrop.active {
+    display: block;
+    opacity: 1;
+}
+
 /* 英雄区域样式 */
 .hero {
     padding: 6rem 0 7rem; /* 增加垂直空间 */
@@ -748,24 +767,30 @@ footer {
         border-top: 1px solid var(--border-color);
         gap: 0;
     }
+    
     nav ul.active {
         display: flex;
+        z-index: 100;
     }
+    
     nav ul li {
         margin: 0;
         width: 100%;
         text-align: center;
     }
+    
     nav ul li a {
         display: block;
         padding: 0.8rem 1rem;
         color: var(--text-color);
         font-size: 1rem;
     }
+    
     nav ul li a:hover {
         background-color: var(--primary-light);
         color: var(--primary-color);
     }
+    
     nav ul li a::after {
         display: none;
     }
@@ -901,6 +926,10 @@ footer {
 /* 添加必要的JS控制样式 */
 body.mobile-nav-active {
     overflow: hidden; /* Prevent scrolling when mobile menu is open */
+}
+
+nav.mobile-menu-open ul {
+    display: flex;
 }
 
 /* 引用框样式 */
