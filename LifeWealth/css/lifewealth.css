@@ -710,20 +710,6 @@ footer {
         align-items: center;
     }
     
-    /* 计算器响应式 */
-    .calculator-demo {
-        padding: 1.5rem;
-    }
-    
-    .time-blocks {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 8px;
-    }
-    
-    .time-blocks.mini {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    
     /* 在小屏幕上调整图片布局 */
     .feature-box {
         flex-direction: column;
@@ -783,26 +769,6 @@ footer {
         font-size: 1rem;
     }
     
-    /* 计算器超小屏幕响应式 */
-    .feature-box {
-        flex-direction: column;
-    }
-    .calculator-demo {
-        padding: 1rem;
-    }
-    .time-blocks {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .time-blocks.mini {
-        grid-template-columns: repeat(5, 1fr);
-    }
-    .calc-item h4 {
-        font-size: 1.1rem;
-    }
-    .time-result {
-        font-size: 0.9rem;
-    }
-    
     .image-content img {
         width: 95%;
     }
@@ -854,90 +820,6 @@ body.mobile-nav-active {
     color: var(--text-color);
     margin-bottom: 1.5rem;
     font-weight: 500;
-}
-
-/* 时间计算器可视化样式 */
-.time-calculator {
-    background-color: var(--bg-light);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    padding: 5rem 0;
-}
-
-.calculator-demo {
-    background-color: var(--bg-color);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.calc-item {
-    margin-bottom: 2rem;
-}
-
-.calc-item:last-child {
-    margin-bottom: 0;
-}
-
-.calc-item h4 {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--text-color);
-}
-
-.time-visual {
-    background-color: var(--bg-light);
-    padding: 1.5rem;
-    border-radius: var(--border-radius);
-}
-
-.time-blocks {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-.time-blocks.mini {
-    grid-template-columns: repeat(10, 1fr);
-    gap: 5px;
-}
-
-.time-block {
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--primary-color);
-    border-radius: 4px;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.time-blocks.mini .time-block {
-    padding-bottom: 100%;
-}
-
-.time-block.empty {
-    background-color: var(--border-color);
-    opacity: 0.5;
-}
-
-.time-block:hover {
-    transform: scale(1.1);
-    z-index: 1;
-}
-
-.time-result {
-    font-size: 1rem;
-    color: var(--text-color);
-    text-align: center;
-    margin-top: 1rem;
-    font-weight: 500;
-}
-
-.time-result strong {
-    color: var(--primary-color);
-    font-size: 1.2rem;
 }
 
 /* 截图样式增强 */
@@ -1038,8 +920,7 @@ body.mobile-nav-active {
 /* 统一所有section标题样式 */
 .app-features h2,
 .relationship-management h2,
-.intro h2,
-.time-calculator h2 {
+.intro h2 {
     font-size: 2.5rem; /* 更大的标题 */
     font-weight: 700;
     margin-bottom: 1rem;
@@ -1049,8 +930,7 @@ body.mobile-nav-active {
 
 .app-features .section-subtitle,
 .relationship-management .feature-desc,
-.intro .lead-text,
-.time-calculator .feature-desc {
+.intro .lead-text {
     font-size: 1.2rem; /* 更大的副标题 */
     color: var(--text-light);
     max-width: 700px; /* 稍宽的容器 */
