@@ -1040,3 +1040,50 @@ body.mobile-nav-active {
     border-bottom: 1px solid var(--border-color);
     padding: 5rem 0;
 }
+
+/* 语言切换按钮样式 */
+.language-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+}
+
+.language-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.language-btn:hover {
+    background-color: #006adc;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.language-btn:active {
+    transform: translateY(0);
+}
+
+/* 响应式调整 */
+@media (max-width: 480px) {
+    .language-switcher {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    .language-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}

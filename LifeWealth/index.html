@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#4a6fff">
-    <meta name="description" content="时间和关系管理工具，帮助你珍惜与重要的人相处的时间。">
-    <title>LifeWealth - 时间与关系管理</title>
+    <meta name="description" content="时间和关系管理工具，帮助你珍惜与重要的人相处的时间。" class="meta-description">
+    <title>Who Matters - Connect with who matters – they define your life's value.</title>
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icon1.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icon1.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icon1.png">
@@ -18,13 +18,13 @@
                 <div class="logo-icon">
                     <img src="assets/icon1.png" alt="LifeWealth Logo" class="logo-image">
                 </div>
-                <span>𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱</span>
+                <span class="logo-text">人生财富</span>
             </div>
             <nav>
                 <ul>
-                    <li><a href="#about">关于理念</a></li>
-                    <li><a href="#contacts">重要的人</a></li>
-                    <li><a href="#records">活动记录</a></li>
+                    <li><a href="#about" class="nav-about">关于理念</a></li>
+                    <li><a href="#contacts" class="nav-contacts">重要的人</a></li>
+                    <li><a href="#records" class="nav-records">活动记录</a></li>
                 </ul>
             </nav>
             <!-- 移动菜单按钮会由JS动态添加 -->
@@ -37,7 +37,7 @@
                 <h1 class="hero-tagline">珍惜时间，珍视关系</h1>
                 <p class="hero-subtitle">你很清楚自己每个月收入多少，但没有一个倒计时表，告诉你还剩下多少次见到父母的机会，还能再陪孩子度过多少个完整的周末。</p>
                 <div class="hero-buttons">
-                    <a href="#contacts" class="cta-button">管理重要的人</a>
+                    <a href="#contacts" class="cta-button manage-contacts-btn">管理重要的人</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -50,7 +50,7 @@
     
     <section class="intro" id="about">
         <div class="container">
-            <h2>认识时间的真正价值</h2>
+            <h2 class="about-title">认识时间的真正价值</h2>
             <p class="lead-text">为什么我们对金钱特别敏感，对陪伴父母的次数不敏感？因为金钱是非常可测量的。</p>
             <div class="feature-box">
                 <div class="text-content">
@@ -63,7 +63,7 @@
                 <div class="image-content">
                     <div class="screenshot-wrapper">
                         <img src="assets/TimeCalculate.jpeg" alt="时间管理插图" class="ios-screenshot">
-                        <div class="ios-screenshot-caption">珍惜与重要的人相处的时光</div>
+                        <div class="ios-screenshot-caption caption-time">珍惜与重要的人相处的时光</div>
                     </div>
                 </div>
             </div>
@@ -72,8 +72,8 @@
     
     <section class="relationship-management" id="contacts">
         <div class="container">
-            <h2>管理重要的社交关系</h2>
-            <p class="feature-desc">添加并管理与你生命中重要的人，了解你们相处的宝贵时间。</p>
+            <h2 class="contacts-title">管理重要的社交关系</h2>
+            <p class="feature-desc contacts-desc">添加并管理与你生命中重要的人，了解你们相处的宝贵时间。</p>
             <div class="feature-box">
                 <div class="feature-list">
                     <div class="feature-item">
@@ -83,8 +83,8 @@
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
                         </div>
-                        <h3>管理重要联系人</h3>
-                        <p>添加父母、子女、朋友等重要人物</p>
+                        <h3 class="feature-manage-contacts">管理重要联系人</h3>
+                        <p class="feature-manage-contacts-desc">添加父母、子女、朋友等重要人物</p>
                     </div>
                     <div class="feature-item">
                         <div class="icon">
@@ -93,8 +93,8 @@
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                         </div>
-                        <h3>设置见面频率</h3>
-                        <p>每天、每周、每月或自定义时间间隔</p>
+                        <h3 class="feature-set-frequency">设置见面频率</h3>
+                        <p class="feature-set-frequency-desc">每天、每周、每月或自定义时间间隔</p>
                     </div>
                     <div class="feature-item">
                         <div class="icon">
@@ -105,14 +105,14 @@
                                 <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
                             </svg>
                         </div>
-                        <h3>从通讯录导入</h3>
-                        <p>一键导入已有联系人信息</p>
+                        <h3 class="feature-import-contacts">从通讯录导入</h3>
+                        <p class="feature-import-contacts-desc">一键导入已有联系人信息</p>
                     </div>
                 </div>
                 <div class="image-content">
                     <div class="screenshot-wrapper">
                         <img src="assets/ContactManagement.jpeg" alt="联系人管理界面" class="ios-screenshot">
-                        <div class="ios-screenshot-caption">联系人管理 - 添加并管理生命中重要的人</div>
+                        <div class="ios-screenshot-caption caption-contacts">联系人管理 - 添加并管理生命中重要的人</div>
                     </div>
                 </div>
             </div>
@@ -121,22 +121,22 @@
     
     <section class="app-features" id="records">
         <div class="container">
-            <h2>活动记录</h2>
-            <p class="section-subtitle">记录与重要的人相处的点滴，珍藏美好回忆</p>
+            <h2 class="records-title">活动记录</h2>
+            <p class="section-subtitle records-subtitle">记录与重要的人相处的点滴，珍藏美好回忆</p>
             
             <div class="feature-box">
                 <div class="text-content">
                     <div class="features-grid two-columns">
                         <div class="feature-card">
                             <div class="feature-icon">✏️</div>
-                            <h3 class="feature-title">创建活动记录</h3>
-                            <p class="feature-description">记录与重要的人相处的活动、经历和感受，添加照片和思考。</p>
+                            <h3 class="feature-title create-activity">创建活动记录</h3>
+                            <p class="feature-description create-activity-desc">记录与重要的人相处的活动、经历和感受，添加照片和思考。</p>
                         </div>
                         
                         <div class="feature-card">
                             <div class="feature-icon">📊</div>
-                            <h3 class="feature-title">查看时间统计</h3>
-                            <p class="feature-description">追踪与不同人相处的时间，发现需要更多关注的关系。</p>
+                            <h3 class="feature-title view-stats">查看时间统计</h3>
+                            <p class="feature-description view-stats-desc">追踪与不同人相处的时间，发现需要更多关注的关系。</p>
                         </div>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                 <div class="image-content">
                     <div class="screenshot-wrapper">
                         <img src="assets/ActivitiesRecord.PNG" alt="活动记录界面" class="ios-screenshot">
-                        <div class="ios-screenshot-caption">活动记录 - 记录与重要的人相处的点滴</div>
+                        <div class="ios-screenshot-caption caption-activities">活动记录 - 记录与重要的人相处的点滴</div>
                     </div>
                 </div>
             </div>
@@ -155,7 +155,7 @@
         <div class="container">
             <h2 class="cta-title">开始珍惜与重要的人相处的时间</h2>
             <p class="cta-description">记录重要的人和活动，不再错过珍贵的相处时光</p>
-            <a href="#" class="cta-button-white">立即开始</a>
+            <a href="#" class="cta-button-white start-now-btn">立即开始</a>
         </div>
     </section>
     
@@ -164,44 +164,52 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h3 class="footer-title">LifeWealth</h3>
-                    <p style="color:rgba(255,255,255,0.7);margin-bottom:20px;">
+                    <p style="color:rgba(255,255,255,0.7);margin-bottom:20px;" class="footer-desc">
                         珍惜时间，珍视关系，记录与重要的人相处的珍贵时光。
                     </p>
                 </div>
                 
                 <div class="footer-section">
-                    <h3 class="footer-title">功能</h3>
+                    <h3 class="footer-title footer-features">功能</h3>
                     <div class="footer-links">
-                        <a href="#contacts">联系人管理</a>
-                        <a href="#records">活动记录</a>
+                        <a href="#contacts" class="footer-link-contacts">联系人管理</a>
+                        <a href="#records" class="footer-link-records">活动记录</a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h3 class="footer-title">资源</h3>
+                    <h3 class="footer-title footer-resources">资源</h3>
                     <div class="footer-links">
-                        <a href="#about">关于理念</a>
-                        <a href="#">使用指南</a>
-                        <a href="#">常见问题</a>
+                        <a href="#about" class="footer-link-about">关于理念</a>
+                        <a href="#" class="footer-link-guide">使用指南</a>
+                        <a href="#" class="footer-link-faq">常见问题</a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h3 class="footer-title">联系我们</h3>
+                    <h3 class="footer-title footer-contact">联系我们</h3>
                     <div class="footer-links">
-                        <a href="mailto:chii_magnus@outlook.com">邮箱: chii_magnus@outlook.com</a>
-                        <a href="https://github.com/chiimagnus">GitHub</a>
+                        <a href="mailto:chii_magnus@outlook.com" class="footer-link-email">邮箱: chii_magnus@outlook.com</a>
+                        <a href="https://github.com/chiimagnus" class="footer-link-github">GitHub</a>
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>© 2025 LifeWealth by Chii Magnus. 保留所有权利。</p>
+                <p class="footer-copyright">© 2025 Who Matters by Chii Magnus. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- 语言切换按钮 -->
+    <div class="language-switcher">
+        <button class="language-btn" id="languageToggle">
+            <span class="lang-text">English</span>
+        </button>
+    </div>
+
     <script src="js/lifewealth.js"></script>
+    <script src="js/languages.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html> 
