@@ -152,6 +152,8 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     isolation: isolate;
+    margin-bottom: 2rem; /* 增加底部间距，防止与下方nav-menu重叠 */
+    border-radius: 24px; /* 圆角更大，风格更统一 */
 }
 
 .avatar-container:hover {
@@ -213,11 +215,6 @@ body {
 /* 滚动时优化样式 - 增强版 */
 body[data-scrolling="true"] {
     pointer-events: none;
-}
-
-body[data-scrolling="true"] .container {
-    /* 保持动画运行，但可以暂停其他不重要的动画 */
-    /* animation-play-state: paused; */
 }
 
 body[data-scrolling="true"] .sidebar {
