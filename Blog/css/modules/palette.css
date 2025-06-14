@@ -106,13 +106,6 @@
     display: block;
 }
 
-.palette-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
 .palette-title {
     font-size: 14px;
     color: var(--text-color-light);
@@ -371,23 +364,3 @@
     height: 100%;
     background: var(--bg-gradient);
 }
-
-/* 分割线样式 */
-.palette-divider {
-    position: relative;
-    text-align: center;
-    margin: 20px 0;
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.palette-divider span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--card-bg);
-    padding: 0 10px;
-    color: var(--text-color-light);
-    font-size: 12px;
-} 

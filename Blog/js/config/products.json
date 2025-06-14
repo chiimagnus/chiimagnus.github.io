@@ -13,9 +13,9 @@
   },
   {
     "title": "Logseq-AI-Search 🔌",
-    "description": "一款基于AI的Logseq智能搜索插件，可以根据当前block内容进行全局文档搜索，并提供AI智能总结功能。支持自定义AI模型和参数，让您的笔记检索更加智能高效。",
+    "description": "Logseq智能搜索插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
     "tags": ["Logseq-Plugin", "AI"],
-    "status": "优化中",
+    "status": "✅ 已发布",
     "links": [
       {
         "text": "GitHub",
@@ -25,9 +25,8 @@
   },
   {
     "title": "Vniverse 🎯",
-    "description": "一款macOS平台的markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
-    "tags": ["macOS", "语音合成"],
-    "status": "📁 已归档",
+    "description": "macOS软件，markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
+    "tags": ["macOS", "语音合成","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
@@ -37,9 +36,8 @@
   },
   {
     "title": "ChatHistoryBox 📦",
-    "description": "一个简单的Chrome扩展，帮助你保存各个AI Chat对话记录为JSON文件。",
-    "tags": ["Chrome-Plugin","ChatHistory"],
-    "status": "📁 已归档",
+    "description": "Chrome扩展，保存各个AI Chat对话记录为JSON文件。",
+    "tags": ["Chrome-Plugin","ChatHistory","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
@@ -50,8 +48,7 @@
   {
     "title": "File-Path-to-Embed-Converter 🔗",
     "description": "Logseq 插件，用于快速将文件路径转换为 Logseq 的嵌入语法",
-    "tags": ["Logseq-Plugin"],
-    "status": "📁 已归档",
+    "tags": ["Logseq-Plugin","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
@@ -61,9 +58,8 @@
   },
   {
     "title": "StreamVoice 🎙️",
-    "description": "StreamVoice 是一个基于 SwiftUI 的 macOS 应用，为 GPT-SoVITS 语音合成引擎提供图形界面，支持实时语音合成和流式音频输出。",
-    "tags": ["macOS", "语音合成"],
-    "status": "📁 已归档",
+    "description": "macOS应用，为 GPT-SoVITS 语音合成引擎提供图形界面，支持实时语音合成和流式音频输出。",
+    "tags": ["macOS", "语音合成","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
