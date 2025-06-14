@@ -2,7 +2,7 @@
   {
     "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
     "description": "拥有真正的富足不仅仅是物质财富，而是平衡发展五种关键财富维度：时间、社交、精神、物质和经验财富。",
-    "tags": ["社交财富"],
+    "tags": ["iOS", "macOS"],
     "status": "🚀 即将发布！",
     "links": [
       {
@@ -14,22 +14,18 @@
   {
     "title": "Logseq-AI-Search 🔌",
     "description": "一款基于AI的Logseq智能搜索插件，可以根据当前block内容进行全局文档搜索，并提供AI智能总结功能。支持自定义AI模型和参数，让您的笔记检索更加智能高效。",
-    "tags": ["Plugin", "AI", "TypeScript"],
+    "tags": ["Logseq-Plugin", "AI"],
     "links": [
       {
         "text": "GitHub",
         "url": "https://github.com/chiimagnus/logseq-AIsearch"
-      },
-      {
-        "text": "功能介绍",
-        "url": "https://github.com/chiimagnus/logseq-AIsearch#-%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"
       }
     ]
   },
   {
     "title": "Vniverse 🎯",
     "description": "一款macOS平台的markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
-    "tags": ["macOS", "语音合成", "PDF", "Markdown", "ChatHistory"],
+    "tags": ["macOS app", "语音合成", "PDF", "Markdown", "ChatHistory"],
     "status": "📁 已归档",
     "links": [
       {
@@ -41,7 +37,7 @@
   {
     "title": "ChatHistoryBox 📦",
     "description": "一个简单的Chrome扩展，帮助你保存各个AI Chat对话记录为JSON文件。",
-    "tags": ["Plugin", "AI", "TypeScript"],
+    "tags": ["Chrome-Plugin", "LLM-Chat"],
     "status": "📁 已归档",
     "links": [
       {
@@ -49,12 +45,6 @@
         "url": "https://github.com/chiimagnus/ChatHistoryBoxChromePlugin"
       }
     ]
-  },
-  {
-    "title": "LightYears ✨",
-    "description": "记录你的ideas。Tana",
-    "tags": ["macOS", "iOS", "笔记软件"],
-    "status": "📁 已归档"
   },
   {
     "title": "File-Path-to-Embed-Converter 🔗",
