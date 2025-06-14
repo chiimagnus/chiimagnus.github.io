@@ -21,6 +21,10 @@
     transform: translateZ(0);
 }
 
+.sidebar {
+    padding-top: 2rem;
+}
+
 .main-content.full-width {
     margin-left: 0;
     width: 100%;
@@ -112,3 +116,7 @@ footer {
 .sidebar::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
 } 
+
+.sidebar {
+    padding-top: 2rem;
+}
