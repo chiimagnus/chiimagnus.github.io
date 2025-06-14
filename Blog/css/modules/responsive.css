@@ -1,0 +1,66 @@
+@media screen and (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .footer-info {
+        flex-direction: row;
+        margin-top: 0;
+    }
+
+    .update-date {
+        margin-right: 20px;
+    }
+}
+
+/* 响应式设计 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .main-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 0;
+        background-size: 300% 300%;
+    }
+    
+    .container {
+        flex-direction: column;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+        width: 100%;
+    }
+    
+    .header-content {
+        padding: 1rem;
+    }
+    
+    .main-navigation .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .avatar {
+        width: 90px;
+        height: 90px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-card {
+        max-width: 100%;
+    }
+} 
