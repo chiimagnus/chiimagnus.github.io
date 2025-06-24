@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { BlogPost } from '../types';
 import { format } from 'date-fns';
 
