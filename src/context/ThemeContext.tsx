@@ -37,6 +37,11 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     root.style.setProperty('--hover-color', colors.secondary);
 
 
+    // Set body background
+    document.body.style.backgroundImage = colors.gradient;
+    document.body.classList.add('bg-gradient-main');
+
+
     // Set RGB values for opacity usage
     const primaryRgb = hexToRgb(colors.primary);
     const secondaryRgb = hexToRgb(colors.secondary);
