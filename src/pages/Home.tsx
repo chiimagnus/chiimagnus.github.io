@@ -1,11 +1,24 @@
 import React from 'react';
 import BlogCard from '../components/BlogCard';
-import { mockPosts } from '../data/mockData';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import articlesData from '../data/articles.json';
+import productsData from '../data/products.json';
+import { BlogPost } from '../types';
 
 const Home: React.FC = () => {
-  const otherPosts = mockPosts.filter(p => !p.featured);
+  // 将 JSON 数据转换为 BlogPost 格式
+  const adaptedArticles: BlogPost[] = articlesData.map((article, index) => ({
+    id: index.toString(),
+    title: article.title,
+    slug: article.slug || '',
+    excerpt: article.description,
+    content: article.description,
+    author: 'chiimagnus',
+    publishedAt: article.date,
+    tags: [],
+    category: 'default',
+    readingTime: 5,
+  }));
 
   return (
     <div className="space-y-12">
@@ -18,8 +31,8 @@ const Home: React.FC = () => {
           </button>
         </div>
         <div className="space-y-6">
-          {mockPosts.map(post => (
-            <BlogCard key={post.id} post={post} />
+          {adaptedArticles.map((article, index) => (
+            <BlogCard key={index} post={article} />
           ))}
         </div>
       </section>
@@ -28,15 +41,14 @@ const Home: React.FC = () => {
       <section id="products">
         <h2 className="text-2xl font-bold mb-6">产品开发</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {products.map(product => (
+          {productsData.map((product, index) => (
             <ProductCard
-              key={product.title}
+              key={index}
               title={product.title}
-              icon={product.icon}
               description={product.description}
               tags={product.tags}
-              linkText={product.linkText}
-              linkUrl={product.linkUrl}
+              status={product.status}
+              links={product.links}
             />
           ))}
         </div>

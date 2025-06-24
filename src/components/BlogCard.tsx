@@ -8,7 +8,13 @@ interface BlogCardProps {
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
-  const formattedDate = format(new Date(post.publishedAt), 'yyyy年MM月dd日 HH:mm');
+  // 预处理日期字符串，移除中文，替换为标准格式
+  const dateString = post.publishedAt
+    .replace('年', '-')
+    .replace('月', '-')
+    .replace('日', '');
+  
+  const formattedDate = format(new Date(dateString), 'yyyy年MM月dd日 HH:mm');
 
   return (
     <article className="glass-card p-6">
