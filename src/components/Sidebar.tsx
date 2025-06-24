@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Github, Mail, Search } from 'lucide-react';
+import { Github, Mail, Search, Home, BookOpen, Package, User } from 'lucide-react';
 import { Bilibili } from '../../public/Bilibili';
 import { Dedao } from '../../public/Dedao';
+import { useSearch } from '../context/SearchContext';
 
 const navItems = [
   { label: '文章', id: 'articles' },
@@ -11,6 +12,8 @@ const navItems = [
 
 const Sidebar: React.FC = () => {
   const [activeSection, setActiveSection] = useState('articles');
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const { searchQuery, setSearchQuery, setIsSearchActive } = useSearch();
 
   useEffect(() => {
     const mainContent = document.querySelector('main');
@@ -40,6 +43,27 @@ const Sidebar: React.FC = () => {
     const section = document.getElementById(id);
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleSearchFocus = () => {
+    setIsSearchExpanded(true);
+    setIsSearchActive(true);
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+    if (e.target.value.trim() !== '') {
+      setIsSearchActive(true);
+    } else {
+      setIsSearchActive(false);
+    }
+  };
+
+  const handleSearchBlur = () => {
+    if (searchQuery === '') {
+      setIsSearchExpanded(false);
+      setIsSearchActive(false);
     }
   };
 
@@ -86,12 +110,20 @@ const Sidebar: React.FC = () => {
       </nav>
 
       <div className="relative">
+        <div 
+          className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+        >
+          <Search className="h-5 w-5 text-gray-300" />
+        </div>
         <input
           type="text"
           placeholder="搜索（快捷键 cmd+k）"
-          className="w-full pl-10 pr-4 py-2 border-none rounded-lg text-sm bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-300"
+          value={searchQuery}
+          onFocus={handleSearchFocus}
+          onBlur={handleSearchBlur}
+          onChange={handleSearchChange}
+          className={`w-full pl-10 pr-4 py-2 border-none rounded-lg text-sm bg-white bg-opacity-20 text-white placeholder-gray-300 focus:ring-2 focus:ring-purple-300 ${isSearchExpanded ? 'focus:ring-purple-500' : ''}`}
         />
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-300" />
       </div>
     </aside>
   );
