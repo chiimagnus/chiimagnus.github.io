@@ -8,7 +8,11 @@ const Footer: React.FC = () => {
         <div className="flex items-center space-x-4">
           <span>Update: 2025-06-24 Tuesday</span>
           <div>
-            <img src="https://profile-counter.glitch.me/chii_magnus'blog/count.svg" alt="访问计数" />
+            <img 
+              src="https://profile-counter.glitch.me/chii_magnus'blog/count.svg" 
+              alt="访问计数"
+              className="w-20"
+            />
           </div>
         </div>
       </div>
