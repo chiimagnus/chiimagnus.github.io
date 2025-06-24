@@ -85,7 +85,7 @@ const Sidebar: React.FC = () => {
         </ul>
       </nav>
 
-      <div className="relative mt-auto">
+      <div className="relative">
         <input
           type="text"
           placeholder="搜索（快捷键 cmd+k）"
