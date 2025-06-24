@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './Header';
+import Sidebar from './Sidebar';
 import Footer from './Footer';
 
 interface LayoutProps {
@@ -8,12 +8,14 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        {children}
-      </main>
-      <Footer />
+    <div className="flex min-h-screen bg-gray-50">
+      <Sidebar />
+      <div className="flex-grow ml-64 flex flex-col">
+        <main className="flex-grow p-8">
+          {children}
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 };

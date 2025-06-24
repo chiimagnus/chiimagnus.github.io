@@ -2,15 +2,8 @@ import { BlogPost, Category, Tag, Author, SiteConfig } from '../types';
 
 export const author: Author = {
   id: '1',
-  name: 'ChiiBlog',
-  bio: '一个热爱技术和写作的开发者，专注于前端开发和用户体验设计。',
-  avatar: 'https://via.placeholder.com/150',
-  email: 'hello@chiiblog.com',
-  website: 'https://chiiblog.com',
-  social: {
-    github: 'https://github.com/chiiblog',
-    twitter: 'https://twitter.com/chiiblog',
-  },
+  name: 'Chii Magnus',
+  avatar: '/avatar.png'
 };
 
 export const categories: Category[] = [
@@ -46,125 +39,49 @@ export const tags: Tag[] = [
   { id: '6', name: '随想', slug: 'thoughts', postCount: 3 },
 ];
 
-export const blogPosts: BlogPost[] = [
+export const mockPosts: BlogPost[] = [
   {
     id: '1',
-    title: 'React 18 新特性深度解析',
-    slug: 'react-18-deep-dive',
-    excerpt: 'React 18 带来了许多令人兴奋的新特性，包括并发渲染、自动批处理、Suspense 改进等。本文将深入解析这些新特性的原理和使用方法。',
-    content: `# React 18 新特性深度解析
-
-React 18 是 React 的一个重要版本，引入了许多突破性的新特性。
-
-## 并发渲染
-
-并发渲染是 React 18 最重要的特性之一...
-
-## 自动批处理
-
-在 React 18 中，所有更新都会被自动批处理...
-
-## Suspense 改进
-
-Suspense 组件得到了显著改进...`,
-    author: 'ChiiBlog',
-    publishedAt: '2024-01-15',
-    tags: ['React', 'JavaScript'],
-    category: '前端开发',
+    title: '构建个人博客：从静态到动态的演进',
+    slug: 'building-a-personal-blog',
+    excerpt: '本文探讨了将一个静态 HTML 博客迁移到现代 React 技术栈的过程中的思考与实践...',
+    content: '',
+    author: author.name,
+    publishedAt: '2024-07-20T10:00:00Z',
+    tags: ['React', 'TypeScript', 'TailwindCSS'],
+    category: '技术分享',
     readingTime: 8,
-    coverImage: 'https://via.placeholder.com/800x400',
+    coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
     featured: true,
   },
   {
     id: '2',
-    title: 'TypeScript 高级类型系统详解',
-    slug: 'typescript-advanced-types',
-    excerpt: 'TypeScript 的类型系统非常强大，本文将详细介绍高级类型的使用技巧，包括联合类型、交叉类型、条件类型等。',
-    content: `# TypeScript 高级类型系统详解
-
-TypeScript 的类型系统是其最强大的特性之一...
-
-## 联合类型
-
-联合类型允许我们定义一个值可以是几种类型之一...
-
-## 交叉类型
-
-交叉类型将多个类型合并为一个类型...`,
-    author: 'ChiiBlog',
-    publishedAt: '2024-01-10',
-    tags: ['TypeScript', 'JavaScript'],
-    category: '前端开发',
-    readingTime: 12,
-    coverImage: 'https://via.placeholder.com/800x400',
-    featured: true,
+    title: 'Tailwind CSS 的设计哲学与最佳实践',
+    slug: 'tailwindcss-design-philosophy',
+    excerpt: '深入了解 Tailwind CSS 如何通过原子化类名提升开发效率，并探讨在大型项目中应用它的最佳实践。',
+    content: '',
+    author: author.name,
+    publishedAt: '2024-07-18T14:30:00Z',
+    tags: ['CSS', '前端开发', '设计'],
+    category: '技术分享',
+    readingTime: 6,
+    coverImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    featured: false,
   },
   {
     id: '3',
-    title: '构建现代化的前端工程架构',
-    slug: 'modern-frontend-architecture',
-    excerpt: '随着前端项目复杂度的增加，如何构建一个可维护、可扩展的前端架构变得越来越重要。本文分享一些最佳实践。',
-    content: `# 构建现代化的前端工程架构
-
-现代前端开发面临着越来越复杂的挑战...
-
-## 项目结构设计
-
-一个好的项目结构是成功的关键...
-
-## 状态管理
-
-合理的状态管理策略...`,
-    author: 'ChiiBlog',
-    publishedAt: '2024-01-05',
-    tags: ['前端架构', '最佳实践'],
-    category: '前端开发',
-    readingTime: 15,
-  },
-  {
-    id: '4',
-    title: '我的 2024 年技术总结',
-    slug: 'tech-summary-2024',
-    excerpt: '回顾这一年的技术学习和成长，分享一些心得体会和对未来的展望。',
-    content: `# 我的 2024 年技术总结
-
-又是一年年末，是时候回顾这一年的技术成长了...
-
-## 学到的新技术
-
-这一年我学习了很多新技术...
-
-## 踩过的坑
-
-技术路上总是充满挑战...`,
-    author: 'ChiiBlog',
-    publishedAt: '2023-12-31',
-    tags: ['总结', '随想'],
-    category: '生活随笔',
-    readingTime: 6,
-  },
-  {
-    id: '5',
-    title: 'CSS Grid 布局完全指南',
-    slug: 'css-grid-complete-guide',
-    excerpt: 'CSS Grid 是现代网页布局的强大工具，本文将全面介绍 Grid 布局的各种用法和技巧。',
-    content: `# CSS Grid 布局完全指南
-
-CSS Grid 是一个二维布局系统...
-
-## 基础概念
-
-Grid 容器和 Grid 项目...
-
-## 实际应用
-
-一些常见的布局模式...`,
-    author: 'ChiiBlog',
-    publishedAt: '2023-12-20',
-    tags: ['CSS', '前端'],
-    category: '前端开发',
-    readingTime: 10,
-  },
+    title: '我的产品开发理念：LifeWealth',
+    slug: 'product-development-lifewealth',
+    excerpt: '介绍我的个人项目 LifeWealth 的创作理念，以及如何通过产品设计来探索生活的五种财富。',
+    content: '',
+    author: author.name,
+    publishedAt: '2024-07-15T09:00:00Z',
+    tags: ['产品设计', '创业', '生活方式'],
+    category: '产品开发',
+    readingTime: 5,
+    coverImage: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
+    featured: false,
+  }
 ];
 
 export const siteConfig: SiteConfig = {
