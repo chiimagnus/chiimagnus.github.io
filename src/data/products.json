@@ -1,7 +1,7 @@
 [
   {
     "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
-    "description": "拥有真正的富足不仅仅是物质财富，而是平衡发展五种关键财富维度：时间、社交、精神、物质和经验财富。",
+    "description": "关系财富管理",
     "tags": ["iOS", "macOS"],
     "status": "🚀 即将发布！",
     "links": [
@@ -13,7 +13,7 @@
   },
   {
     "title": "AI-Search 🔌",
-    "description": "Logseq智能搜索插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
+    "description": "Logseq插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
     "tags": ["Logseq-Plugin", "AI"],
     "status": "✅ 已发布",
     "links": [
