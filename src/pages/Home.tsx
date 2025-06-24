@@ -8,7 +8,7 @@ const Home: React.FC = () => {
 
   return (
     <div className="space-y-12">
-      <section>
+      <section id="articles">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">文章</h2>
           <button className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white">
@@ -24,7 +24,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Products Section */}
-      <section>
+      <section id="products">
         <h2 className="text-2xl font-bold mb-6">产品开发</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <ProductCard
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section>
+      <section id="about">
         <h2 className="text-2xl font-bold mb-6">关于我</h2>
         <div className="glass-card p-6">
           <p className="text-center text-lg mb-4">热爱创造与表达的多面体，致力于将诗意融入产品设计。</p>

@@ -1,16 +1,48 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { Github, Mail, Search, Rss } from 'lucide-react';
-import { Bilibili } from '../components/icons/Bilibili';
-import { Dedao } from '../components/icons/Dedao';
+import React, { useState, useEffect } from 'react';
+import { Github, Mail, Search } from 'lucide-react';
+import { Bilibili } from './icons/Bilibili';
+import { Dedao } from './icons/Dedao';
 
 const navItems = [
-  { label: '文章', path: '/posts' },
-  { label: '产品开发', path: '/products' },
-  { label: '关于我', path: '/about' },
+  { label: '文章', id: 'articles' },
+  { label: '产品开发', id: 'products' },
+  { label: '关于我', id: 'about' },
 ];
 
 const Sidebar: React.FC = () => {
+  const [activeSection, setActiveSection] = useState('articles');
+
+  useEffect(() => {
+    const mainContent = document.querySelector('main');
+    if (!mainContent) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { root: mainContent, threshold: 0.5 }
+    );
+
+    const sections = mainContent.querySelectorAll('section[id]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <aside className="w-full lg:w-64 bg-black bg-opacity-20 flex-shrink-0 flex flex-col p-4">
       <div className="flex flex-col items-center text-center py-8">
@@ -37,18 +69,17 @@ const Sidebar: React.FC = () => {
         <ul className="space-y-2">
           {navItems.map((item) => (
             <li key={item.label}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  `block py-2 px-4 rounded-lg text-center transition-colors text-white ${
-                    isActive
-                      ? 'bg-white bg-opacity-30 font-semibold'
-                      : 'hover:bg-white hover:bg-opacity-10'
-                  }`
-                }
+              <a
+                href={`#${item.id}`}
+                onClick={(e) => handleNavClick(e, item.id)}
+                className={`block py-2 px-4 rounded-lg text-center transition-colors text-white ${
+                  activeSection === item.id
+                    ? 'bg-white bg-opacity-30 font-semibold'
+                    : 'hover:bg-white hover:bg-opacity-10'
+                }`}
               >
                 {item.label}
-              </NavLink>
+              </a>
             </li>
           ))}
         </ul>
