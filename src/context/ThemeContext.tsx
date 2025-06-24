@@ -50,7 +50,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     // Update theme-color meta tag
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
-      themeColorMeta.setAttribute('content', colors.primary);
+      themeColorMeta.setAttribute('content', colors.topBarColor);
     }
     
     // Store theme choice
