@@ -12,19 +12,16 @@ module.exports = {
         'custom-blue': '#BFDBFE',
         'glass-bg': 'rgba(255, 255, 255, 0.15)',
         'glass-border': 'rgba(255, 255, 255, 0.2)',
-        'primary': {
-          DEFAULT: '#8B5CF6',
-          '50': '#F5F3FF',
-          '100': '#EDE9FE',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-        },
+        
+        // Theme colors that support opacity modifiers (e.g., bg-primary/50)
+        primary: 'rgb(var(--primary-color-rgb) / <alpha-value>)',
+        secondary: 'rgb(var(--secondary-color-rgb) / <alpha-value>)',
+        accent: 'var(--accent-color)',
+        link: 'var(--link-color)',
+        hover: 'var(--hover-color)',
+      },
+      backgroundImage: {
+        'gradient-main': 'var(--bg-gradient)',
       },
       typography: {
         DEFAULT: {

@@ -3,6 +3,7 @@ import { Github, Mail, Search, Home, BookOpen, Package, User, X } from 'lucide-r
 import { Bilibili } from '../../public/Bilibili';
 import { Dedao } from '../../public/Dedao';
 import { useSearch } from '../context/SearchContext';
+import { ThemeSelector } from './ThemeSelector';
 
 const navItems = [
   { label: '文章', id: 'articles' },
@@ -119,6 +120,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             ))}
           </ul>
         </nav>
+
+        <div className="mb-8 px-4">
+          <ThemeSelector />
+        </div>
 
         <div className="relative">
           <div 
