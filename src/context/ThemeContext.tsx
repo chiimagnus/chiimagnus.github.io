@@ -47,6 +47,12 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
       root.style.setProperty('--secondary-color-rgb', secondaryRgb);
     }
     
+    // Update theme-color meta tag
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', colors.primary);
+    }
+    
     // Store theme choice
     localStorage.setItem('theme', theme.name);
   }, [theme]);
