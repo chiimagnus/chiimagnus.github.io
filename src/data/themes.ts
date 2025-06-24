@@ -18,8 +18,8 @@ export const themes: Theme[] = [
       secondary: '#6c5ce7',
       accent: '#ff6b6b',
       gradient: 'linear-gradient(45deg, #ff6b6b 0%, #ffd93d 20%, #6c5ce7 40%, #00b894 60%, #0984e3 80%, #e84393 100%)',
-      topBarColor: '#ff6b6b',
-      bottomBarColor: '#e84393',
+      topBarColor: '#00b894',
+      bottomBarColor: '#6c5ce7',
     },
   },
   {
@@ -29,8 +29,8 @@ export const themes: Theme[] = [
       secondary: '#81ecec',
       accent: '#2d3436',
       gradient: 'linear-gradient(45deg, #2d3436 0%, #6c5ce7 30%, #00b894 60%, #81ecec 100%)',
-      topBarColor: '#2d3436',
-      bottomBarColor: '#81ecec',
+      topBarColor: '#00b894',
+      bottomBarColor: '#6c5ce7',
     },
   },
   {
@@ -40,8 +40,8 @@ export const themes: Theme[] = [
       secondary: '#00cec9',
       accent: '#e17055',
       gradient: 'linear-gradient(45deg, #e17055 0%, #fdcb6e 30%, #0984e3 60%, #00cec9 100%)',
-      topBarColor: '#e17055',
-      bottomBarColor: '#00cec9',
+      topBarColor: '#0984e3',
+      bottomBarColor: '#fdcb6e',
     },
   },
   {
@@ -51,8 +51,8 @@ export const themes: Theme[] = [
       secondary: '#dfe6e9',
       accent: '#e84393',
       gradient: 'linear-gradient(45deg, #e84393 0%, #fd79a8 30%, #fab1a0 60%, #dfe6e9 100%)',
-      topBarColor: '#e84393',
-      bottomBarColor: '#dfe6e9',
+      topBarColor: '#fab1a0',
+      bottomBarColor: '#fd79a8',
     },
   },
   {
@@ -62,8 +62,8 @@ export const themes: Theme[] = [
       secondary: '#ffeaa7',
       accent: '#d63031',
       gradient: 'linear-gradient(45deg, #d63031 0%, #fdcb6e 50%, #ffeaa7 100%)',
-      topBarColor: '#d63031',
-      bottomBarColor: '#ffeaa7',
+      topBarColor: '#fdcb6e',
+      bottomBarColor: '#fdcb6e',
     },
   },
   {
@@ -74,7 +74,7 @@ export const themes: Theme[] = [
       accent: '#ff00ff',
       gradient: 'linear-gradient(45deg, #000000 0%, #1a1a1a 30%, #ff00ff 60%, #00ffff 80%, #000000 100%)',
       topBarColor: '#ff00ff',
-      bottomBarColor: '#000000',
+      bottomBarColor: '#1a1a1a',
     },
   },
 ];
