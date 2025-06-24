@@ -38,6 +38,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
 
     // Set body background
+    document.body.style.backgroundColor = colors.bottomBarColor;
     document.body.style.backgroundImage = colors.gradient;
     document.body.classList.add('bg-gradient-main');
 
