@@ -18,10 +18,14 @@ const Home: React.FC = () => {
     tags: [],
     category: 'default',
     readingTime: 5,
+    url: article.url,
+    external: article.external,
   }));
 
   return (
     <div className="space-y-12">
+      
+      {/* 文章 */}
       <section id="articles">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">文章</h2>
@@ -37,7 +41,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Products Section */}
+      {/* 产品 */}
       <section id="products">
         <h2 className="text-2xl font-bold mb-6">产品开发</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -54,7 +58,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* 关于我 */}
       <section id="about">
         <h2 className="text-2xl font-bold mb-6">关于我</h2>
         <div className="glass-card p-6">

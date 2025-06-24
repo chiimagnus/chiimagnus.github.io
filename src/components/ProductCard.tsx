@@ -34,7 +34,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, tags, sta
       </div>
       <div className="mt-auto space-y-1">
         {links.map((link, index) => (
-          <a key={index} href={link.url} className="block text-sm font-semibold text-purple-300 hover:text-purple-200">
+          <a 
+            key={index} 
+            href={link.url} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="block text-sm font-semibold text-purple-300 hover:text-purple-200"
+          >
             {link.text}
           </a>
         ))}

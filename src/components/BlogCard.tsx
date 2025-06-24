@@ -21,7 +21,12 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
       <h3 className="text-xl font-bold mb-2">{post.title}</h3>
       <p className="text-sm text-gray-300 mb-3">{formattedDate}</p>
       <p className="text-gray-200 mb-4">{post.excerpt}</p>
-      <a href="#" className="flex items-center font-semibold text-purple-300 hover:text-purple-200">
+      <a 
+        href={post.url} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className="flex items-center font-semibold text-purple-300 hover:text-purple-200"
+      >
         阅读全文 <ArrowRight className="ml-2 h-4 w-4" />
       </a>
     </article>

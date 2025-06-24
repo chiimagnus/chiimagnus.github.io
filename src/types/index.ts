@@ -12,6 +12,8 @@ export interface BlogPost {
   readingTime: number;
   coverImage?: string;
   featured?: boolean;
+  url: string;
+  external?: boolean;
 }
 
 export interface Category {
