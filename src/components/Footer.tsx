@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
       <div className="flex justify-between items-center">
         <span>© 2025 𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼. 保留所有权利。</span>
         <div className="flex items-center space-x-4">
-          <span>Update: 2025-06-14 Saturday</span>
+          <span>Update: 2025-06-24 Tuesday</span>
           <div>
             <img src="https://profile-counter.glitch.me/chii_magnus'blog/count.svg" alt="访问计数" />
           </div>
