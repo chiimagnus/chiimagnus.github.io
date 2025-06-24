@@ -11,12 +11,14 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <ThemeProvider>
       <Router>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/lifewealth" element={<LifeWealth />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route path="/lifewealth" element={<LifeWealth />} />
+          <Route path="/" element={
+            <Layout>
+              <Home />
+            </Layout>
+          } />
+        </Routes>
       </Router>
     </ThemeProvider>
   </React.StrictMode>,
