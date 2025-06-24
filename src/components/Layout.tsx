@@ -1,15 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 import { SearchProvider } from '../context/SearchContext';
+import { Menu } from 'lucide-react';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <SearchProvider>
       <div className="bg-gray-900 text-white min-h-screen flex">
-        <Sidebar />
+        <Sidebar isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />
         <div className="flex-1 flex flex-col">
-          <main className="flex-1 p-6 sm:p-8 lg:p-10">
+          <main className="flex-1 p-6 sm:p-8 lg:p-10 relative">
+            <button 
+              className="lg:hidden p-2 rounded-md bg-white/10 hover:bg-white/20 absolute top-4 right-4 z-20"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu size={24} />
+            </button>
             <div className="max-w-4xl mx-auto">
               {children}
             </div>
