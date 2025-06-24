@@ -1,0 +1,70 @@
+[
+  {
+    "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
+    "description": "拥有真正的富足不仅仅是物质财富，而是平衡发展五种关键财富维度：时间、社交、精神、物质和经验财富。",
+    "tags": ["iOS", "macOS"],
+    "status": "🚀 即将发布！",
+    "links": [
+      {
+        "text": "详细介绍",
+        "url": "/LifeWealth"
+      }
+    ]
+  },
+  {
+    "title": "Logseq-AI-Search 🔌",
+    "description": "Logseq智能搜索插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
+    "tags": ["Logseq-Plugin", "AI"],
+    "status": "✅ 已发布",
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/logseq-AIsearch"
+      }
+    ]
+  },
+  {
+    "title": "Vniverse 🎯",
+    "description": "macOS软件，markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
+    "tags": ["macOS", "语音合成","📁 已归档"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/VoiceVerse"
+      }
+    ]
+  },
+  {
+    "title": "ChatHistoryBox 📦",
+    "description": "Chrome扩展，保存各个AI Chat对话记录为JSON文件。",
+    "tags": ["Chrome-Plugin","ChatHistory","📁 已归档"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/ChatHistoryBoxChromePlugin"
+      }
+    ]
+  },
+  {
+    "title": "File-Path-to-Embed-Converter 🔗",
+    "description": "Logseq 插件，用于快速将文件路径转换为 Logseq 的嵌入语法",
+    "tags": ["Logseq-Plugin","📁 已归档"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/File-Path-to-Embed-Converter"
+      }
+    ]
+  },
+  {
+    "title": "StreamVoice 🎙️",
+    "description": "macOS应用，为 GPT-SoVITS 语音合成引擎提供图形界面，支持实时语音合成和流式音频输出。",
+    "tags": ["macOS", "语音合成","📁 已归档"],
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/StreamVoice"
+      }
+    ]
+  }
+]
