@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,9 +7,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
+        'custom-yellow': '#FDE68A',
+        'custom-pink': '#FBCFE8',
+        'custom-blue': '#BFDBFE',
+        'glass-bg': 'rgba(255, 255, 255, 0.15)',
+        'glass-border': 'rgba(255, 255, 255, 0.2)',
+        'primary': {
+          DEFAULT: '#8B5CF6',
+          '50': '#F5F3FF',
+          '100': '#EDE9FE',
           200: '#bae6fd',
           300: '#7dd3fc',
           400: '#38bdf8',
@@ -32,7 +38,16 @@ export default {
           },
         },
       },
+      boxShadow: {
+        'glass': '0 4px 30px rgba(0, 0, 0, 0.1)',
+      },
+      backdropFilter: {
+        'blur': 'blur(10px)',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('tailwindcss-filters'),
+  ],
 } 

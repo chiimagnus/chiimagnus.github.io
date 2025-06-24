@@ -4,7 +4,8 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply text-white;
+    background: linear-gradient(135deg, #fde68a, #fbcfe8, #bfdbfe);
     font-family: 'Inter', sans-serif;
   }
   
@@ -13,7 +14,7 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
+    @apply font-bold text-white;
   }
   
   h1 {
@@ -29,7 +30,7 @@
   }
   
   a {
-    @apply text-primary-600 hover:text-primary-700 transition-colors;
+    @apply text-purple-300 hover:text-purple-200 transition-colors;
   }
 }
 
@@ -63,4 +64,8 @@
   .btn-secondary {
     @apply bg-gray-200 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-300 transition-colors font-medium;
   }
+}
+
+.glass-card {
+  @apply bg-glass-bg border border-glass-border rounded-xl shadow-glass backdrop-blur;
 } 
