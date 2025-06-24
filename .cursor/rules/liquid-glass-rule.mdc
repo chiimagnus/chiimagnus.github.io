@@ -1,0 +1,51 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 使用 liquid-glass-react 实现液态玻璃效果
+
+本指南说明如何在项目中应用 `liquid-glass-react` 组件来替代标准的毛玻璃效果，以实现更具动态和交互性的液态玻璃 UI。
+
+## 1. 安装依赖
+
+首先，确保已安装 `liquid-glass-react`：
+
+```bash
+npm install liquid-glass-react
+```
+
+## 2. 基本用法
+
+将需要应用液态玻璃效果的组件包裹在 `LiquidGlass` 组件中。
+
+```tsx
+import LiquidGlass from 'liquid-glass-react';
+
+const MyComponent = () => (
+  <LiquidGlass>
+    <div>
+      {/* 你的内容 */}
+    </div>
+  </LiquidGlass>
+);
+```
+
+## 3. 应用场景
+
+### a. 侧边栏和主要布局
+
+在 `[src/components/Layout.tsx](mdc:src/components/Layout.tsx)` 中，`Sidebar` 和右侧内容区域的背景都应用了此效果，以提供统一的视觉体验。
+
+### b. 可交互卡片
+
+对于像 `[src/components/BlogCard.tsx](mdc:src/components/BlogCard.tsx)` 这样的卡片组件，可以使用 `LiquidGlass` 作为根元素，并调整 `elasticity` 和 `displacementScale` 等属性来增强悬停和点击时的交互感。
+
+## 4. 关键属性
+
+- `elasticity`: 控制"液体"的弹性感觉（0 表示刚性，越高越有弹性）。
+- `displacementScale`: 控制位移效果的强度。
+- `blurAmount`: 控制模糊/霜冻程度。
+- `cornerRadius`: 设置边框圆角。
+
+通过调整这些属性，可以为不同的 UI 元素创建独特的液态玻璃质感。
