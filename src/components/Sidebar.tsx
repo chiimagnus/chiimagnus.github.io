@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Github, Mail, Search, Home, BookOpen, Package, User } from 'lucide-react';
 import { Bilibili } from '../../public/Bilibili';
 import { Dedao } from '../../public/Dedao';
@@ -14,6 +14,7 @@ const Sidebar: React.FC = () => {
   const [activeSection, setActiveSection] = useState('articles');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const { searchQuery, setSearchQuery, setIsSearchActive } = useSearch();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const mainContent = document.querySelector('main');
@@ -35,6 +36,20 @@ const Sidebar: React.FC = () => {
 
     return () => {
       sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+        event.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
@@ -116,8 +131,9 @@ const Sidebar: React.FC = () => {
           <Search className="h-5 w-5 text-gray-300" />
         </div>
         <input
+          ref={searchInputRef}
           type="text"
-          placeholder="搜索（快捷键 cmd+k）"
+          placeholder="搜索 (⌘K)"
           value={searchQuery}
           onFocus={handleSearchFocus}
           onBlur={handleSearchBlur}

@@ -36,10 +36,12 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
 
     const lowerCaseQuery = searchQuery.toLowerCase();
 
-    // 筛选文章
+    // 筛选文章，扩展搜索范围
     const filteredArticles = articlesData.filter(article =>
       article.title.toLowerCase().includes(lowerCaseQuery) ||
-      article.description.toLowerCase().includes(lowerCaseQuery)
+      article.description.toLowerCase().includes(lowerCaseQuery) ||
+      article.slug.toLowerCase().includes(lowerCaseQuery) ||
+      article.date.toLowerCase().includes(lowerCaseQuery)
     );
 
     // 使用 Home.tsx 中的适配器逻辑
@@ -58,10 +60,13 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
       external: article.external,
     }));
     
-    // 筛选产品
+    // 筛选产品，扩展搜索范围
     const filteredProducts: Product[] = productsData.filter(product =>
       product.title.toLowerCase().includes(lowerCaseQuery) ||
-      product.description.toLowerCase().includes(lowerCaseQuery)
+      product.description.toLowerCase().includes(lowerCaseQuery) ||
+      (product.status && product.status.toLowerCase().includes(lowerCaseQuery)) ||
+      product.tags.some(tag => tag.toLowerCase().includes(lowerCaseQuery)) ||
+      product.links.some(link => link.text.toLowerCase().includes(lowerCaseQuery))
     );
 
     // 合并结果并添加类型标识
