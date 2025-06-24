@@ -1,9 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, Github, Twitter } from 'lucide-react';
 import BlogCard from '../components/BlogCard';
 import { mockPosts } from '../data/mockData';
-import { BlogPost } from '../types';
 import ProductCard from '../components/ProductCard';
 
 const Home: React.FC = () => {
