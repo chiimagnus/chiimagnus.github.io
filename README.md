@@ -1,1 +1,1 @@
-# Welcom to Chii Magnus's Blog~
+# Welcom to Chii Magnus's Blog~🎉
