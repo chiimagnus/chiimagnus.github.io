@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Mail, Search } from 'lucide-react';
-import { Bilibili } from './icons/Bilibili';
-import { Dedao } from './icons/Dedao';
+import { Bilibili } from '../../public/Bilibili';
+import { Dedao } from '../../public/Dedao';
 
 const navItems = [
   { label: '文章', id: 'articles' },
