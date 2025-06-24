@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSearch, SearchResult } from '../context/SearchContext';
-import { BookOpen, Package } from 'lucide-react';
+import { BookOpen, Package, ArrowRight } from 'lucide-react';
+import { format } from 'date-fns';
 
 // 从 ProductCard.tsx 借用颜色逻辑
 const getTagColor = (tag: string) => {
@@ -15,23 +16,35 @@ const SearchResults: React.FC = () => {
 
   if (!searchQuery) return null;
 
-  const renderArticle = (item: SearchResult & { type: 'article' }) => (
-    <a 
-      href={item.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block glass-card p-4 hover:border-purple-400 transition-all"
-    >
-      <div className="flex items-center space-x-3">
-        <BookOpen className="h-5 w-5 text-green-400" />
-        <h3 className="text-lg font-semibold">{item.title}</h3>
-        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white bg-opacity-20">
-          文章
-        </span>
+  const renderArticle = (item: SearchResult & { type: 'article' }) => {
+    // 日期处理逻辑
+    const dateString = item.publishedAt.replace('年', '-').replace('月', '-').replace('日', '');
+    const formattedDate = format(new Date(dateString), 'yyyy年MM月dd日');
+
+    return (
+      <div className="glass-card p-4">
+        <div className="flex items-center space-x-3 mb-2">
+          <BookOpen className="h-5 w-5 text-green-400" />
+          <h3 className="text-lg font-semibold">{item.title}</h3>
+          <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white bg-opacity-20">
+            文章
+          </span>
+        </div>
+        <div className="ml-8">
+          <p className="text-sm text-gray-400 mb-2">{formattedDate}</p>
+          <p className="text-sm text-gray-300 mb-3">{item.excerpt}</p>
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center text-sm font-semibold text-purple-300 hover:text-purple-200"
+          >
+            阅读全文 <ArrowRight className="ml-1 h-4 w-4" />
+          </a>
+        </div>
       </div>
-      <p className="text-sm text-gray-300 mt-2 ml-8">{item.excerpt}</p>
-    </a>
-  );
+    );
+  };
 
   const renderProduct = (item: SearchResult & { type: 'product' }) => (
     <div className="glass-card p-4">
