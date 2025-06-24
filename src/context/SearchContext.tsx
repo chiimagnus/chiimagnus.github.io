@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useState, useMemo, ReactNode } from 'react';
 import articlesData from '../data/articles.json';
 import productsData from '../data/products.json';
 import { BlogPost } from '../types';

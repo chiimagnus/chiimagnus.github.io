@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { themes, defaultTheme, Theme } from '../data/themes';
 
 // Utility to convert hex to RGB, needed for CSS variables

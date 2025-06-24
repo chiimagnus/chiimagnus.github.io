@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useRef, useEffect } from 'react';
 import { Github, Mail, Search, X } from 'lucide-react';
 import { Bilibili } from '../../public/Bilibili';
 import { Dedao } from '../../public/Dedao';
