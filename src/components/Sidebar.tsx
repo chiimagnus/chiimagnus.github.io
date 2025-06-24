@@ -63,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       ></div>
 
       <aside 
-        className={`fixed top-0 left-0 h-full w-64 flex-shrink-0 flex flex-col px-4 pt-6 pb-4 lg:pt-10 space-y-4 z-40 transform transition-transform duration-300 ease-in-out lg:static lg:transform-none
+        className={`fixed top-0 left-0 h-full w-64 flex-shrink-0 flex flex-col px-4 pt-6 pb-4 lg:justify-center space-y-4 z-40 transform transition-transform duration-300 ease-in-out lg:transform-none
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
         }
       >
