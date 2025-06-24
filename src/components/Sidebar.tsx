@@ -63,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       ></div>
 
       <aside 
-        className={`fixed top-0 left-0 h-full w-64 flex-shrink-0 flex flex-col p-4 space-y-4 z-40 transform transition-transform duration-300 ease-in-out lg:static lg:transform-none
+        className={`fixed top-0 left-0 h-full w-64 flex-shrink-0 flex flex-col px-4 pt-6 pb-4 lg:pt-10 space-y-4 z-40 transform transition-transform duration-300 ease-in-out lg:static lg:transform-none
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
         }
       >
@@ -95,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                   <a
                     href={`#${item.id}`}
                     onClick={(e) => handleNavClick(e, item.id)}
-                    className="block py-2 px-4 rounded-lg text-center transition-colors text-white hover:bg-white/10"
+                    className="block py-2 px-4 rounded-lg text-left transition-colors text-white hover:bg-white/10"
                   >
                     {item.label}
                   </a>
