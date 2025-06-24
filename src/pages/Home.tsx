@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BlogCard from '../components/BlogCard';
 import ProductCard from '../components/ProductCard';
 import articlesData from '../data/articles.json';
@@ -6,6 +6,8 @@ import productsData from '../data/products.json';
 import { BlogPost } from '../types';
 
 const Home: React.FC = () => {
+  const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
+
   // 将 JSON 数据转换为 BlogPost 格式
   const adaptedArticles: BlogPost[] = articlesData.map((article, index) => ({
     id: index.toString(),
@@ -22,6 +24,8 @@ const Home: React.FC = () => {
     external: article.external,
   }));
 
+  const displayedArticles = isArticlesExpanded ? adaptedArticles : adaptedArticles.slice(0, 3);
+
   return (
     <div className="space-y-12">
       
@@ -29,13 +33,16 @@ const Home: React.FC = () => {
       <section id="articles">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">文章</h2>
-          <button className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white">
-            <span>展开</span>
-            <span>↓</span>
+          <button 
+            onClick={() => setIsArticlesExpanded(!isArticlesExpanded)}
+            className="flex items-center space-x-2 text-sm text-gray-300 hover:text-white"
+          >
+            <span>{isArticlesExpanded ? '收起' : '展开'}</span>
+            <span className={`transform transition-transform ${isArticlesExpanded ? 'rotate-180' : ''}`}>↓</span>
           </button>
         </div>
         <div className="space-y-6">
-          {adaptedArticles.map((article, index) => (
+          {displayedArticles.map((article, index) => (
             <BlogCard key={index} post={article} />
           ))}
         </div>
