@@ -79,10 +79,10 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
             </button>
           </div>
           <div className="flex justify-center space-x-2 mt-4">
-            <a href="mailto:chii_magnus@outlook.com" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30" title="Email"><Mail size={16} /></a>
-            <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30" title="GitHub"><Github size={16} /></a>
-            <a href="https://m.igetget.com/native/mine/account#/user/detail?enId=GEznR6VwQNKxEeXPOz9xB9Ojy0d24k" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30" title="得到"><Dedao className="w-4 h-4" /></a>
-            <a href="https://space.bilibili.com/1055823731" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30" title="哔哩哔哩"><Bilibili className="w-4 h-4" /></a>
+            <a href="mailto:chii_magnus@outlook.com" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 ease-in-out hover:scale-110" title="Email"><Mail size={16} /></a>
+            <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 ease-in-out hover:scale-110" title="GitHub"><Github size={16} /></a>
+            <a href="https://m.igetget.com/native/mine/account#/user/detail?enId=GEznR6VwQNKxEeXPOz9xB9Ojy0d24k" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 ease-in-out hover:scale-110" title="得到"><Dedao className="w-4 h-4" /></a>
+            <a href="https://space.bilibili.com/1055823731" target="_blank" rel="noopener noreferrer" className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 ease-in-out hover:scale-110" title="哔哩哔哩"><Bilibili className="w-4 h-4" /></a>
           </div>
         </div>
 
@@ -95,7 +95,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                   <a
                     href={`#${item.id}`}
                     onClick={(e) => handleNavClick(e, item.id)}
-                    className="block py-2 px-4 rounded-lg text-left transition-colors text-white hover:bg-white/10"
+                    className="block py-2 px-4 rounded-lg text-left transition-all duration-200 ease-in-out text-white hover:bg-white/10 hover:pl-6"
                   >
                     {item.label}
                   </a>

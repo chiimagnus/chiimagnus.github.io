@@ -17,7 +17,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ post }) => {
   const formattedDate = format(new Date(dateString), 'yyyy年MM月dd日 HH:mm');
 
   return (
-    <article className="glass-card p-6">
+    <article className="glass-card p-6 transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
       <h3 className="text-xl font-bold mb-2">{post.title}</h3>
       <p className="text-sm text-gray-300 mb-3">{formattedDate}</p>
       <p className="text-gray-200 mb-4">{post.excerpt}</p>

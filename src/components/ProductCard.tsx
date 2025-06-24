@@ -17,17 +17,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ title, description, tags, sta
   };
   
   return (
-    <div className="glass-card p-5 flex flex-col">
+    <div className="glass-card p-5 flex flex-col transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-1">
       <h3 className="text-lg font-bold mb-2">{title}</h3>
       <p className="text-gray-200 text-sm mb-4 flex-grow">{description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
         {tags.map((tag, index) => (
-          <span key={index} className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getTagColor(tag)}`}>
+          <span key={index} className={`text-xs font-semibold px-2.5 py-1 rounded-full ${getTagColor(tag)} transition-transform duration-200 hover:scale-105`}>
             {tag}
           </span>
         ))}
         {status && (
-          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-400 text-blue-900">
+          <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-400 text-blue-900 transition-transform duration-200 hover:scale-105">
             {status}
           </span>
         )}
