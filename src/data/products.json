@@ -12,7 +12,7 @@
     ]
   },
   {
-    "title": "Logseq-AI-Search 🔌",
+    "title": "AI-Search 🔌",
     "description": "Logseq智能搜索插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
     "tags": ["Logseq-Plugin", "AI"],
     "status": "✅ 已发布",
