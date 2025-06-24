@@ -16,33 +16,9 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
-  const [activeSection, setActiveSection] = useState('articles');
   const [isSearchExpanded, setIsSearchExpanded] = useState(false);
   const { searchQuery, setSearchQuery, setIsSearchActive } = useSearch();
   const searchInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const mainContent = document.querySelector('main');
-    if (!mainContent) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { root: mainContent, threshold: 0.5 }
-    );
-
-    const sections = mainContent.querySelectorAll('section[id]');
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, []);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -135,11 +111,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
-                  className={`block py-2 px-4 rounded-lg text-center transition-colors text-white ${
-                    activeSection === item.id
-                      ? 'bg-white bg-opacity-30 font-semibold'
-                      : 'hover:bg-white hover:bg-opacity-10'
-                  }`}
+                  className="block py-2 px-4 rounded-lg text-center transition-colors text-white hover:bg-white hover:bg-opacity-10"
                 >
                   {item.label}
                 </a>
