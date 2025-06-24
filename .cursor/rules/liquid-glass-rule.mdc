@@ -39,7 +39,7 @@ const MyComponent = () => (
 
 ### b. 可交互卡片
 
-对于像 `[src/components/BlogCard.tsx](mdc:src/components/BlogCard.tsx)` 这样的卡片组件，可以使用 `LiquidGlass` 作为根元素，并调整 `elasticity` 和 `displacementScale` 等属性来增强悬停和点击时的交互感。
+对于像 `[src/components/BlogCard.tsx](mdc:src/components/BlogCard.tsx)` 和 `[src/components/ProductCard.tsx](mdc:src/components/ProductCard.tsx)` 这样的卡片组件，可以使用 `LiquidGlass` 作为根元素，并调整 `elasticity` 和 `displacementScale` 等属性来增强悬停和点击时的交互感。
 
 ## 4. 关键属性
 
@@ -48,4 +48,46 @@ const MyComponent = () => (
 - `blurAmount`: 控制模糊/霜冻程度。
 - `cornerRadius`: 设置边框圆角。
 
+## 5. 常用配置
+
+### 侧边栏卡片
+```tsx
+<LiquidGlass
+  cornerRadius={16}
+  elasticity={0.2}
+>
+  {/* 内容 */}
+</LiquidGlass>
+```
+
+### 博客和产品卡片
+```tsx
+<LiquidGlass
+  cornerRadius={12}
+  elasticity={0.3}
+  displacementScale={50}
+  className="transition-transform hover:scale-105"
+>
+  {/* 内容 */}
+</LiquidGlass>
+```
+
+### 主内容区域
+```tsx
+<LiquidGlass
+  mouseContainer={containerRef}
+  cornerRadius={16}
+  elasticity={0.05}
+  displacementScale={40}
+>
+  {/* 内容 */}
+</LiquidGlass>
+```
+
 通过调整这些属性，可以为不同的 UI 元素创建独特的液态玻璃质感。
+
+## 6. 注意事项
+
+- Safari 和 Firefox 对位移效果的支持有限
+- 使用 `mouseContainer` 属性可以让效果响应更大区域的鼠标移动
+- 适当的 `elasticity` 值可以创造更自然的交互感觉
