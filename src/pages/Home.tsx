@@ -9,7 +9,8 @@ import SearchResults from '../components/SearchResults';
 
 const Home: React.FC = () => {
   const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
-  const { isSearchActive } = useSearch();
+  const { searchQuery } = useSearch();
+  const showSearchResults = searchQuery.trim() !== '';
 
   // 将 JSON 数据转换为 BlogPost 格式
   const adaptedArticles: BlogPost[] = articlesData.map((article, index) => ({
@@ -31,7 +32,7 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <div className={`transition-opacity duration-500 ${isSearchActive ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
+      <div className={`transition-opacity duration-500 ${showSearchResults ? 'opacity-0 h-0 overflow-hidden' : 'opacity-100'}`}>
         <div className="space-y-12">
           <section id="articles">
             <div className="flex justify-between items-center mb-6">
@@ -73,8 +74,9 @@ const Home: React.FC = () => {
               <p className="text-center text-lg mb-4">热爱创造与表达的多面体，致力于将诗意融入产品设计。</p>
               <div className="flex justify-center flex-wrap gap-3">
                 <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">✍️ 诗人</span>
-                <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">💡 产品设计与开发</span>
+                <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">⚡ Builder</span>
                 <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">🚀 创业者</span>
+                <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">💡 产品设计与开发</span>
                 <span className="bg-white bg-opacity-20 text-white text-sm font-medium px-4 py-1.5 rounded-full">🧠 INTJ</span>
               </div>
             </div>
@@ -82,7 +84,7 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      {isSearchActive && (
+      {showSearchResults && (
         <div className="transition-opacity duration-500 opacity-100">
           <SearchResults />
         </div>
