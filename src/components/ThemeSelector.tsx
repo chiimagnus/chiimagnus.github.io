@@ -5,7 +5,6 @@ export const ThemeSelector = () => {
 
   return (
     <div>
-      {/* <h3 className="text-base font-semibold mb-3 text-gray-300">主题切换</h3> */}
       <div className="flex flex-nowrap items-center justify-between">
         {availableThemes.map((theme) => (
           <button
