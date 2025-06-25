@@ -33,8 +33,6 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
   const feDisplacementMapRef = useRef<SVGFEDisplacementMapElement>(null);
   
   const [id] = useState(generateId());
-  const mouse = useRef({ x: 0, y: 0 });
-  const mouseUsed = useRef(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -57,15 +55,6 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
       
       const context = canvas.getContext('2d', { willReadFrequently: true });
       if (!context) return;
-      
-      const mouseProxy = new Proxy(mouse.current, {
-        get: (target, prop: 'x' | 'y') => {
-          mouseUsed.current = true;
-          return target[prop];
-        }
-      });
-      
-      mouseUsed.current = false;
       
       const data = new Uint8ClampedArray(w * h * 4);
       let maxScale = 0;
@@ -113,17 +102,6 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
       feDisplacementMapRef.current.setAttribute('scale', maxScale.toString());
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      mouse.current.x = (e.clientX - rect.left) / rect.width;
-      mouse.current.y = (e.clientY - rect.top) / rect.height;
-      
-      if (mouseUsed.current) {
-        requestAnimationFrame(updateShader);
-      }
-    };
-
     updateShader(); // Initial render
     
     // Use ResizeObserver to update on size changes
@@ -131,11 +109,9 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
         requestAnimationFrame(updateShader)
     });
     resizeObserver.observe(container);
-    window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       resizeObserver.unobserve(container);
-      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [id]);
 
