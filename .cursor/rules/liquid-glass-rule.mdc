@@ -3,91 +3,90 @@ description:
 globs: 
 alwaysApply: false
 ---
-# 使用 liquid-glass-react 实现液态玻璃效果
+# 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
 
-本指南说明如何在项目中应用 `liquid-glass-react` 组件来替代标准的毛玻璃效果，以实现更具动态和交互性的液态玻璃 UI。
+本指南说明如何在项目中应用我们自定义的 `[src/components/LiquidGlass.tsx](mdc:src/components/LiquidGlass.tsx)` 组件，以实现动态的、有呼吸感的液态玻璃 UI。此组件并非外部库，而是根据原生 JavaScript 脚本为本项目量身定制的。
 
-## 1. 安装依赖
+## 1. 实现原理
 
-首先，确保已安装 `liquid-glass-react`：
-
-```bash
-npm install liquid-glass-react
-```
+该组件通过以下技术组合实现：
+- **React Hooks**: 使用 `useRef`, `useState`, 和 `useEffect` 管理组件生命周期和 DOM 元素。
+- **Canvas API**: 在一个隐藏的 `<canvas>` 元素上实时绘制位移图（Displacement Map）。
+- **SVG 滤镜**: 使用 `<feDisplacementMap>` SVG 滤镜来读取 Canvas 生成的图像，并将其作为扭曲效果应用到 DOM 元素上。
+- **CSS `backdrop-filter`**: 将最终的扭曲和模糊效果应用到组件背景上，使其影响下层内容。
 
 ## 2. 基本用法
 
-将需要应用液态玻璃效果的组件包裹在 `LiquidGlass` 组件中。
+将需要应用液态玻璃效果的 UI 块包裹在 `LiquidGlass` 组件中。
 
 ```tsx
-import LiquidGlass from 'liquid-glass-react';
+import LiquidGlass from './LiquidGlass'; // 确保路径正确
 
-const MyComponent = () => (
-  <LiquidGlass>
-    <div>
-      {/* 你的内容 */}
+const MyCard = () => (
+  <LiquidGlass className="rounded-2xl overflow-hidden">
+    <div className="p-4">
+      {/* 你的内容，通常背景是透明的 */}
     </div>
   </LiquidGlass>
 );
 ```
 
-## 3. 应用场景
+## 3. 当前应用场景
 
-### a. 侧边栏和主要布局
+- **侧边栏卡片**: 在 `[src/components/Sidebar.tsx](mdc:src/components/Sidebar.tsx)` 中，每一个功能卡片（如个人资料、导航链接、主题选择器和搜索框）都被独立的 `LiquidGlass` 组件包裹，形成多个分离的玻璃面板。
+- **汉堡菜单**: 在 `[src/components/Layout.tsx](mdc:src/components/Layout.tsx)` 中，用于在移动端展开侧边栏的汉堡菜单按钮也被此效果包裹，以保持视觉统一。
 
-在 `[src/components/Layout.tsx](mdc:src/components/Layout.tsx)` 中，`Sidebar` 和右侧内容区域的背景都应用了此效果，以提供统一的视觉体验。
+## 4. 如何配置效果参数
 
-### b. 可交互卡片
+所有参数的配置都在 `[src/components/LiquidGlass.tsx](mdc:src/components/LiquidGlass.tsx)` 文件内部完成，该组件目前不通过 props 接收配置。
 
-对于像 `[src/components/BlogCard.tsx](mdc:src/components/BlogCard.tsx)` 和 `[src/components/ProductCard.tsx](mdc:src/components/ProductCard.tsx)` 这样的卡片组件，可以使用 `LiquidGlass` 作为根元素，并调整 `elasticity` 和 `displacementScale` 等属性来增强悬停和点击时的交互感。
+### a. 背景滤镜效果 (模糊度, 对比度等)
 
-## 4. 关键属性
-
-- `elasticity`: 控制"液体"的弹性感觉（0 表示刚性，越高越有弹性）。
-- `displacementScale`: 控制位移效果的强度。
-- `blurAmount`: 控制模糊/霜冻程度。
-- `cornerRadius`: 设置边框圆角。
-
-## 5. 常用配置
-
-### 侧边栏卡片
+- **位置**: 文件底部的 `return` 语句中，修改 `style` 对象的 `backdropFilter` 属性。
+- **可调参数**:
+  - `blur(12px)`: 控制背景的模糊程度。值越大越模糊。
+  - `contrast(1.2)`: 控制对比度。
+  - `brightness(1.05)`: 控制亮度。
+  - `saturate(1.1)`: 控制饱和度。
 ```tsx
-<LiquidGlass
-  cornerRadius={16}
-  elasticity={0.2}
->
-  {/* 内容 */}
-</LiquidGlass>
+style={{
+  backdropFilter: `url(#${id}_filter) blur(12px) contrast(1.2) brightness(1.05) saturate(1.1)`,
+  // ...
+}}
 ```
 
-### 博客和产品卡片
+### b. 立体光影效果
+
+- **位置**: 同上，修改 `style` 对象的 `boxShadow` 属性。
+- **说明**: `boxShadow` 可以同时设置外阴影和内阴影（`inset`），以增强玻璃的立体感和悬浮感。
 ```tsx
-<LiquidGlass
-  cornerRadius={12}
-  elasticity={0.3}
-  displacementScale={50}
-  className="transition-transform hover:scale-105"
->
-  {/* 内容 */}
-</LiquidGlass>
+style={{
+  // ...
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15)',
+}}
 ```
 
-### 主内容区域
+### c. 扭曲强度 (Distortion Intensity)
+
+- **位置**: `useEffect` 钩子内部的 `updateShader` 函数中。
+- **说明**: 修改 `maxScale` 计算公式中的乘数。值越小，由鼠标移动引起的扭曲效果越轻微。
 ```tsx
-<LiquidGlass
-  mouseContainer={containerRef}
-  cornerRadius={16}
-  elasticity={0.05}
-  displacementScale={40}
->
-  {/* 内容 */}
-</LiquidGlass>
+// 约在第 85 行
+maxScale = Math.max(1, maxScale * 0.3); // 修改 0.3 这个值
 ```
 
-通过调整这些属性，可以为不同的 UI 元素创建独特的液态玻璃质感。
+### d. 边缘柔和度与形状
 
-## 6. 注意事项
+- **位置**: `updateShader` 函数内部的 `fragment` 函数。
+- **说明**: 通过调整 `roundedRectSDF` 和 `smoothStep` 的参数可以改变玻璃效果的形状和边缘的羽化程度。
+```tsx
+// 约在第 73-75 行
+const distanceToEdge = roundedRectSDF(ixAdjusted, iy, 0.4 * aspectRatio, 0.4, 0.4); 
+const displacement = smoothStep(0.8, 0.0, distanceToEdge - 0.15);
+```
 
-- Safari 和 Firefox 对位移效果的支持有限
-- 使用 `mouseContainer` 属性可以让效果响应更大区域的鼠标移动
-- 适当的 `elasticity` 值可以创造更自然的交互感觉
+## 5. 注意事项
+
+- **性能**: 此效果涉及实时 Canvas 绘制，请避免在单个页面上过度使用，以免影响性能。
+- **浏览器兼容性**: 效果核心依赖 `backdrop-filter`，在某些旧版浏览器上可能不支持。
+- **全局修改**: 由于参数是硬编码在组件内的，任何修改都会影响到所有使用 `LiquidGlass` 的地方。
