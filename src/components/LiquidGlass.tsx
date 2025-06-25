@@ -143,7 +143,11 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
     <div
       ref={containerRef}
       className={className}
-      style={{
+        style={{
+        // 参数-模糊度 blur
+        // 参数-对比度 contrast
+        // 参数-亮度 brightness
+        // 参数-饱和度 saturate
         backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
         WebkitBackdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
         boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15)',
