@@ -70,7 +70,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
       >
         {/* Profile Card */}
         <LiquidGlass className="rounded-2xl overflow-hidden">
-          <div className="bg-black/30 p-4 text-center">
+          <div className="p-4 text-center">
             <div className="flex justify-between items-start lg:justify-center">
               <div className="flex flex-col items-center w-full">
                 <img src="/avatar.png" alt="头像" className="w-24 h-24 rounded-full mb-4 border-2 border-white" />
@@ -91,7 +91,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
         {/* Navigation Card */}
         <LiquidGlass className="rounded-2xl overflow-hidden">
-          <div className="bg-black/30">
+          <div>
             <nav>
               <ul className="space-y-1 p-2">
                 {navItems.map((item) => (
@@ -112,14 +112,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
         {/* Theme Selector Card */}
         <LiquidGlass className="rounded-2xl overflow-hidden">
-          <div className="bg-black/30 p-4">
+          <div className="p-4">
             <ThemeSelector />
           </div>
         </LiquidGlass>
         
         {/* Search Card */}
         <LiquidGlass className="rounded-2xl overflow-hidden">
-          <div className="relative bg-black/30 rounded-2xl">
+          <div className="relative rounded-2xl">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-300" />
             </div>
