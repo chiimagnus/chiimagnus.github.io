@@ -1,7 +1,7 @@
 ---
 description: 
 globs: 
-alwaysApply: false
+alwaysApply: true
 ---
 # 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
 
