@@ -75,14 +75,13 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
       const fragment = (uv: { x: number; y: number; }) => {
         const ix = uv.x - 0.5;
         const iy = uv.y - 0.5;
-        const distanceToEdge = roundedRectSDF(ix, iy, 0.5, 0.5, 0.1); // Use relative size
-    
-        // 参数-边缘柔和度 smoothStep
-        // 第一个参数（0.6）：边缘过渡的起始阈值，值越小，效果范围越广。
-        // 第二个参数（0.0）：边缘过渡的结束阈值，值越大，效果越集中。
-        const displacement = smoothStep(0.6, 0.0, distanceToEdge);
+        // Use aspect ratio to avoid stretching
+        const aspectRatio = w / h;
+        const ixAdjusted = ix * aspectRatio;
+
+        const distanceToEdge = roundedRectSDF(ixAdjusted, iy, 0.4 * aspectRatio, 0.4, 0.4); 
+        const displacement = smoothStep(0.8, 0.0, distanceToEdge - 0.15);
         const scaled = smoothStep(0, 1, displacement);
-        
         return { x: ix * scaled + 0.5, y: iy * scaled + 0.5 };
       };
       
@@ -144,13 +143,10 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
     <div
       ref={containerRef}
       className={className}
-        style={{
-        // 参数-模糊度 blur
-        // 参数-对比度 contrast
-        // 参数-亮度 brightness
-        // 参数-饱和度 saturate
-        backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.4) brightness(1.1) saturate(1.05)`,
-        WebkitBackdropFilter: `url(#${id}_filter) blur(1px) contrast(1.4) brightness(1.1) saturate(1.05)`,
+      style={{
+        backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
+        WebkitBackdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
+        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15)',
       }}
     >
       {children}
