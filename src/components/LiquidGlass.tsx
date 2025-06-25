@@ -76,6 +76,8 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
         const ix = uv.x - 0.5;
         const iy = uv.y - 0.5;
         const distanceToEdge = roundedRectSDF(ix, iy, 0.5, 0.5, 0.1); // Use relative size
+        
+        // 参数-边缘柔和度smoothStep
         const displacement = smoothStep(0.6, 0.0, distanceToEdge);
         const scaled = smoothStep(0, 1, displacement);
         return { x: ix * scaled + 0.5, y: iy * scaled + 0.5 };
@@ -91,7 +93,8 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
         rawValues.push(dx, dy);
       }
       
-      maxScale = Math.max(1, maxScale * 0.5); // Avoid division by zero and control intensity
+      // 参数-扭曲度scale
+      maxScale = Math.max(1, maxScale * 5); 
 
       let index = 0;
       for (let i = 0; i < data.length; i += 4) {
@@ -138,9 +141,13 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
     <div
       ref={containerRef}
       className={className}
-      style={{
-        backdropFilter: `url(#${id}_filter) blur(10px) contrast(1.2) brightness(1.1) saturate(1.1)`,
-        WebkitBackdropFilter: `url(#${id}_filter) blur(10px) contrast(1.2) brightness(1.1) saturate(1.1)`,
+        style={{
+        // 参数-模糊度blur
+        // 参数-对比度contrast
+        // 参数-亮度brightness
+        // 参数-饱和度saturate
+        backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.1) saturate(1.1)`,
+        WebkitBackdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.1) saturate(1.1)`,
       }}
     >
       {children}
