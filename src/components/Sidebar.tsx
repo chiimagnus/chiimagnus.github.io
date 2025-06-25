@@ -57,20 +57,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
 
   return (
     <>
-      {/* Overlay for mobile */}
+      {/* Overlay for mobile, now transparent */}
       <div 
-        className={`fixed inset-0 bg-black/60 z-30 lg:hidden ${isOpen ? 'block' : 'hidden'}`}
+        className={`fixed inset-0 z-30 lg:hidden ${isOpen ? 'block' : 'hidden'}`}
         onClick={() => setIsOpen(false)}
       ></div>
 
       <aside 
-        className={`fixed top-0 left-0 h-full w-64 flex-shrink-0 flex flex-col px-4 pt-6 pb-4 lg:justify-center space-y-4 z-40 transform transition-transform duration-300 ease-in-out lg:transform-none
-          ${isOpen ? 'translate-x-0' : '-translate-x-full'}`
+        className={`fixed inset-y-4 left-4 w-64 z-40 transform transition-transform duration-300 ease-in-out
+          ${isOpen ? 'translate-x-0' : '-translate-x-[calc(100%+1rem)]'} lg:translate-x-0 flex flex-col space-y-4 p-0`
         }
       >
         {/* Profile Card */}
-        <LiquidGlass className="rounded-2xl">
-          <div className="bg-black/30 rounded-2xl p-4 text-center">
+        <LiquidGlass className="rounded-2xl overflow-hidden">
+          <div className="bg-black/30 p-4 text-center">
             <div className="flex justify-between items-start lg:justify-center">
               <div className="flex flex-col items-center w-full">
                 <img src="/avatar.png" alt="头像" className="w-24 h-24 rounded-full mb-4 border-2 border-white" />
@@ -90,8 +90,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         </LiquidGlass>
 
         {/* Navigation Card */}
-        <LiquidGlass className="rounded-2xl">
-          <div className="bg-black/30 rounded-2xl">
+        <LiquidGlass className="rounded-2xl overflow-hidden">
+          <div className="bg-black/30">
             <nav>
               <ul className="space-y-1 p-2">
                 {navItems.map((item) => (
@@ -111,14 +111,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
         </LiquidGlass>
 
         {/* Theme Selector Card */}
-        <LiquidGlass className="rounded-2xl">
-          <div className="bg-black/30 rounded-2xl p-4">
+        <LiquidGlass className="rounded-2xl overflow-hidden">
+          <div className="bg-black/30 p-4">
             <ThemeSelector />
           </div>
         </LiquidGlass>
         
         {/* Search Card */}
-        <LiquidGlass className="rounded-2xl">
+        <LiquidGlass className="rounded-2xl overflow-hidden">
           <div className="relative bg-black/30 rounded-2xl">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-300" />

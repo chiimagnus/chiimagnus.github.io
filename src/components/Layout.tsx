@@ -12,7 +12,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     <SearchProvider>
       <div className="min-h-screen flex">
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />
-        <div className="flex-1 flex flex-col lg:ml-64">
+        <div className="flex-1 flex flex-col lg:ml-72">
           <main className="flex-1 p-6 pt-16 sm:p-8 sm:pt-16 lg:p-10 relative">
             <LiquidGlass 
               className={`lg:hidden rounded-md fixed top-4 left-4 z-50 overflow-hidden ${isSidebarOpen ? 'hidden' : ''}`}
