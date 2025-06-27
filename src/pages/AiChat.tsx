@@ -65,8 +65,8 @@ const AiChat: React.FC = () => {
     const relevantContent = findRelevantContent(input);
     
     try {
-      // IMPORTANT: Replace with your actual Cloudflare Worker URL
-      const response = await fetch('YOUR_CLOUDFLARE_WORKER_URL', {
+      // The Cloudflare Worker URL is now set to the deployed address.
+      const response = await fetch('https://chii-ai-assistant.chiimagnus.workers.dev', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
