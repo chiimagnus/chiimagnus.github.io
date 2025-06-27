@@ -14,11 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Router>
         <Routes>
           <Route path="/lifewealth" element={<LifeWealth />} />
-          <Route path="/ai-chat" element={
-            <Layout showSidebar={false}>
-              <AiChat />
-            </Layout>
-          } />
+          <Route path="/ai-chat" element={<AiChat />} />
           <Route path="/" element={
             <Layout>
               <Home />
