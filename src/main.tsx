@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './index.css'
 import Home from './pages/Home'
 import LifeWealth from './pages/LifeWealth'
+import AiChat from './pages/AiChat'
 import Layout from './components/Layout'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -13,6 +14,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Router>
         <Routes>
           <Route path="/lifewealth" element={<LifeWealth />} />
+          <Route path="/ai-chat" element={
+            <Layout showSidebar={false}>
+              <AiChat />
+            </Layout>
+          } />
           <Route path="/" element={
             <Layout>
               <Home />

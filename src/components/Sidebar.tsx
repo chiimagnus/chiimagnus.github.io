@@ -1,16 +1,19 @@
 import React, {useRef, useEffect } from 'react';
-import { Github, Mail, Search, X } from 'lucide-react';
+import { Github, Mail, Search, X, Bot } from 'lucide-react';
 import { Bilibili } from '../../public/Bilibili';
 import { Dedao } from '../../public/Dedao';
 import { useSearch } from '../context/SearchContext';
 import { ThemeSelector } from './ThemeSelector';
 import LiquidGlass from './LiquidGlass';
+import { Link } from 'react-router-dom';
 
 const navItems = [
-  { label: '文章', id: 'articles' },
-  { label: '产品开发', id: 'products' },
-  { label: '关于我', id: 'about' },
+  { label: '文章', id: 'articles', isExternal: false },
+  { label: '产品开发', id: 'products', isExternal: false },
+  { label: '关于我', id: 'about', isExternal: false },
 ];
+
+const aiNavItem = { label: 'AI 问答', id: 'ai-chat', isExternal: true };
 
 interface SidebarProps {
   isOpen: boolean;
@@ -107,6 +110,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                 ))}
               </ul>
             </nav>
+          </div>
+        </LiquidGlass>
+
+        {/* AI Chat Card */}
+        <LiquidGlass className="rounded-2xl overflow-hidden">
+          <div className="p-2">
+            <Link
+              to="/ai-chat"
+              className="flex items-center py-2 px-4 rounded-lg text-left transition-all duration-200 ease-in-out text-white hover:bg-white/10"
+            >
+              <Bot size={20} className="mr-3" />
+              <span className="flex-1">{aiNavItem.label}</span>
+            </Link>
           </div>
         </LiquidGlass>
 
