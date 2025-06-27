@@ -13,7 +13,7 @@ const navItems = [
   { label: '关于我', id: 'about', isExternal: false },
 ];
 
-const aiNavItem = { label: 'AI 问答', id: 'ai-chat', isExternal: true };
+const aiNavItem = { label: 'AI 问答(Beta)', id: 'ai-chat', isExternal: true };
 
 interface SidebarProps {
   isOpen: boolean;
