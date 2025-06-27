@@ -8,12 +8,12 @@ import LiquidGlass from './LiquidGlass';
 import { Link } from 'react-router-dom';
 
 const navItems = [
-  { label: '文章', id: 'articles', isExternal: false },
-  { label: '产品开发', id: 'products', isExternal: false },
-  { label: '关于我', id: 'about', isExternal: false },
+  { label: '文章', id: 'articles'},
+  { label: '产品开发', id: 'products'},
+  { label: '关于我', id: 'about'},
 ];
 
-const aiNavItem = { label: 'Chii的AI小助手(Beta)', id: 'ai-chat', isExternal: true };
+const aiNavItem = { label: 'Chii的AI小助手(Beta)', id: 'ai-chat'};
 
 interface SidebarProps {
   isOpen: boolean;
