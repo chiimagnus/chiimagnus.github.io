@@ -104,9 +104,9 @@ const LiquidGlass: React.FC<LiquidGlassProps> = ({ children, className }) => {
 
     updateShader(); // Initial render
     
-    // Use ResizeObserver to update on size changes
+    // 使用 ResizeObserver 监听尺寸变化并更新效果
     const resizeObserver = new ResizeObserver(() => {
-        requestAnimationFrame(updateShader)
+        updateShader();
     });
     resizeObserver.observe(container);
 
