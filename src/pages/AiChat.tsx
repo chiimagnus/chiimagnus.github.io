@@ -86,20 +86,51 @@ const AiChat: React.FC = () => {
         throw new Error('无法读取 AI 的响应。');
       }
       
-      let botMessageText = '';
       const botMessageId = Date.now() + 1;
+      let botMessageText = '';
 
       setMessages(prev => [...prev, { id: botMessageId, role: 'bot', text: '...' }]);
       
       const decoder = new TextDecoder();
-      while (true) {
+      let buffer = '';
+      let streamEnded = false;
+
+      while (!streamEnded) {
         const { done, value } = await reader.read();
-        if (done) break;
-        botMessageText += decoder.decode(value, { stream: true });
-        setMessages(prev => prev.map(msg => 
-          msg.id === botMessageId ? { ...msg, text: botMessageText + '...' } : msg
-        ));
+        
+        if (done) {
+          streamEnded = true;
+          break;
+        }
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const jsonString = line.slice(6).trim();
+            if (jsonString === '[DONE]') {
+              streamEnded = true;
+              break; 
+            }
+            try {
+              const parsed = JSON.parse(jsonString);
+              const content = parsed.choices?.[0]?.delta?.content;
+
+              if (content) {
+                botMessageText += content;
+                setMessages(prev => prev.map(msg => 
+                  msg.id === botMessageId ? { ...msg, text: botMessageText + '...' } : msg
+                ));
+              }
+            } catch (e) {
+              console.error('Failed to parse JSON:', jsonString, e);
+            }
+          }
+        }
       }
+      
       setMessages(prev => prev.map(msg => 
         msg.id === botMessageId ? { ...msg, text: botMessageText } : msg
       ));
