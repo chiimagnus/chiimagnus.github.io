@@ -46,12 +46,12 @@ const HorizontalTagFilter: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className="flex items-center space-x-3 w-full">
       {/* 清除按钮 */}
       {selectedTags.length > 0 && (
         <button
           onClick={handleClearAll}
-          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap"
+          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0"
         >
           <X size={14} />
           <span>清除</span>
@@ -59,8 +59,8 @@ const HorizontalTagFilter: React.FC = () => {
       )}
 
       {/* 水平滚动标签容器 */}
-      <div className="flex-1 overflow-x-auto scrollbar-hide">
-        <div className="flex space-x-2 pb-1">
+      <div className="flex-1 overflow-x-auto scrollbar-hide" style={{ minWidth: 0 }}>
+        <div className="flex space-x-2 pb-1" style={{ width: 'max-content' }}>
           {availableTags.map((tag) => {
             const isSelected = selectedTags.includes(tag);
             return (
