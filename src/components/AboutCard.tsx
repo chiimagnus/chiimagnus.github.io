@@ -61,7 +61,6 @@ const AboutCard: React.FC = () => {
 
       <LiquidGlass className="rounded-2xl overflow-hidden">
         <div className="p-8">
-          <h3 className="text-center text-2xl font-bold mb-8 text-white">个人特质</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
             {personalTraits.map((trait, index) => (
               <div key={index} className="text-center group">
@@ -82,7 +81,7 @@ const AboutCard: React.FC = () => {
 
       <LiquidGlass className="rounded-2xl overflow-hidden">
         <div className="p-8">
-          <h3 className="text-center text-2xl font-bold mb-8 text-white">核心技能</h3>
+          <h3 className="text-center text-2xl font-bold mb-8 text-white">核心技能：Vibe Coding</h3>
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div>
