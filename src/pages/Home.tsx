@@ -54,9 +54,9 @@ const Home: React.FC = () => {
           </section>
 
           <section id="products">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
-              <h2 className="text-2xl font-bold">产品开发</h2>
-              <div className="flex-1 sm:ml-6 min-w-0">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0 min-w-0">
+              <h2 className="text-2xl font-bold flex-shrink-0">产品开发</h2>
+              <div className="flex-1 sm:ml-6 min-w-0 overflow-hidden">
                 <HorizontalTagFilter />
               </div>
             </div>
