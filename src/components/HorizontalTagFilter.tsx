@@ -46,12 +46,12 @@ const HorizontalTagFilter: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center space-x-3 w-full">
+    <div className="flex items-center space-x-2 sm:space-x-3 w-full">
       {/* 清除按钮 */}
       {selectedTags.length > 0 && (
         <button
           onClick={handleClearAll}
-          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0"
+          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0 touch-manipulation min-h-[32px] px-1"
         >
           <X size={14} />
           <span>清除</span>
@@ -60,7 +60,7 @@ const HorizontalTagFilter: React.FC = () => {
 
       {/* 水平滚动标签容器 */}
       <div className="flex-1 overflow-x-auto scrollbar-hide py-1" style={{ minWidth: 0 }}>
-        <div className="flex space-x-2" style={{ width: 'max-content' }}>
+        <div className="flex space-x-2 sm:space-x-2" style={{ width: 'max-content' }}>
           {availableTags.map((tag) => {
             const isSelected = selectedTags.includes(tag);
             return (
@@ -68,10 +68,11 @@ const HorizontalTagFilter: React.FC = () => {
                 key={tag}
                 onClick={() => handleTagToggle(tag)}
                 className={`
-                  text-xs font-medium px-3 py-1.5 rounded-full border transition-all duration-200 
-                  hover:scale-105 active:scale-95 whitespace-nowrap flex-shrink-0
-                  ${isSelected 
-                    ? getSelectedTagColor(tag) 
+                  text-xs sm:text-xs font-medium px-2.5 sm:px-3 py-1.5 sm:py-1.5 rounded-full border
+                  transition-all duration-200 hover:scale-105 active:scale-95 whitespace-nowrap flex-shrink-0
+                  touch-manipulation min-h-[32px] sm:min-h-auto
+                  ${isSelected
+                    ? getSelectedTagColor(tag)
                     : getTagColor(tag) + ' hover:bg-white/30'
                   }
                 `}
