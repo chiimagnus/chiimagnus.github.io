@@ -6,6 +6,7 @@ import { BlogPost } from '../types';
 import { useSearch } from '../context/SearchContext';
 import SearchResults from '../components/SearchResults';
 import AboutCard from '../components/AboutCard';
+import HorizontalTagFilter from '../components/HorizontalTagFilter';
 
 const Home: React.FC = () => {
   const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
@@ -53,7 +54,12 @@ const Home: React.FC = () => {
           </section>
 
           <section id="products">
-            <h2 className="text-2xl font-bold mb-6">产品开发</h2>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 space-y-4 sm:space-y-0">
+              <h2 className="text-2xl font-bold">产品开发</h2>
+              <div className="flex-1 sm:ml-6">
+                <HorizontalTagFilter />
+              </div>
+            </div>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {filteredProducts.map((product, index) => (
                 <ProductCard
