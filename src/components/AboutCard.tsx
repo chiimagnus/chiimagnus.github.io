@@ -2,33 +2,6 @@ import React from 'react';
 import LiquidGlass from './LiquidGlass';
 
 const AboutCard: React.FC = () => {
-  const personalTraits = [
-    {
-      icon: '💡',
-      title: '创新思维',
-      description: '探索新技术与创意解决方案'
-    },
-    {
-      icon: '📚',
-      title: '自主学习',
-      description: '快速掌握并应用新技术'
-    },
-    {
-      icon: '🤝',
-      title: '团队协作',
-      description: '良好沟通与团队合作'
-    },
-    {
-      icon: '🔍',
-      title: '细节导向',
-      description: '注重代码质量与用户体验'
-    },
-    {
-      icon: '🌱',
-      title: '长期视角',
-      description: '重视可维护性与可持续发展'
-    }
-  ];
 
   const coreSkills = [
     { icon: '📱', name: 'iOS/macOS', tech: 'Swift' },
@@ -38,13 +11,7 @@ const AboutCard: React.FC = () => {
     { icon: '🎨', name: '产品设计', tech: 'UX/UI' }
   ];
 
-  const vibeCodingTraits = [
-    { emoji: '🎵', text: '用音乐节奏编码' },
-    { emoji: '✨', text: '直觉驱动开发' },
-    { emoji: '🌊', text: '流畅的代码流' },
-    { emoji: '🔮', text: '预见性设计' },
-    { emoji: '🎨', text: '美学与功能并重' }
-  ];
+
 
   return (
     <div className="space-y-6">

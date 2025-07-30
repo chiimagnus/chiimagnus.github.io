@@ -1,5 +1,4 @@
 import React from 'react';
-import { X } from 'lucide-react';
 import { useSearch } from '../context/SearchContext';
 
 const TagFilter: React.FC = () => {
