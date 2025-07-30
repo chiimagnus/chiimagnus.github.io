@@ -30,6 +30,20 @@ const AboutCard: React.FC = () => {
     }
   ];
 
+  const frontendSkills = [
+    { name: 'JavaScript/TypeScript', level: '熟练掌握', desc: '现代前端开发，熟悉ES6+特性' },
+    { name: 'React基础知识', level: '了解', desc: 'React核心概念和组件开发' },
+    { name: '浏览器扩展开发', level: '熟悉', desc: 'Chrome扩展开发流程和API' },
+    { name: 'Swift', level: '熟练掌握', desc: 'iOS/macOS原生应用开发' }
+  ];
+
+  const otherSkills = [
+    { name: 'Git', level: '熟练', desc: '版本控制和团队协作经验' },
+    { name: 'AI集成', level: '具备', desc: 'AI模型集成和应用开发经验' },
+    { name: '插件开发', level: '熟悉', desc: '浏览器扩展和各种IDE插件开发' },
+    { name: '跨平台开发', level: '具备', desc: 'iOS、macOS、Web多平台开发经验' }
+  ];
+
   return (
     <div className="space-y-6">
       <LiquidGlass className="rounded-2xl overflow-hidden">
@@ -65,8 +79,46 @@ const AboutCard: React.FC = () => {
           </div>
         </div>
       </LiquidGlass>
+
+      <LiquidGlass className="rounded-2xl overflow-hidden">
+        <div className="p-8">
+          <h3 className="text-center text-2xl font-bold mb-8 text-white">核心技能</h3>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h4 className="text-xl font-semibold mb-4 text-white">前端开发</h4>
+              <div className="space-y-3">
+                {frontendSkills.map((skill, index) => (
+                  <div key={index} className="bg-white bg-opacity-10 rounded-lg p-3">
+                    <div className="flex justify-between items-start mb-1">
+                      <h5 className="text-white font-medium">{skill.name}</h5>
+                      <span className="text-xs bg-white bg-opacity-20 text-white px-2 py-1 rounded-full">{skill.level}</span>
+                    </div>
+                    <p className="text-white text-opacity-70 text-sm">{skill.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-xl font-semibold mb-4 text-white">开发工具 & 其他</h4>
+              <div className="space-y-3">
+                {otherSkills.map((skill, index) => (
+                  <div key={index} className="bg-white bg-opacity-10 rounded-lg p-3">
+                    <div className="flex justify-between items-start mb-1">
+                      <h5 className="text-white font-medium">{skill.name}</h5>
+                      <span className="text-xs bg-white bg-opacity-20 text-white px-2 py-1 rounded-full">{skill.level}</span>
+                    </div>
+                    <p className="text-white text-opacity-70 text-sm">{skill.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </LiquidGlass>
     </div>
   );
 };
 
-export default AboutCard; 
+export default AboutCard;
