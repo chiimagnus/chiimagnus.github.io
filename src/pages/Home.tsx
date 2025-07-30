@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import BlogCard from '../components/BlogCard';
 import ProductCard from '../components/ProductCard';
 import articlesData from '../data/articles.json';
-import productsData from '../data/products.json';
 import { BlogPost } from '../types';
 import { useSearch } from '../context/SearchContext';
 import SearchResults from '../components/SearchResults';
@@ -10,7 +9,7 @@ import AboutCard from '../components/AboutCard';
 
 const Home: React.FC = () => {
   const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);
-  const { searchQuery } = useSearch();
+  const { searchQuery, filteredProducts } = useSearch();
   const showSearchResults = searchQuery.trim() !== '';
 
   // 将 JSON 数据转换为 BlogPost 格式
@@ -56,7 +55,7 @@ const Home: React.FC = () => {
           <section id="products">
             <h2 className="text-2xl font-bold mb-6">产品开发</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {productsData.map((product, index) => (
+              {filteredProducts.map((product, index) => (
                 <ProductCard
                   key={index}
                   title={product.title}

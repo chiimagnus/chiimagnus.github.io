@@ -5,6 +5,7 @@ import { Dedao } from '../../public/Dedao';
 import { useSearch } from '../context/SearchContext';
 import { ThemeSelector } from './ThemeSelector';
 import LiquidGlass from './LiquidGlass';
+import TagFilter from './TagFilter';
 import { Link } from 'react-router-dom';
 
 const navItems = [
@@ -147,6 +148,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
               onChange={handleSearchChange}
               className="w-full pl-10 pr-4 py-3 border-none rounded-2xl text-sm bg-transparent text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-primary"
             />
+          </div>
+        </LiquidGlass>
+
+        {/* Tag Filter Card */}
+        <LiquidGlass className="rounded-2xl overflow-hidden">
+          <div className="p-4">
+            <TagFilter />
           </div>
         </LiquidGlass>
       </aside>
