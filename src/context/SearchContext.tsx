@@ -21,6 +21,11 @@ interface SearchContextType {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   searchResults: SearchResult[];
+  // 产品标签过滤相关
+  selectedTags: string[];
+  setSelectedTags: (tags: string[]) => void;
+  availableTags: string[];
+  filteredProducts: Product[];
 }
 
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
@@ -28,6 +33,26 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  // 计算所有可用标签
+  const availableTags = useMemo(() => {
+    const allTags = new Set<string>();
+    productsData.forEach(product => {
+      product.tags.forEach(tag => allTags.add(tag));
+    });
+    return Array.from(allTags).sort();
+  }, []);
+
+  // 根据选中标签过滤产品
+  const filteredProducts = useMemo(() => {
+    if (selectedTags.length === 0) {
+      return productsData;
+    }
+    return productsData.filter(product =>
+      selectedTags.some(tag => product.tags.includes(tag))
+    );
+  }, [selectedTags]);
 
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -84,7 +109,11 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
     setIsSearchActive,
     searchQuery,
     setSearchQuery,
-    searchResults
+    searchResults,
+    selectedTags,
+    setSelectedTags,
+    availableTags,
+    filteredProducts
   };
 
   return (

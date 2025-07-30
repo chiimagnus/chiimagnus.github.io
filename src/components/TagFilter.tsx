@@ -1,0 +1,96 @@
+import React from 'react';
+import { X } from 'lucide-react';
+import { useSearch } from '../context/SearchContext';
+
+const TagFilter: React.FC = () => {
+  const { selectedTags, setSelectedTags, availableTags } = useSearch();
+
+  const handleTagToggle = (tag: string) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter(t => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
+  const handleClearAll = () => {
+    setSelectedTags([]);
+  };
+
+  const getTagColor = (tag: string) => {
+    if (tag.includes('归档')) return 'bg-red-400/20 text-red-300 border-red-400/30';
+    if (tag === 'iOS') return 'bg-blue-400/20 text-blue-300 border-blue-400/30';
+    if (tag === 'macOS') return 'bg-purple-400/20 text-purple-300 border-purple-400/30';
+    if (tag === 'React') return 'bg-cyan-400/20 text-cyan-300 border-cyan-400/30';
+    if (tag === 'TypeScript') return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+    if (tag === 'Plugin') return 'bg-green-400/20 text-green-300 border-green-400/30';
+    if (tag === 'swiftUI') return 'bg-orange-400/20 text-orange-300 border-orange-400/30';
+    if (tag.includes('语音')) return 'bg-pink-400/20 text-pink-300 border-pink-400/30';
+    return 'bg-white/20 text-white border-white/30';
+  };
+
+  const getSelectedTagColor = (tag: string) => {
+    if (tag.includes('归档')) return 'bg-red-400 text-red-900 border-red-400';
+    if (tag === 'iOS') return 'bg-blue-400 text-blue-900 border-blue-400';
+    if (tag === 'macOS') return 'bg-purple-400 text-purple-900 border-purple-400';
+    if (tag === 'React') return 'bg-cyan-400 text-cyan-900 border-cyan-400';
+    if (tag === 'TypeScript') return 'bg-blue-500 text-blue-900 border-blue-500';
+    if (tag === 'Plugin') return 'bg-green-400 text-green-900 border-green-400';
+    if (tag === 'swiftUI') return 'bg-orange-400 text-orange-900 border-orange-400';
+    if (tag.includes('语音')) return 'bg-pink-400 text-pink-900 border-pink-400';
+    return 'bg-white text-gray-900 border-white';
+  };
+
+  if (availableTags.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-3">
+      {/* 标题和清除按钮 */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-medium text-white/80">产品标签</h3>
+        {selectedTags.length > 0 && (
+          <button
+            onClick={handleClearAll}
+            className="text-xs text-white/60 hover:text-white/80 transition-colors"
+          >
+            清除全部
+          </button>
+        )}
+      </div>
+
+      {/* 标签列表 */}
+      <div className="flex flex-wrap gap-2">
+        {availableTags.map((tag) => {
+          const isSelected = selectedTags.includes(tag);
+          return (
+            <button
+              key={tag}
+              onClick={() => handleTagToggle(tag)}
+              className={`
+                text-xs font-medium px-2.5 py-1.5 rounded-full border transition-all duration-200 
+                hover:scale-105 active:scale-95
+                ${isSelected 
+                  ? getSelectedTagColor(tag) 
+                  : getTagColor(tag) + ' hover:bg-white/30'
+                }
+              `}
+            >
+              {tag}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* 选中标签计数 */}
+      {selectedTags.length > 0 && (
+        <div className="text-xs text-white/60">
+          已选择 {selectedTags.length} 个标签
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default TagFilter;

@@ -87,4 +87,15 @@
 
 .glass-card {
   @apply bg-glass-bg border border-glass-border rounded-xl shadow-glass backdrop-blur;
-} 
+}
+
+.scrollbar-hide {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* WebKit */
+}
