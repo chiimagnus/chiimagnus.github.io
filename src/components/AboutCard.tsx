@@ -30,18 +30,20 @@ const AboutCard: React.FC = () => {
     }
   ];
 
-  const frontendSkills = [
-    { name: 'JavaScript/TypeScript', level: '熟练掌握', desc: '现代前端开发，熟悉ES6+特性' },
-    { name: 'React基础知识', level: '了解', desc: 'React核心概念和组件开发' },
-    { name: '浏览器扩展开发', level: '熟悉', desc: 'Chrome扩展开发流程和API' },
-    { name: 'Swift', level: '熟练掌握', desc: 'iOS/macOS原生应用开发' }
+  const coreSkills = [
+    { icon: '📱', name: 'iOS/macOS', tech: 'Swift' },
+    { icon: '⚛️', name: 'React', tech: 'TypeScript' },
+    { icon: '🔌', name: '插件开发', tech: 'Chrome/IDE' },
+    { icon: '🤖', name: 'AI集成', tech: 'LLM/API' },
+    { icon: '🎨', name: '产品设计', tech: 'UX/UI' }
   ];
 
-  const otherSkills = [
-    { name: 'Git', level: '熟练', desc: '版本控制和团队协作经验' },
-    { name: 'AI集成', level: '具备', desc: 'AI模型集成和应用开发经验' },
-    { name: '插件开发', level: '熟悉', desc: '浏览器扩展和各种IDE插件开发' },
-    { name: '跨平台开发', level: '具备', desc: 'iOS、macOS、Web多平台开发经验' }
+  const vibeCodingTraits = [
+    { emoji: '🎵', text: '用音乐节奏编码' },
+    { emoji: '✨', text: '直觉驱动开发' },
+    { emoji: '🌊', text: '流畅的代码流' },
+    { emoji: '🔮', text: '预见性设计' },
+    { emoji: '🎨', text: '美学与功能并重' }
   ];
 
   return (
@@ -61,58 +63,19 @@ const AboutCard: React.FC = () => {
 
       <LiquidGlass className="rounded-2xl overflow-hidden">
         <div className="p-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {personalTraits.map((trait, index) => (
+          <h3 className="text-center text-2xl font-bold mb-8 text-white">核心技能：Vibe Coding</h3>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            {coreSkills.map((skill, index) => (
               <div key={index} className="text-center group">
-                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 transition-all duration-300 hover:bg-opacity-20 hover:scale-105 hover:shadow-lg">
-                  <div className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-300">
-                    {trait.icon}
+                <div className="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 transition-all duration-300 hover:bg-opacity-20 hover:scale-105">
+                  <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {skill.icon}
                   </div>
-                  <h4 className="text-white font-semibold text-lg mb-2">{trait.title}</h4>
-                  <p className="text-white text-opacity-70 text-sm leading-relaxed">
-                    {trait.description}
-                  </p>
+                  <h4 className="text-white font-semibold text-sm mb-1">{skill.name}</h4>
+                  <p className="text-white text-opacity-70 text-xs">{skill.tech}</p>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </LiquidGlass>
-
-      <LiquidGlass className="rounded-2xl overflow-hidden">
-        <div className="p-8">
-          <h3 className="text-center text-2xl font-bold mb-8 text-white">核心技能：Vibe Coding</h3>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-xl font-semibold mb-4 text-white">前端开发</h4>
-              <div className="space-y-3">
-                {frontendSkills.map((skill, index) => (
-                  <div key={index} className="bg-white bg-opacity-10 rounded-lg p-3">
-                    <div className="flex justify-between items-start mb-1">
-                      <h5 className="text-white font-medium">{skill.name}</h5>
-                      <span className="text-xs bg-white bg-opacity-20 text-white px-2 py-1 rounded-full">{skill.level}</span>
-                    </div>
-                    <p className="text-white text-opacity-70 text-sm">{skill.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h4 className="text-xl font-semibold mb-4 text-white">开发工具 & 其他</h4>
-              <div className="space-y-3">
-                {otherSkills.map((skill, index) => (
-                  <div key={index} className="bg-white bg-opacity-10 rounded-lg p-3">
-                    <div className="flex justify-between items-start mb-1">
-                      <h5 className="text-white font-medium">{skill.name}</h5>
-                      <span className="text-xs bg-white bg-opacity-20 text-white px-2 py-1 rounded-full">{skill.level}</span>
-                    </div>
-                    <p className="text-white text-opacity-70 text-sm">{skill.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </LiquidGlass>
