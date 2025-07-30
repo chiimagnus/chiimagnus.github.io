@@ -46,12 +46,12 @@ const HorizontalTagFilter: React.FC = () => {
   }
 
   return (
-    <div className="hidden sm:flex items-center space-x-2 sm:space-x-3 w-full min-w-0">
+    <div className="flex items-center w-full" style={{ minWidth: 0 }}>
       {/* 清除按钮 */}
       {selectedTags.length > 0 && (
         <button
           onClick={handleClearAll}
-          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0 touch-manipulation min-h-[32px] px-1"
+          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0 touch-manipulation min-h-[32px] px-1 mr-2"
         >
           <X size={14} />
           <span className="hidden sm:inline">清除</span>
@@ -59,8 +59,15 @@ const HorizontalTagFilter: React.FC = () => {
       )}
 
       {/* 水平滚动标签容器 */}
-      <div className="flex-1 overflow-x-auto scrollbar-hide py-1 min-w-0">
-        <div className="flex space-x-2 sm:space-x-2 w-max">
+      <div
+        className="overflow-x-auto scrollbar-hide py-1"
+        style={{
+          flex: '1 1 0%',
+          minWidth: 0,
+          width: 0
+        }}
+      >
+        <div className="flex space-x-2 sm:space-x-2" style={{ width: 'max-content' }}>
           {availableTags.map((tag) => {
             const isSelected = selectedTags.includes(tag);
             return (
@@ -86,7 +93,7 @@ const HorizontalTagFilter: React.FC = () => {
 
       {/* 选中计数 */}
       {selectedTags.length > 0 && (
-        <div className="text-xs text-white/60 whitespace-nowrap flex-shrink-0">
+        <div className="text-xs text-white/60 whitespace-nowrap flex-shrink-0 ml-2">
           {selectedTags.length}
         </div>
       )}
