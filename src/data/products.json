@@ -1,8 +1,20 @@
 [
   {
+    "title": "FrameWeavers 🎬",
+    "description": "用连环画重讲你们的故事",
+    "tags": ["swiftUI","iOS"],
+    "status": "🏆 AdventureX2025",
+    "links": [
+      {
+        "text": "GitHub",
+        "url": "https://github.com/chiimagnus/FrameWeavers"
+      }
+    ]
+  },
+  {
     "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
     "description": "LifeWealth 关系财富管理",
-    "tags": ["iOS", "macOS"],
+    "tags": ["swiftUI","iOS", "macOS"],
     "status": "🚀 即将发布！",
     "links": [
       {
@@ -14,7 +26,7 @@
   {
     "title": "AI-Search 🔌",
     "description": "Logseq插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
-    "tags": ["Logseq-Plugin", "AI"],
+    "tags": ["React","TypeScript","Plugin"],
     "status": "✅ 已发布",
     "links": [
       {
@@ -25,7 +37,7 @@
   },
   {
     "title": "Vniverse 🎯",
-    "description": "macOS软件，markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
+    "description": "markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
     "tags": ["macOS", "语音合成","📁 已归档"],
     "links": [
       {
@@ -37,7 +49,7 @@
   {
     "title": "ChatHistoryBox 📦",
     "description": "Chrome扩展，保存各个AI Chat对话记录为JSON文件。",
-    "tags": ["Chrome-Plugin","ChatHistory","📁 已归档"],
+    "tags": ["Plugin","ChatHistory","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
@@ -48,7 +60,7 @@
   {
     "title": "File-Path-to-Embed-Converter 🔗",
     "description": "Logseq 插件，用于快速将文件路径转换为 Logseq 的嵌入语法",
-    "tags": ["Logseq-Plugin","📁 已归档"],
+    "tags": ["React","TypeScript","Plugin","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
