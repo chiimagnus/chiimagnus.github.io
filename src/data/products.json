@@ -49,7 +49,7 @@
   {
     "title": "ChatHistoryBox 📦",
     "description": "Chrome扩展，保存各个AI Chat对话记录为JSON文件。",
-    "tags": ["Plugin","ChatHistory","📁 已归档"],
+    "tags": ["Plugin","TypeScript","📁 已归档"],
     "links": [
       {
         "text": "GitHub",
