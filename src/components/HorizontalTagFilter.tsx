@@ -59,8 +59,8 @@ const HorizontalTagFilter: React.FC = () => {
       )}
 
       {/* 水平滚动标签容器 */}
-      <div className="flex-1 overflow-x-auto scrollbar-hide" style={{ minWidth: 0 }}>
-        <div className="flex space-x-2 pb-1" style={{ width: 'max-content' }}>
+      <div className="flex-1 overflow-x-auto scrollbar-hide py-1" style={{ minWidth: 0 }}>
+        <div className="flex space-x-2" style={{ width: 'max-content' }}>
           {availableTags.map((tag) => {
             const isSelected = selectedTags.includes(tag);
             return (
