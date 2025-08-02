@@ -12,6 +12,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
     let mouseY = 0;
     let airplaneX = 0;
     let airplaneY = 0;
+    let animationId: number;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
@@ -22,18 +23,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
       if (airplaneRef.current) {
         airplaneX += (mouseX - airplaneX) * 0.1;
         airplaneY += (mouseY - airplaneY) * 0.1;
-        
-        airplaneRef.current.style.transform = 
+
+        // 保持基础的 translate(-50%, -50%) 并添加鼠标跟随效果
+        airplaneRef.current.style.transform =
           `translate(-50%, -50%) translateX(${airplaneX}px) translateY(${airplaneY}px) rotate(${airplaneX * 0.5}deg)`;
       }
-      requestAnimationFrame(animateAirplane);
+      animationId = requestAnimationFrame(animateAirplane);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    animateAirplane();
+    // 确保元素存在后再开始动画
+    if (airplaneRef.current) {
+      document.addEventListener('mousemove', handleMouseMove);
+      animateAirplane();
+    }
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
     };
   }, []);
 
@@ -100,11 +108,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             <div className="relative w-80 h-80">
               <div
                 ref={airplaneRef}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl text-blue-600 transition-transform duration-100 animate-pulse"
+                className="airplane-model absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl text-blue-600 transition-transform duration-100"
+                style={{ animation: 'float 3s ease-in-out infinite' }}
               >
                 <i className="fas fa-fighter-jet"></i>
               </div>
-              <div className="absolute top-1/2 left-1/2 w-48 h-48 border-3 border-dashed border-orange-400 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-60 animate-spin"></div>
+              <div
+                className="flight-path absolute top-1/2 left-1/2 w-48 h-48 border-4 border-dashed border-orange-400 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-60"
+                style={{ animation: 'rotate 10s linear infinite' }}
+              ></div>
             </div>
           </div>
         </div>
@@ -117,6 +129,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
           onClick={scrollToFeatures}
         ></div>
       </div>
+
+
     </section>
   );
 };

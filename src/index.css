@@ -19,6 +19,25 @@
     background-size: 400% 400%;
     animation: gradient-animation 15s ease infinite;
   }
+
+  /* JETJETJET 飞机动画 */
+  @keyframes float {
+    0%, 100% {
+      transform: translate(-50%, -50%) translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translate(-50%, -50%) translateY(-20px) rotate(5deg);
+    }
+  }
+
+  @keyframes rotate {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
 }
 
 @layer base {
