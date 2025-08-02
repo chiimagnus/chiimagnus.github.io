@@ -13,9 +13,7 @@ const TagFilter: React.FC = () => {
     }
   };
 
-  const handleClearAll = () => {
-    setSelectedTags([]);
-  };
+
 
   const getTagColor = (tag: string) => {
     if (tag === 'DOING') return 'bg-yellow-400/20 text-yellow-300 border-yellow-400/30';
@@ -37,17 +35,9 @@ const TagFilter: React.FC = () => {
 
   return (
     <div className="space-y-3">
-      {/* 标题和清除按钮 */}
-      <div className="flex items-center justify-between">
+      {/* 标题 */}
+      <div>
         <h3 className="text-sm font-medium text-white/80">产品标签</h3>
-        {selectedTags.length > 0 && (
-          <button
-            onClick={handleClearAll}
-            className="text-xs text-white/60 hover:text-white/80 transition-colors"
-          >
-            清除全部
-          </button>
-        )}
       </div>
 
       {/* 标签列表 */}
@@ -73,12 +63,7 @@ const TagFilter: React.FC = () => {
         })}
       </div>
 
-      {/* 选中状态 */}
-      {selectedTags.length > 0 && (
-        <div className="text-xs text-white/60">
-          已选择: {selectedTags[0]}
-        </div>
-      )}
+
     </div>
   );
 };

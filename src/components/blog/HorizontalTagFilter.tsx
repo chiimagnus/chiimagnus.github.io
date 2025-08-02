@@ -1,5 +1,4 @@
 import React from 'react';
-import { X } from 'lucide-react';
 import { useSearch } from '../../context/SearchContext';
 
 const HorizontalTagFilter: React.FC = () => {
@@ -14,9 +13,7 @@ const HorizontalTagFilter: React.FC = () => {
     }
   };
 
-  const handleClearAll = () => {
-    setSelectedTags([]);
-  };
+
 
   const getTagColor = (tag: string) => {
     if (tag === 'DOING') return 'bg-yellow-400/20 text-yellow-300 border-yellow-400/30';
@@ -38,16 +35,7 @@ const HorizontalTagFilter: React.FC = () => {
 
   return (
     <div className="flex items-center w-full" style={{ minWidth: 0 }}>
-      {/* 清除按钮 */}
-      {selectedTags.length > 0 && (
-        <button
-          onClick={handleClearAll}
-          className="flex items-center space-x-1 text-xs text-white/60 hover:text-white/80 transition-colors whitespace-nowrap flex-shrink-0 touch-manipulation min-h-[32px] px-1 mr-2"
-        >
-          <X size={14} />
-          <span className="hidden sm:inline">清除</span>
-        </button>
-      )}
+
 
       {/* 水平滚动标签容器 */}
       <div
@@ -82,12 +70,7 @@ const HorizontalTagFilter: React.FC = () => {
         </div>
       </div>
 
-      {/* 选中状态 */}
-      {selectedTags.length > 0 && (
-        <div className="text-xs text-white/60 whitespace-nowrap flex-shrink-0 ml-2">
-          ✓
-        </div>
-      )}
+
     </div>
   );
 };
