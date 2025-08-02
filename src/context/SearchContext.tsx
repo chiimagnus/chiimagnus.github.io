@@ -33,7 +33,7 @@ const SearchContext = createContext<SearchContextType | undefined>(undefined);
 export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [isSearchActive, setIsSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>(['DOING']);
 
   // 计算状态标签（DOING、DONE、Archive）
   const availableTags = useMemo(() => {

@@ -5,10 +5,11 @@ const TagFilter: React.FC = () => {
   const { selectedTags, setSelectedTags, availableTags } = useSearch();
 
   const handleTagToggle = (tag: string) => {
+    // 单选模式：如果点击已选中的标签，则取消选择；否则选择新标签
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(t => t !== tag));
+      setSelectedTags([]);
     } else {
-      setSelectedTags([...selectedTags, tag]);
+      setSelectedTags([tag]);
     }
   };
 
@@ -72,10 +73,10 @@ const TagFilter: React.FC = () => {
         })}
       </div>
 
-      {/* 选中标签计数 */}
+      {/* 选中状态 */}
       {selectedTags.length > 0 && (
         <div className="text-xs text-white/60">
-          已选择 {selectedTags.length} 个标签
+          已选择: {selectedTags[0]}
         </div>
       )}
     </div>
