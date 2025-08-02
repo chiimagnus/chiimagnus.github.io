@@ -18,7 +18,8 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ features, className =
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('animate-fade-in-up');
+          entry.target.classList.add('opacity-100', 'translate-y-0');
+          entry.target.classList.remove('opacity-0', 'translate-y-8');
         }
       });
     }, observerOptions);
@@ -50,15 +51,10 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ features, className =
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <div
               key={feature.id}
-              className="feature-card group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100"
-              style={{ 
-                opacity: 0,
-                transform: 'translateY(30px)',
-                animationDelay: `${index * 100}ms`
-              }}
+              className="feature-card group bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 opacity-0 translate-y-8"
             >
               <div className="flex flex-col items-center text-center">
                 {/* Icon */}
@@ -81,22 +77,7 @@ const FeaturesSection: React.FC<FeaturesSectionProps> = ({ features, className =
         </div>
       </div>
 
-      <style jsx>{`
-        @keyframes fade-in-up {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
 
-        .animate-fade-in-up {
-          animation: fade-in-up 0.6s ease-out forwards;
-        }
-      `}</style>
     </section>
   );
 };

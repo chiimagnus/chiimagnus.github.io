@@ -100,15 +100,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             <div className="relative w-80 h-80">
               <div
                 ref={airplaneRef}
-                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl text-blue-600 transition-transform duration-100"
-                style={{ animation: 'float 3s ease-in-out infinite' }}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl text-blue-600 transition-transform duration-100 animate-pulse"
               >
                 <i className="fas fa-fighter-jet"></i>
               </div>
-              <div 
-                className="absolute top-1/2 left-1/2 w-48 h-48 border-3 border-dashed border-orange-400 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-60"
-                style={{ animation: 'rotate 10s linear infinite' }}
-              ></div>
+              <div className="absolute top-1/2 left-1/2 w-48 h-48 border-3 border-dashed border-orange-400 rounded-full transform -translate-x-1/2 -translate-y-1/2 opacity-60 animate-spin"></div>
             </div>
           </div>
         </div>
@@ -116,23 +112,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div 
+        <div
           className="w-6 h-6 border-r-2 border-b-2 border-blue-600 transform rotate-45 cursor-pointer"
           onClick={scrollToFeatures}
         ></div>
       </div>
-
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translate(-50%, -50%) translateY(0px) rotate(0deg); }
-          50% { transform: translate(-50%, -50%) translateY(-20px) rotate(5deg); }
-        }
-        
-        @keyframes rotate {
-          from { transform: translate(-50%, -50%) rotate(0deg); }
-          to { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-      `}</style>
     </section>
   );
 };
