@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能演示 - JETJETJET</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/demo.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-fighter-jet"></i>
+                <span>JETJETJET</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="#recording" class="nav-link">录制演示</a></li>
+                <li><a href="#playback" class="nav-link">回放演示</a></li>
+                <li><a href="#data" class="nav-link">数据分析</a></li>
+                <li><a href="tech.html" class="nav-link">技术架构</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 演示页面标题 -->
+    <section class="demo-header">
+        <div class="container">
+            <h1>功能演示</h1>
+            <p>体验JETJETJET的核心功能，了解飞机运动追踪的完整流程</p>
+        </div>
+    </section>
+
+    <!-- 录制演示区域 -->
+    <section id="recording" class="demo-section">
+        <div class="container">
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h2>实时录制演示</h2>
+                    <p>模拟手机传感器数据采集过程，实时显示飞机姿态变化</p>
+                    <div class="demo-controls">
+                        <button id="startRecording" class="btn btn-primary">
+                            <i class="fas fa-play"></i>
+                            开始录制
+                        </button>
+                        <button id="stopRecording" class="btn btn-secondary" disabled>
+                            <i class="fas fa-stop"></i>
+                            停止录制
+                        </button>
+                    </div>
+                    <div class="recording-status">
+                        <div class="status-indicator">
+                            <div class="status-dot"></div>
+                            <span id="statusText">等待开始</span>
+                        </div>
+                        <div class="recording-time">
+                            <span id="recordingTime">00:00</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-visual">
+                    <div class="airplane-simulator">
+                        <div class="airplane-3d" id="airplane3d">
+                            <i class="fas fa-fighter-jet"></i>
+                        </div>
+                        <div class="attitude-indicators">
+                            <div class="indicator">
+                                <label>俯仰角 (Pitch)</label>
+                                <div class="value" id="pitchValue">0°</div>
+                                <div class="progress-bar">
+                                    <div class="progress" id="pitchProgress"></div>
+                                </div>
+                            </div>
+                            <div class="indicator">
+                                <label>横滚角 (Roll)</label>
+                                <div class="value" id="rollValue">0°</div>
+                                <div class="progress-bar">
+                                    <div class="progress" id="rollProgress"></div>
+                                </div>
+                            </div>
+                            <div class="indicator">
+                                <label>偏航角 (Yaw)</label>
+                                <div class="value" id="yawValue">0°</div>
+                                <div class="progress-bar">
+                                    <div class="progress" id="yawProgress"></div>
+                                </div>
+                            </div>
+                            <div class="indicator">
+                                <label>速度 (Speed)</label>
+                                <div class="value" id="speedValue">0 m/s</div>
+                                <div class="progress-bar">
+                                    <div class="progress" id="speedProgress"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 回放演示区域 -->
+    <section id="playback" class="demo-section alt-bg">
+        <div class="container">
+            <div class="demo-content reverse">
+                <div class="demo-visual">
+                    <div class="playback-simulator">
+                        <div class="flight-path-3d">
+                            <canvas id="flightCanvas" width="400" height="300"></canvas>
+                        </div>
+                        <div class="playback-controls">
+                            <button id="playBtn" class="control-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <button id="pauseBtn" class="control-btn">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                            <button id="resetBtn" class="control-btn">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                            <div class="timeline">
+                                <input type="range" id="timelineSlider" min="0" max="100" value="0">
+                                <div class="timeline-labels">
+                                    <span>00:00</span>
+                                    <span id="totalTime">02:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="demo-text">
+                    <h2>3D回放演示</h2>
+                    <p>将录制的运动数据转换为流畅的3D动画，完整重现飞行轨迹</p>
+                    <div class="feature-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-cube"></i>
+                            <div>
+                                <h4>3D可视化</h4>
+                                <p>SceneKit渲染的精美3D模型</p>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-play-circle"></i>
+                            <div>
+                                <h4>流畅回放</h4>
+                                <p>支持播放、暂停、快进等控制</p>
+                            </div>
+                        </div>
+                        <div class="highlight">
+                            <i class="fas fa-route"></i>
+                            <div>
+                                <h4>轨迹追踪</h4>
+                                <p>完整显示飞行路径和姿态变化</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 数据分析区域 -->
+    <section id="data" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>数据分析演示</h2>
+                <p>详细的飞行数据分析和可视化图表</p>
+            </div>
+            <div class="data-dashboard">
+                <div class="data-card">
+                    <h3>飞行统计</h3>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-value">2:30</div>
+                            <div class="stat-label">飞行时长</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">156</div>
+                            <div class="stat-label">数据点</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">12.5</div>
+                            <div class="stat-label">最大速度 (m/s)</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">45°</div>
+                            <div class="stat-label">最大俯仰角</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <h3>角度变化图表</h3>
+                    <div class="chart-container">
+                        <canvas id="angleChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <h3>速度变化图表</h3>
+                    <div class="chart-container">
+                        <canvas id="speedChart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="data-card">
+                    <h3>飞行历史</h3>
+                    <div class="history-list">
+                        <div class="history-item">
+                            <div class="history-info">
+                                <h4>飞行记录 - 12/15 14:30</h4>
+                                <p>持续时间: 2:30 | 数据点: 156</p>
+                            </div>
+                            <button class="btn-small">查看</button>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-info">
+                                <h4>飞行记录 - 12/14 16:45</h4>
+                                <p>持续时间: 1:45 | 数据点: 98</p>
+                            </div>
+                            <button class="btn-small">查看</button>
+                        </div>
+                        <div class="history-item">
+                            <div class="history-info">
+                                <h4>飞行记录 - 12/13 10:20</h4>
+                                <p>持续时间: 3:15 | 数据点: 203</p>
+                            </div>
+                            <button class="btn-small">查看</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术特性 -->
+    <section class="tech-features">
+        <div class="container">
+            <h2>技术特性</h2>
+            <div class="features-grid">
+                <div class="tech-feature">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>CoreMotion传感器</h3>
+                    <p>高精度的设备运动数据采集，支持陀螺仪、加速度计等多种传感器</p>
+                </div>
+                <div class="tech-feature">
+                    <i class="fas fa-database"></i>
+                    <h3>SwiftData存储</h3>
+                    <p>现代化的数据持久化方案，支持本地存储和iCloud同步</p>
+                </div>
+                <div class="tech-feature">
+                    <i class="fas fa-cube"></i>
+                    <h3>SceneKit渲染</h3>
+                    <p>强大的3D图形渲染引擎，提供流畅的3D模型显示和动画</p>
+                </div>
+                <div class="tech-feature">
+                    <i class="fas fa-code"></i>
+                    <h3>MVVM架构</h3>
+                    <p>清晰的代码架构，易于维护和扩展的SwiftUI应用设计</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-fighter-jet"></i>
+                        <span>JETJETJET</span>
+                    </div>
+                    <p>创新的飞机运动追踪应用</p>
+                </div>
+                <div class="footer-section">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="demo.html">功能演示</a></li>
+                        <li><a href="tech.html">技术架构</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JETJETJET. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/demo.js"></script>
+</body>
+</html>

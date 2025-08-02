@@ -1,0 +1,485 @@
+/* 演示页面专用样式 */
+
+.demo-header {
+    padding: 120px 0 60px;
+    background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+    text-align: center;
+}
+
+.demo-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.demo-header p {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.demo-section {
+    padding: 80px 0;
+}
+
+.demo-section.alt-bg {
+    background: var(--surface);
+}
+
+.demo-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.demo-content.reverse {
+    grid-template-columns: 1fr 1fr;
+}
+
+.demo-content.reverse .demo-visual {
+    order: 1;
+}
+
+.demo-content.reverse .demo-text {
+    order: 2;
+}
+
+.demo-text h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.demo-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.demo-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.recording-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: var(--transition);
+}
+
+.status-dot.recording {
+    background: #ff3b30;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.recording-time {
+    font-family: 'Monaco', monospace;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* 飞机模拟器 */
+.airplane-simulator {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.airplane-3d {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.airplane-3d i {
+    font-size: 80px;
+    color: var(--primary-color);
+    transition: transform 0.3s ease;
+}
+
+.attitude-indicators {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.indicator {
+    text-align: center;
+}
+
+.indicator label {
+    display: block;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+.indicator .value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background: var(--gradient);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 50%;
+}
+
+/* 回放模拟器 */
+.playback-simulator {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.flight-path-3d {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#flightCanvas {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.playback-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.playback-controls > div:first-child {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.control-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3);
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#timelineSlider {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #f0f0f0;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+#timelineSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+}
+
+.timeline-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* 功能亮点 */
+.feature-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.highlight {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.highlight i {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.highlight h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.highlight p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* 数据仪表板 */
+.data-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.data-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.data-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.stat {
+    text-align: center;
+    padding: 15px;
+    background: var(--surface);
+    border-radius: 8px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.chart-container {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border-radius: 8px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--surface);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.history-item:hover {
+    background: #e8f4ff;
+}
+
+.history-info h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+.history-info p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.btn-small {
+    padding: 8px 16px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-small:hover {
+    background: #0056b3;
+}
+
+/* 技术特性 */
+.tech-features {
+    padding: 80px 0;
+    background: var(--text-primary);
+    color: white;
+}
+
+.tech-features h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 50px;
+}
+
+.tech-feature {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.tech-feature i {
+    font-size: 48px;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+}
+
+.tech-feature h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.tech-feature p {
+    color: #86868B;
+    line-height: 1.6;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .demo-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .demo-content.reverse .demo-visual,
+    .demo-content.reverse .demo-text {
+        order: unset;
+    }
+    
+    .demo-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .demo-text h2 {
+        font-size: 2rem;
+    }
+    
+    .attitude-indicators {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .data-dashboard {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .demo-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .recording-status {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+}

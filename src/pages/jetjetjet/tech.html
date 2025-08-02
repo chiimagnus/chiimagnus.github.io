@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术架构 - JETJETJET</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/tech.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-fighter-jet"></i>
+                <span>JETJETJET</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">首页</a></li>
+                <li><a href="demo.html" class="nav-link">功能演示</a></li>
+                <li><a href="#architecture" class="nav-link">架构设计</a></li>
+                <li><a href="#frameworks" class="nav-link">技术栈</a></li>
+                <li><a href="#implementation" class="nav-link">实现细节</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 技术架构页面标题 -->
+    <section class="tech-header">
+        <div class="container">
+            <h1>技术架构</h1>
+            <p>深入了解JETJETJET的技术实现，从架构设计到核心技术栈</p>
+        </div>
+    </section>
+
+    <!-- MVVM架构图 -->
+    <section id="architecture" class="architecture-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>MVVM架构设计</h2>
+                <p>清晰的分层架构，确保代码的可维护性和可扩展性</p>
+            </div>
+            <div class="architecture-diagram">
+                <div class="layer view-layer">
+                    <h3><i class="fas fa-eye"></i> View Layer</h3>
+                    <div class="layer-content">
+                        <div class="component">FlightRecordingView</div>
+                        <div class="component">AirplaneModelView</div>
+                        <div class="component">FlightHistoryView</div>
+                        <div class="component">FlightDataDetailView</div>
+                    </div>
+                    <p>SwiftUI视图层，负责UI展示和用户交互</p>
+                </div>
+                
+                <div class="layer viewmodel-layer">
+                    <h3><i class="fas fa-cogs"></i> ViewModel Layer</h3>
+                    <div class="layer-content">
+                        <div class="component">FlightRecordingVM</div>
+                        <div class="component">AirplaneModelVM</div>
+                        <div class="component">FlightHistoryVM</div>
+                        <div class="component">FlightDataDetailVM</div>
+                    </div>
+                    <p>业务逻辑层，处理数据绑定和状态管理</p>
+                </div>
+                
+                <div class="layer service-layer">
+                    <h3><i class="fas fa-server"></i> Service Layer</h3>
+                    <div class="layer-content">
+                        <div class="component">MotionService</div>
+                        <div class="component">DataService</div>
+                        <div class="component">CloudSyncService</div>
+                    </div>
+                    <p>服务层，封装核心业务逻辑和外部API调用</p>
+                </div>
+                
+                <div class="layer model-layer">
+                    <h3><i class="fas fa-database"></i> Model Layer</h3>
+                    <div class="layer-content">
+                        <div class="component">FlightData</div>
+                        <div class="component">FlightSession</div>
+                        <div class="component">FlightDataSnapshot</div>
+                    </div>
+                    <p>数据模型层，定义数据结构和持久化</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术栈展示 -->
+    <section id="frameworks" class="frameworks-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>核心技术栈</h2>
+                <p>基于最新的iOS开发技术，构建现代化的移动应用</p>
+            </div>
+            <div class="frameworks-grid">
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fab fa-swift"></i>
+                    </div>
+                    <h3>SwiftUI</h3>
+                    <p>声明式UI框架</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>响应式数据绑定</li>
+                            <li>组件化开发</li>
+                            <li>跨平台兼容</li>
+                            <li>现代化UI设计</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>SwiftData</h3>
+                    <p>数据持久化框架</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>类型安全的数据模型</li>
+                            <li>自动化数据迁移</li>
+                            <li>CloudKit集成</li>
+                            <li>高性能查询</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>CoreMotion</h3>
+                    <p>运动传感器框架</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>设备姿态检测</li>
+                            <li>加速度数据采集</li>
+                            <li>陀螺仪数据处理</li>
+                            <li>实时运动分析</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h3>SceneKit</h3>
+                    <p>3D图形渲染框架</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>高性能3D渲染</li>
+                            <li>物理引擎支持</li>
+                            <li>动画系统</li>
+                            <li>材质和光照</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>CloudKit</h3>
+                    <p>云端同步服务</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>自动数据同步</li>
+                            <li>多设备共享</li>
+                            <li>离线支持</li>
+                            <li>隐私保护</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="framework-card">
+                    <div class="framework-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Foundation</h3>
+                    <p>基础框架支持</p>
+                    <div class="framework-details">
+                        <ul>
+                            <li>数据类型处理</li>
+                            <li>时间和日期</li>
+                            <li>网络通信</li>
+                            <li>系统服务</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 实现细节 -->
+    <section id="implementation" class="implementation-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>核心实现细节</h2>
+                <p>深入了解关键功能的技术实现</p>
+            </div>
+            <div class="implementation-grid">
+                <div class="implementation-card">
+                    <h3><i class="fas fa-microchip"></i> 传感器数据采集</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>MotionService.swift</span>
+                        </div>
+                        <pre><code>func startMotionUpdates(handler: @escaping (FlightDataSnapshot) -> Void) {
+    motionManager.deviceMotionUpdateInterval = 0.1
+    motionManager.startDeviceMotionUpdates(to: .main) { motion, error in
+        guard let motion = motion else { return }
+        
+        let pitch = motion.attitude.pitch * 180.0 / .pi
+        let roll = motion.attitude.roll * 180.0 / .pi
+        let yaw = motion.attitude.yaw * 180.0 / .pi
+        
+        let snapshot = FlightDataSnapshot(
+            timestamp: Date(),
+            speed: calculateSpeed(from: motion.userAcceleration),
+            pitch: pitch, roll: roll, yaw: yaw
+        )
+        handler(snapshot)
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3><i class="fas fa-database"></i> 数据模型设计</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>FlightData.swift</span>
+                        </div>
+                        <pre><code>@Model
+final class FlightData {
+    var timestamp: Date = Date()
+    var speed: Double = 0.0      // 前进速度 (m/s)
+    var pitch: Double = 0.0      // 俯仰角 (degrees)
+    var roll: Double = 0.0       // 横滚角 (degrees)
+    var yaw: Double = 0.0        // 偏航角 (degrees)
+    var sessionId: UUID?         // 关联的会话ID
+    
+    init(timestamp: Date = Date(), speed: Double = 0.0, 
+         pitch: Double = 0.0, roll: Double = 0.0, 
+         yaw: Double = 0.0, sessionId: UUID? = nil) {
+        self.timestamp = timestamp
+        self.speed = speed
+        self.pitch = pitch
+        self.roll = roll
+        self.yaw = yaw
+        self.sessionId = sessionId
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3><i class="fas fa-eye"></i> MVVM数据绑定</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>FlightRecordingVM.swift</span>
+                        </div>
+                        <pre><code>@Observable
+class FlightRecordingVM {
+    private let motionService = MotionService()
+    
+    var isRecording = false
+    var currentSnapshot: FlightDataSnapshot?
+    var recordingDuration: TimeInterval = 0
+    
+    func startRecording() {
+        isRecording = true
+        recordingStartTime = Date()
+        
+        motionService.startMotionUpdates { [weak self] snapshot in
+            self?.currentSnapshot = snapshot
+            self?.recordedData.append(snapshot)
+        }
+    }
+    
+    func stopRecording() {
+        isRecording = false
+        motionService.stopMotionUpdates()
+        saveFlightSession()
+    }
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="implementation-card">
+                    <h3><i class="fas fa-cube"></i> 3D模型渲染</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span>Airplane3DSceneView.swift</span>
+                        </div>
+                        <pre><code>struct Airplane3DSceneView: UIViewRepresentable {
+    @Bindable var airplane3DModel: Airplane3DModel
+    
+    func makeUIView(context: Context) -> SCNView {
+        let sceneView = SCNView()
+        sceneView.scene = createScene()
+        sceneView.allowsCameraControl = showControls
+        return sceneView
+    }
+    
+    func updateUIView(_ uiView: SCNView, context: Context) {
+        updateAirplaneAttitude(uiView)
+    }
+    
+    private func updateAirplaneAttitude(_ sceneView: SCNView) {
+        let pitchRadians = airplane3DModel.pitch * .pi / 180
+        let rollRadians = airplane3DModel.roll * .pi / 180
+        let yawRadians = airplane3DModel.yaw * .pi / 180
+        
+        airplaneNode.eulerAngles = SCNVector3(pitchRadians, yawRadians, rollRadians)
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 架构优势 -->
+    <section class="advantages-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>架构优势</h2>
+                <p>MVVM架构带来的开发和维护优势</p>
+            </div>
+            <div class="advantages-grid">
+                <div class="advantage-card">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>清晰分层</h3>
+                    <p>View、ViewModel、Service、Model各司其职，职责明确，降低耦合度</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>数据绑定</h3>
+                    <p>@Observable和@Bindable实现自动数据同步，减少手动更新UI的代码</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-puzzle-piece"></i>
+                    <h3>组件化</h3>
+                    <p>每个ViewModel独立管理状态，支持组件复用和独立测试</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-expand-arrows-alt"></i>
+                    <h3>易扩展</h3>
+                    <p>新功能可以通过添加新的ViewModel和Service轻松实现</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-bug"></i>
+                    <h3>易测试</h3>
+                    <p>业务逻辑集中在ViewModel，便于单元测试和集成测试</p>
+                </div>
+                <div class="advantage-card">
+                    <i class="fas fa-tools"></i>
+                    <h3>易维护</h3>
+                    <p>代码结构清晰，修改和调试更加便捷，降低维护成本</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-fighter-jet"></i>
+                        <span>JETJETJET</span>
+                    </div>
+                    <p>创新的飞机运动追踪应用</p>
+                </div>
+                <div class="footer-section">
+                    <h4>技术文档</h4>
+                    <ul>
+                        <li><a href="#architecture">架构设计</a></li>
+                        <li><a href="#frameworks">技术栈</a></li>
+                        <li><a href="#implementation">实现细节</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>相关链接</h4>
+                    <ul>
+                        <li><a href="index.html">项目首页</a></li>
+                        <li><a href="demo.html">功能演示</a></li>
+                        <li><a href="#">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 JETJETJET. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/tech.js"></script>
+</body>
+</html>

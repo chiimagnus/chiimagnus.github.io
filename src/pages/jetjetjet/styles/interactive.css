@@ -1,0 +1,615 @@
+/* 交互式演示页面样式 */
+
+.interactive-header {
+    padding: 120px 0 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.interactive-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="20" cy="20" r="1" fill="rgba(255,255,255,0.2)"/><circle cx="80" cy="30" r="1.5" fill="rgba(255,255,255,0.25)"/><circle cx="30" cy="80" r="1" fill="rgba(255,255,255,0.2)"/><circle cx="70" cy="70" r="1.2" fill="rgba(255,255,255,0.3)"/></svg>');
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-100px); }
+}
+
+.interactive-header h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.interactive-header p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+}
+
+/* 模拟器布局 */
+.simulator-section {
+    padding: 80px 0;
+    background: var(--surface);
+}
+
+.simulator-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* 3D飞机显示区域 */
+.airplane-display {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.airplane-container-3d {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 50%, #98FB98 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    perspective: 1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.airplane-model-3d {
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+}
+
+.airplane-body {
+    position: relative;
+    transform-style: preserve-3d;
+}
+
+.fuselage {
+    width: 80px;
+    height: 12px;
+    background: linear-gradient(to right, #2c3e50, #34495e, #2c3e50);
+    border-radius: 6px;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.wing-left, .wing-right {
+    position: absolute;
+    width: 60px;
+    height: 8px;
+    background: linear-gradient(to right, #34495e, #2c3e50);
+    border-radius: 4px;
+    top: 2px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.wing-left {
+    left: -50px;
+    transform: rotate(-10deg);
+}
+
+.wing-right {
+    right: -50px;
+    transform: rotate(10deg);
+}
+
+.tail {
+    position: absolute;
+    width: 20px;
+    height: 25px;
+    background: linear-gradient(to bottom, #34495e, #2c3e50);
+    border-radius: 0 0 10px 10px;
+    right: -15px;
+    top: -12px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+.nose {
+    position: absolute;
+    width: 15px;
+    height: 8px;
+    background: linear-gradient(to right, #e74c3c, #c0392b);
+    border-radius: 0 8px 8px 0;
+    left: -12px;
+    top: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.attitude-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.grid-line {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.grid-line.horizontal {
+    width: 100%;
+    height: 1px;
+    top: 50%;
+    left: 0;
+}
+
+.grid-line.vertical {
+    width: 1px;
+    height: 100%;
+    left: 50%;
+    top: 0;
+}
+
+.horizon-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.6);
+    top: 50%;
+    left: 0;
+    transform: translateY(-1px);
+}
+
+.attitude-indicator {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.compass {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border: 3px solid var(--primary-color);
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.compass-needle {
+    position: absolute;
+    width: 4px;
+    height: 50px;
+    background: linear-gradient(to top, #e74c3c, #c0392b);
+    border-radius: 2px;
+    transform-origin: bottom center;
+    transition: transform 0.3s ease;
+}
+
+.compass-needle::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -4px;
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 12px solid #e74c3c;
+}
+
+.compass-marks {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.mark {
+    position: absolute;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mark.north { top: 5px; left: 50%; transform: translateX(-50%); }
+.mark.east { right: 8px; top: 50%; transform: translateY(-50%); }
+.mark.south { bottom: 5px; left: 50%; transform: translateX(-50%); }
+.mark.west { left: 8px; top: 50%; transform: translateY(-50%); }
+
+/* 控制面板 */
+.control-panel {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    height: fit-content;
+}
+
+.control-panel h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.control-group {
+    margin-bottom: 25px;
+}
+
+.control-group label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 8px;
+}
+
+.attitude-slider {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--surface);
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.attitude-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--gradient);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease;
+}
+
+.attitude-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.slider-value {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 600;
+    color: var(--primary-color);
+    background: var(--surface);
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.control-description {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+/* 预设控制 */
+.preset-controls {
+    margin: 30px 0;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: 8px;
+}
+
+.preset-controls h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.preset-btn {
+    padding: 10px 15px;
+    background: white;
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+}
+
+.preset-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.reset-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 122, 255, 0.3);
+}
+
+/* 数据显示区域 */
+.data-section {
+    padding: 80px 0;
+    background: var(--background);
+}
+
+.data-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+}
+
+.data-display, .trajectory-display {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+}
+
+.data-display h3, .trajectory-display h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.data-card {
+    background: var(--surface);
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: var(--transition);
+}
+
+.data-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.data-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+}
+
+.pitch-card .data-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+.roll-card .data-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.yaw-card .data-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.speed-card .data-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+.data-info {
+    flex: 1;
+}
+
+.data-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.data-value {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.data-bar {
+    width: 100%;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.data-progress {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.pitch-card .data-progress { background: linear-gradient(135deg, #667eea, #764ba2); }
+.roll-card .data-progress { background: linear-gradient(135deg, #f093fb, #f5576c); }
+.yaw-card .data-progress { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+.speed-card .data-progress { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+/* 轨迹显示 */
+.trajectory-container {
+    text-align: center;
+}
+
+#trajectoryCanvas {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #f8f9fa;
+    margin-bottom: 20px;
+}
+
+.trajectory-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.trajectory-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    background: white;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.trajectory-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* 使用说明 */
+.instructions-section {
+    padding: 80px 0;
+    background: var(--surface);
+}
+
+.instructions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.instruction-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.instruction-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.instruction-icon {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    color: white;
+    font-size: 28px;
+}
+
+.instruction-card h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+.instruction-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .simulator-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .data-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .interactive-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .airplane-container-3d {
+        height: 300px;
+    }
+    
+    .data-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .preset-buttons {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .trajectory-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .instructions-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
