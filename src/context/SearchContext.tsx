@@ -35,23 +35,53 @@ export const SearchProvider = ({ children }: { children: ReactNode }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  // 计算所有可用标签
+  // 计算状态标签（DOING、DONE、Archive）
   const availableTags = useMemo(() => {
-    const allTags = new Set<string>();
+    const statusTags = new Set<string>();
     productsData.forEach(product => {
-      product.tags.forEach(tag => allTags.add(tag));
+      if (product.status) {
+        // 根据状态内容分类
+        if (product.status.includes('开发中') || product.status.includes('即将发布') || product.status.includes('AdventureX')) {
+          statusTags.add('DOING');
+        } else if (product.status.includes('已发布')) {
+          statusTags.add('DONE');
+        } else if (product.tags.some(tag => tag.includes('归档'))) {
+          statusTags.add('Archive');
+        }
+      }
+      // 检查tags中是否有归档标记
+      if (product.tags.some(tag => tag.includes('归档'))) {
+        statusTags.add('Archive');
+      }
     });
-    return Array.from(allTags).sort();
+
+    // 确保按照指定顺序返回
+    const orderedTags = ['DOING', 'DONE', 'Archive'];
+    return orderedTags.filter(tag => statusTags.has(tag));
   }, []);
 
-  // 根据选中标签过滤产品
+  // 根据选中的状态标签过滤产品
   const filteredProducts = useMemo(() => {
     if (selectedTags.length === 0) {
       return productsData;
     }
-    return productsData.filter(product =>
-      selectedTags.some(tag => product.tags.includes(tag))
-    );
+
+    return productsData.filter(product => {
+      return selectedTags.some(selectedTag => {
+        if (selectedTag === 'DOING') {
+          return product.status && (
+            product.status.includes('开发中') ||
+            product.status.includes('即将发布') ||
+            product.status.includes('AdventureX')
+          );
+        } else if (selectedTag === 'DONE') {
+          return product.status && product.status.includes('已发布');
+        } else if (selectedTag === 'Archive') {
+          return product.tags.some(tag => tag.includes('归档'));
+        }
+        return false;
+      });
+    });
   }, [selectedTags]);
 
   const searchResults = useMemo(() => {

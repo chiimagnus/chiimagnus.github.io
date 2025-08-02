@@ -17,26 +17,16 @@ const TagFilter: React.FC = () => {
   };
 
   const getTagColor = (tag: string) => {
-    if (tag.includes('归档')) return 'bg-red-400/20 text-red-300 border-red-400/30';
-    if (tag === 'iOS') return 'bg-blue-400/20 text-blue-300 border-blue-400/30';
-    if (tag === 'macOS') return 'bg-purple-400/20 text-purple-300 border-purple-400/30';
-    if (tag === 'React') return 'bg-cyan-400/20 text-cyan-300 border-cyan-400/30';
-    if (tag === 'TypeScript') return 'bg-blue-500/20 text-blue-400 border-blue-500/30';
-    if (tag === 'Plugin') return 'bg-green-400/20 text-green-300 border-green-400/30';
-    if (tag === 'swiftUI') return 'bg-orange-400/20 text-orange-300 border-orange-400/30';
-    if (tag.includes('语音')) return 'bg-pink-400/20 text-pink-300 border-pink-400/30';
+    if (tag === 'DOING') return 'bg-yellow-400/20 text-yellow-300 border-yellow-400/30';
+    if (tag === 'DONE') return 'bg-green-400/20 text-green-300 border-green-400/30';
+    if (tag === 'Archive') return 'bg-red-400/20 text-red-300 border-red-400/30';
     return 'bg-white/20 text-white border-white/30';
   };
 
   const getSelectedTagColor = (tag: string) => {
-    if (tag.includes('归档')) return 'bg-red-400 text-red-900 border-red-400';
-    if (tag === 'iOS') return 'bg-blue-400 text-blue-900 border-blue-400';
-    if (tag === 'macOS') return 'bg-purple-400 text-purple-900 border-purple-400';
-    if (tag === 'React') return 'bg-cyan-400 text-cyan-900 border-cyan-400';
-    if (tag === 'TypeScript') return 'bg-blue-500 text-blue-900 border-blue-500';
-    if (tag === 'Plugin') return 'bg-green-400 text-green-900 border-green-400';
-    if (tag === 'swiftUI') return 'bg-orange-400 text-orange-900 border-orange-400';
-    if (tag.includes('语音')) return 'bg-pink-400 text-pink-900 border-pink-400';
+    if (tag === 'DOING') return 'bg-yellow-400 text-yellow-900 border-yellow-400';
+    if (tag === 'DONE') return 'bg-green-400 text-green-900 border-green-400';
+    if (tag === 'Archive') return 'bg-red-400 text-red-900 border-red-400';
     return 'bg-white text-gray-900 border-white';
   };
 
