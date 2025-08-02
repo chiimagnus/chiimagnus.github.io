@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSearch, SearchResult } from '../context/SearchContext';
+import { useSearch, SearchResult } from '../../context/SearchContext';
 import { BookOpen, Package, ArrowRight } from 'lucide-react';
 import { format } from 'date-fns';
 

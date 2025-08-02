@@ -1,4 +1,4 @@
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export const ThemeSelector = () => {
   const { setTheme, availableThemes, theme: currentTheme } = useTheme();

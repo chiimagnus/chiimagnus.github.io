@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import BlogCard from '../components/BlogCard';
-import ProductCard from '../components/ProductCard';
+import BlogCard from '../components/blog/BlogCard';
+import ProductCard from '../components/blog/ProductCard';
 import articlesData from '../data/articles.json';
 import { BlogPost } from '../types';
 import { useSearch } from '../context/SearchContext';
-import SearchResults from '../components/SearchResults';
-import AboutCard from '../components/AboutCard';
-import HorizontalTagFilter from '../components/HorizontalTagFilter';
+import SearchResults from '../components/blog/SearchResults';
+import AboutCard from '../components/blog/AboutCard';
+import HorizontalTagFilter from '../components/blog/HorizontalTagFilter';
 
 const Home: React.FC = () => {
   const [isArticlesExpanded, setIsArticlesExpanded] = useState(false);

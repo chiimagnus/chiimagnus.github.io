@@ -1,7 +1,7 @@
 import React from 'react';
 import { format } from 'date-fns';
 import { ArrowRight } from 'lucide-react';
-import { BlogPost } from '../types';
+import { BlogPost } from '../../types';
 import LiquidGlass from './LiquidGlass';
 
 interface BlogCardProps {

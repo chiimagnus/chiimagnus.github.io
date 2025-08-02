@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import { SearchProvider } from '../context/SearchContext';
+import { SearchProvider } from '../../context/SearchContext';
 import { Menu } from 'lucide-react';
 import LiquidGlass from './LiquidGlass';
 

@@ -6,7 +6,7 @@ import Home from './pages/Home'
 import LifeWealth from './pages/LifeWealth'
 import AiChat from './pages/AiChat'
 import JetJetJetPage from './pages/JetJetJetPage'
-import Layout from './components/Layout'
+import Layout from './components/blog/Layout'
 import { ThemeProvider } from './context/ThemeContext'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

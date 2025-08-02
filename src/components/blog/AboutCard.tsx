@@ -1,5 +1,5 @@
 import React from 'react';
-import LiquidGlass from './LiquidGlass';
+import LiquidGlass from '../LiquidGlass';
 
 const AboutCard: React.FC = () => {
 

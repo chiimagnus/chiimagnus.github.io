@@ -1,8 +1,8 @@
 import React, {useRef, useEffect } from 'react';
 import { Github, Mail, Search, X, Bot } from 'lucide-react';
-import { Bilibili } from '../../public/Bilibili';
-import { Dedao } from '../../public/Dedao';
-import { useSearch } from '../context/SearchContext';
+import { Bilibili } from '../../../public/Bilibili';
+import { Dedao } from '../../../public/Dedao';
+import { useSearch } from '../../context/SearchContext';
 import { ThemeSelector } from './ThemeSelector';
 import LiquidGlass from './LiquidGlass';
 import TagFilter from './TagFilter';
