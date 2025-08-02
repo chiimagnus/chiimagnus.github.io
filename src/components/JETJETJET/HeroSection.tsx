@@ -13,10 +13,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
     let airplaneX = 0;
     let airplaneY = 0;
     let animationId: number;
+    let floatOffset = 0;
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
       mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+      // 调试信息
+      console.log('Mouse move:', { mouseX, mouseY });
     };
 
     const animateAirplane = () => {
@@ -24,9 +27,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
         airplaneX += (mouseX - airplaneX) * 0.1;
         airplaneY += (mouseY - airplaneY) * 0.1;
 
-        // 保持基础的 translate(-50%, -50%) 并添加鼠标跟随效果
+        // 添加浮动效果
+        floatOffset += 0.02;
+        const floatY = Math.sin(floatOffset) * 10;
+        const floatRotate = Math.sin(floatOffset * 0.5) * 3;
+
+        // 组合所有变换：基础居中 + 鼠标跟随 + 浮动效果
         airplaneRef.current.style.transform =
-          `translate(-50%, -50%) translateX(${airplaneX}px) translateY(${airplaneY}px) rotate(${airplaneX * 0.5}deg)`;
+          `translate(-50%, -50%) translateX(${airplaneX}px) translateY(${airplaneY + floatY}px) rotate(${airplaneX * 0.5 + floatRotate}deg)`;
       }
       animationId = requestAnimationFrame(animateAirplane);
     };
@@ -108,8 +116,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = '' }) => {
             <div className="relative w-80 h-80">
               <div
                 ref={airplaneRef}
-                className="airplane-model absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-6xl text-blue-600 transition-transform duration-100"
-                style={{ animation: 'float 3s ease-in-out infinite' }}
+                className="airplane-model absolute top-1/2 left-1/2 text-6xl text-blue-600"
               >
                 <i className="fas fa-fighter-jet"></i>
               </div>
