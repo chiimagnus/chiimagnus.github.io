@@ -5,7 +5,6 @@ import { Dedao } from '../../../public/Dedao';
 import { useSearch } from '../../context/SearchContext';
 import { ThemeSelector } from './ThemeSelector';
 import LiquidGlass from './LiquidGlass';
-import TagFilter from './TagFilter';
 import { Link } from 'react-router-dom';
 
 const navItems = [
@@ -151,12 +150,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           </div>
         </LiquidGlass>
 
-        {/* Tag Filter Card */}
-        <LiquidGlass className="rounded-2xl overflow-hidden">
-          <div className="p-4">
-            <TagFilter />
-          </div>
-        </LiquidGlass>
+
       </aside>
     </>
   );
