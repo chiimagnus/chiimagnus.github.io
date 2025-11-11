@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import LifeWealth from './pages/LifeWealth'
 import AiChat from './pages/AiChat'
 import JetJetJetPage from './pages/JetJetJetPage'
+import SyncNosOAuthCallback from './pages/SyncNosOAuthCallback'
 import Layout from './components/blog/Layout'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/lifewealth" element={<LifeWealth />} />
           <Route path="/ai-chat" element={<AiChat />} />
           <Route path="/jetjetjet" element={<JetJetJetPage />} />
+          <Route path="/syncnos-oauth/callback" element={<SyncNosOAuthCallback />} />
           <Route path="/" element={
             <Layout>
               <Home />
