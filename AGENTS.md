@@ -1,9 +1,6 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-# chiiBlog 项目开发规则
+# chiiBlog 项目开发规则（仓库范围）
+
+本文件适用于本仓库内的所有代码与文档改动（除非更深层目录存在更具体的 `AGENTS.md`）。
 
 ## 技术栈与架构
 1. **核心框架**：使用 React + TypeScript 构建组件化前端。
@@ -52,3 +49,4 @@ alwaysApply: true
    - 若问题复杂，提供至少两种解决方案供选择。
 2. **代码审查**：
    - 确保组件职责单一，避免冗余代码。
+

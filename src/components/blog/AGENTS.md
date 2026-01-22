@@ -1,10 +1,11 @@
----
-description: A guide on how to use and customize the LiquidGlass component.
-globs: ["**/src/components/blog/LiquidGlass.tsx", "**/src/components/blog/*Card.tsx", "**/src/components/blog/Sidebar.tsx"]
-alwaysApply: true
----
+# Blog 组件规则：`LiquidGlass`（目录范围）
 
-# 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
+本文件适用于 `src/components/blog/` 目录下的改动，尤其是以下文件：
+- `src/components/blog/LiquidGlass.tsx`
+- `src/components/blog/*Card.tsx`
+- `src/components/blog/Sidebar.tsx`
+
+## 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
 
 本指南说明如何在项目中应用我们自定义的 `src/components/blog/LiquidGlass.tsx` 组件，以实现动态的、有呼吸感的液态玻璃 UI。此组件并非外部库，而是根据原生 Web 技术为本项目量身定制的。
 
@@ -49,6 +50,7 @@ const MyCard = () => (
   - `contrast(1.2)`: 控制对比度。
   - `brightness(1.05)`: 控制亮度。
   - `saturate(1.1)`: 控制饱和度。
+
 ```tsx
 style={{
   backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
@@ -60,6 +62,7 @@ style={{
 
 - **位置**: 同上，修改 `style` 对象的 `boxShadow` 属性 (约在第 143 行)。
 - **说明**: `boxShadow` 可以同时设置外阴影和内阴影（`inset`），以增强玻璃的立体感和悬浮感。
+
 ```tsx
 style={{
   // ...
@@ -71,6 +74,7 @@ style={{
 
 - **位置**: `useEffect` 钩子内部的 `updateShader` 函数中。
 - **说明**: 修改 `maxScale` 计算公式中的乘数。值越小，扭曲效果越轻微。当前值为 `1`，提供一个比较明显的扭曲效果。
+
 ```tsx
 // 约在第 103 行
 maxScale = Math.max(1, maxScale * 1); // 修改 1 这个值
@@ -80,9 +84,10 @@ maxScale = Math.max(1, maxScale * 1); // 修改 1 这个值
 
 - **位置**: `updateShader` 函数内部的 `fragment` 函数。
 - **说明**: 通过调整 `roundedRectSDF` 和 `smoothStep` 的参数可以改变玻璃效果的形状和边缘的羽化程度。
+
 ```tsx
 // 约在第 79-80 行
-const distanceToEdge = roundedRectSDF(ixAdjusted, iy, 0.4 * aspectRatio, 0.4, 0.4); 
+const distanceToEdge = roundedRectSDF(ixAdjusted, iy, 0.4 * aspectRatio, 0.4, 0.4);
 const displacement = smoothStep(0.8, 0.0, distanceToEdge - 0.15);
 ```
 
@@ -91,3 +96,4 @@ const displacement = smoothStep(0.8, 0.0, distanceToEdge - 0.15);
 - **性能**: 此效果涉及实时 Canvas 绘制，请避免在单个页面上过度使用，以免影响性能。
 - **浏览器兼容性**: 效果核心依赖 `backdrop-filter`，在某些旧版浏览器上可能不支持。
 - **全局修改**: 由于参数是硬编码在组件内的，任何修改都会影响到所有使用 `LiquidGlass` 的地方。
+
