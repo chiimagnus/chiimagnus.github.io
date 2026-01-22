@@ -34,6 +34,18 @@
   - `npm run build` 通过
   - `npm run lint` 通过（如仓库启用 ESLint）
 
+**Repo status（当前代码状态）:**
+> 你已回滚并仅保留 commit `368e2f137d6853f14129560f610c1d8a781b2459`（2026-01-23 01:19 +0800）。
+
+- ✅ Task 1 已落地：`src/utils/gradientRuntime.ts`
+- ✅ Task 2 已落地：`src/data/themes.ts` 已加入 `gradientStops`
+- ✅ Task 3 已落地：`src/context/ThemeContext.tsx` 已有 JS `GradientClock` + `getGradientPhase/getGradientPalette`
+- ✅ Task 4 已落地：`src/pages/DicePage.tsx` 已改为轻量遮罩（不再压死主题背景）
+- ✅ Task 5 已落地：`src/components/dice/DiceScene.tsx` 已有 `GradientDrivenLighting`
+- ⏳ Task 6 未落地：托盘“仅丝绒（Felt）区域”随 palette 染色（避免整个托盘变单色）
+- ⏳ Task 7 未落地：骰子金属高光/自发光随 palette 变化（保持数字贴图不被“洗白”）
+- ⏳ Task 8 未完成：`src/index.css` 仍保留 `.bg-gradient-main`/`gradient-animation`（当前虽未再使用，但建议清理以避免未来误用/双重驱动）
+
 ---
 
 ## Plan A（主方案）：JS 驱动背景 + 共享 phase/runtime
@@ -156,14 +168,14 @@
 - Modify: `src/components/dice/DiceTray.tsx`
 
 **Implementation notes:**
-- 增加 props（推荐）：
-  - `velvetTint?: string`
-  - `velvetEmissive?: string`
-  - `velvetEmissiveIntensity?: number`
-- 或在 DiceTray 内直接 `useTheme()`（但 props 更解耦、更易复用/测试）。
-- 用 `useFrame` 或 `useEffect + requestAnimationFrame` 更新材质：
-  - 只对“丝绒材质”做轻微 tint（避免整只托盘都变色）
-  - 避免每帧创建新 `THREE.Color` 对象（复用一个临时对象）。
+- 托盘 glb（`casino_dice_tray_CC0.glb`）包含 `Wood_Frame` / `Felt_Insert` / `Metal_Studs` 三套材质，且 PBR 因子可能非常接近。
+  - **不要用 metalness/roughness 的启发式筛选**，否则会把木头/金属也一起染色，导致“整个托盘变成一个颜色”。
+  - 推荐按节点名/材质名精准筛选 Felt：`Tray_Felt` / `Felt_Insert`。
+- 实现方式建议：
+  - 在 `DiceTray` 里 `useTheme()` 读取 `getGradientPalette/getGradientPhase`
+  - `useEffect` 时 traverse 一次，缓存 Felt 对应的 `MeshStandardMaterial` 引用（避免每帧 traverse）
+  - `useFrame` 里每帧仅更新 Felt 材质的 `color`（轻微 lerp tint）与**很小**的 `emissiveIntensity`（避免细节被抹平）
+  - 注意：`material.color` 会乘到 `baseColorTexture` 上，tint 过大会“洗成纯色”，建议 `0.1~0.25` 范围内调。
 
 **Verify:**
 - Run: `npm run build`
@@ -199,8 +211,10 @@
 - Modify: `src/context/ThemeContext.tsx`
 
 **Implementation notes:**
-- 删除 `@keyframes gradient-animation` 与 `.bg-gradient-main` 的动画（或保留但不再给 body 添加该 class）
-- 确保背景动画只由 JS 驱动，避免“CSS 动画 + JS 更新”造成抖动/竞态。
+- 现状（在 `368e2f1...`）：
+  - `ThemeContext` 已 `classList.remove('bg-gradient-main')`，并由 JS 驱动 `backgroundPosition`
+  - 但 `src/index.css` 仍保留 `.bg-gradient-main` 与 `@keyframes gradient-animation`
+- 建议：直接从 `src/index.css` 移除旧动画定义，避免未来误加 class 导致“双重驱动”。
 
 **Verify:**
 - Manual: 背景仍然流动，且节奏稳定（无抖动）
@@ -217,4 +231,3 @@
 - React StrictMode 会重复执行 effect：GradientClock 必须保证不会重复启动多个 rAF 循环。
 - 不要把 `phase` 存在 React state 并每帧 setState，否则会导致全站 60fps rerender。
 - 主题渐变字符串解析较脆：优先在 `themes.ts` 提供结构化 `gradientStops`，减少解析风险。
-
