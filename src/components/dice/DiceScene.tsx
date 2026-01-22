@@ -13,13 +13,17 @@ export interface DiceSceneProps {
    * 注意：当前实现会在骰子稳定后触发。
    */
   onDiceClick?: () => void;
+  /**
+   * 骰子稳定后的最终点数回调（用于抽卡/命运逻辑）。
+   */
+  onRollSettled?: (diceResult: number) => void;
 }
 
 /**
  * DiceScene
  * 博德之门 3 风格的 3D 骰子场景（含物理、光照与托盘）。
  */
-export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) => {
+export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick, onRollSettled }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
   const [rollId, setRollId] = useState(0);
@@ -50,9 +54,10 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
         lastResultRef.current = result;
         setDiceResult(result);
       }
+      onRollSettled?.(result);
       onDiceClick?.();
     },
-    [onDiceClick],
+    [onDiceClick, onRollSettled],
   );
 
   /**
@@ -203,4 +208,3 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
     </div>
   );
 };
-

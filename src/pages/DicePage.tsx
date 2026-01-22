@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DiceScene } from '../components/dice';
 import '../styles/dice.css';
+import { DiceResultOverlay } from '../components/dice/DiceResultOverlay';
+import { buildDicePool, drawCard, type DiceCard } from '../features/dice/dicePool';
+import { useTheme } from '../context/ThemeContext';
 
 /**
  * DicePage
@@ -11,6 +14,10 @@ import '../styles/dice.css';
  * - 为避免影响 `/blog` 的滚动，仅在本页挂载期间禁用 body 滚动
  */
 const DicePage: React.FC = () => {
+  const pool = useMemo(() => buildDicePool(), []);
+  const [resultCard, setResultCard] = useState<DiceCard | null>(null);
+  const { setTheme } = useTheme();
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -18,6 +25,22 @@ const DicePage: React.FC = () => {
       document.body.style.overflow = previousOverflow;
     };
   }, []);
+
+  /**
+   * handleRollSettled
+   * 骰子稳定后抽取一张命运卡并展示结果浮层（停留，等待用户点击跳转）。
+   */
+  const handleRollSettled = useCallback(
+    (diceResult: number) => {
+      const card = drawCard({ diceResult, pool });
+      if (!card) return;
+      if (card.type === 'theme') {
+        setTheme(card.themeName);
+      }
+      setResultCard(card);
+    },
+    [pool, setTheme],
+  );
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
@@ -45,7 +68,7 @@ const DicePage: React.FC = () => {
 
       {/* 3D 场景 */}
       <div className="absolute inset-0 z-0">
-        <DiceScene />
+        <DiceScene onRollSettled={handleRollSettled} />
       </div>
 
       {/* 底部装饰文字 */}
@@ -54,6 +77,13 @@ const DicePage: React.FC = () => {
           &quot;命运的齿轮开始转动...&quot;
         </p>
       </footer>
+
+      {resultCard && (
+        <DiceResultOverlay
+          card={resultCard}
+          onClose={() => setResultCard(null)}
+        />
+      )}
     </div>
   );
 };
