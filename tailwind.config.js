@@ -2,7 +2,9 @@
 module.exports = {
   content: [
     "./index.html",
+    "./dice.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./src-3d/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
