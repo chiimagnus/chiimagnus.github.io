@@ -62,8 +62,14 @@ const DicePage: React.FC = () => {
 
   return (
     <div className="relative w-screen h-screen overflow-hidden">
-      {/* 背景暗化层：保留主题背景变化，同时让 3D 场景更沉浸 */}
-      <div className="absolute inset-0 bg-black/60 z-0" />
+      {/* 轻量氛围遮罩：不要压死主题渐变（主题渐变由 ThemeProvider 的 JS GradientClock 驱动） */}
+      <div
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            'radial-gradient(ellipse at center, rgba(var(--secondary-color-rgb), 0.10) 0%, rgba(0, 0, 0, 0.25) 60%, rgba(0, 0, 0, 0.50) 100%)',
+        }}
+      />
 
       {/* 顶部栏 */}
       <header className="absolute top-0 left-0 right-0 z-10 p-6">
