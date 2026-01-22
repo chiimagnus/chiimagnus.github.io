@@ -1,12 +1,12 @@
 ---
 description: A guide on how to use and customize the LiquidGlass component.
-globs: ["**/src/components/LiquidGlass.tsx", "**/src/components/*Card.tsx", "**/src/components/Sidebar.tsx"]
+globs: ["**/src/components/blog/LiquidGlass.tsx", "**/src/components/blog/*Card.tsx", "**/src/components/blog/Sidebar.tsx"]
 alwaysApply: true
 ---
 
 # 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
 
-本指南说明如何在项目中应用我们自定义的 `src/components/LiquidGlass.tsx` 组件，以实现动态的、有呼吸感的液态玻璃 UI。此组件并非外部库，而是根据原生 Web 技术为本项目量身定制的。
+本指南说明如何在项目中应用我们自定义的 `src/components/blog/LiquidGlass.tsx` 组件，以实现动态的、有呼吸感的液态玻璃 UI。此组件并非外部库，而是根据原生 Web 技术为本项目量身定制的。
 
 ## 1. 实现原理
 
@@ -34,12 +34,12 @@ const MyCard = () => (
 
 ## 3. 当前应用场景
 
-- **侧边栏**: 在 `src/components/Sidebar.tsx` 中，个人资料、导航链接、主题选择器和搜索框等多个卡片均被独立的 `LiquidGlass` 组件包裹。
-- **内容卡片**: 在 `src/components/AboutCard.tsx`, `src/components/BlogCard.tsx`, 和 `src/components/ProductCard.tsx` 中，用于包裹主要内容，形成统一的卡片视觉风格。
+- **侧边栏**: 在 `src/components/blog/Sidebar.tsx` 中，个人资料、导航链接、主题选择器和搜索框等多个卡片均被独立的 `LiquidGlass` 组件包裹。
+- **内容卡片**: 在 `src/components/blog/AboutCard.tsx`, `src/components/blog/BlogCard.tsx`, 和 `src/components/blog/ProductCard.tsx` 中，用于包裹主要内容，形成统一的卡片视觉风格。
 
 ## 4. 如何配置效果参数
 
-所有参数的配置都在 `src/components/LiquidGlass.tsx` 文件内部完成，该组件目前不通过 props 接收配置。
+所有参数的配置都在 `src/components/blog/LiquidGlass.tsx` 文件内部完成，该组件目前不通过 props 接收配置。
 
 ### a. 背景滤镜效果 (模糊度, 对比度等)
 

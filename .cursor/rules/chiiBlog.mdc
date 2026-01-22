@@ -36,7 +36,8 @@ alwaysApply: true
    - 使用 Tailwind 的响应式工具类（如 `md:`、`lg:`）。
 2. **视觉一致性**：
    - 颜色、间距等设计变量通过 Tailwind 配置统一管理。
-   - SVG 图标优先放在 `public` 目录。
+   - 自定义 SVG 图标组件放在 `src/components/icons` 目录。
+   - 静态资源文件（如图片、字体）放在 `public` 目录。
 
 ## 扩展性
 1. **添加新功能**：

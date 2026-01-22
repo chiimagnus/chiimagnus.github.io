@@ -1,7 +1,7 @@
 import React, {useRef, useEffect } from 'react';
 import { Github, Mail, Search, X, Bot } from 'lucide-react';
-import { Bilibili } from '../../../public/Bilibili';
-import { Dedao } from '../../../public/Dedao';
+import { Bilibili } from '../icons/Bilibili';
+import { Dedao } from '../icons/Dedao';
 import { useSearch } from '../../context/SearchContext';
 import { ThemeSelector } from './ThemeSelector';
 import LiquidGlass from './LiquidGlass';
