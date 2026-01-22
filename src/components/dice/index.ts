@@ -7,3 +7,8 @@ export type { D20DiceProps } from './D20Dice';
 export { DiceTray } from './DiceTray';
 export type { DiceTrayProps } from './DiceTray';
 
+export { DiceResultOverlay } from './DiceResultOverlay';
+export type { DiceResultOverlayProps } from './DiceResultOverlay';
+
+export { ThemeResultCard } from './ThemeResultCard';
+export type { ThemeResultCardProps } from './ThemeResultCard';
