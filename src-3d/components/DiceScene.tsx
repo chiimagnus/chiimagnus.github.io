@@ -2,6 +2,7 @@ import React, { Suspense, useCallback, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, ContactShadows } from '@react-three/drei';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
+import * as THREE from 'three';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
 
@@ -57,18 +58,25 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
       <Canvas
         shadows
         camera={{ position: [0, 4.2, 4.5], fov: 45 }}
+        dpr={[1, 2]}
+        gl={{
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.35,
+        }}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
           {/* 环境光 */}
-          <ambientLight intensity={0.2} />
+          <ambientLight intensity={0.35} />
+          <hemisphereLight intensity={0.35} color="#ffffff" groundColor="#1a0f2e" />
 
           {/* 主光源 - 顶部暖色调光 */}
           <spotLight
             position={[2, 5, 2]}
             angle={0.4}
             penumbra={0.5}
-            intensity={1}
+            intensity={1.35}
             color="#ff9966"
             castShadow
             shadow-mapSize={[1024, 1024]}
@@ -77,16 +85,19 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
           {/* 补光 - 侧面冷色调 */}
           <pointLight
             position={[-3, 2, -2]}
-            intensity={0.3}
+            intensity={0.45}
             color="#6699ff"
           />
 
           {/* 底部反射光 */}
           <pointLight
             position={[0, -1, 0]}
-            intensity={0.2}
+            intensity={0.25}
             color="#ff6b35"
           />
+
+          {/* 前方柔和补光：避免托盘整体偏暗 */}
+          <directionalLight position={[0, 4, 6]} intensity={0.35} color="#ffffff" />
 
           <Physics gravity={[0, -9.81, 0]}>
             {/* 防止骰子掉出场景的“兜底地面”（不可见） */}
