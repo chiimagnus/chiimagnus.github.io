@@ -42,9 +42,9 @@ export const DiceTray: React.FC<DiceTrayProps> = ({ position = [0, 0, 0], scale 
       const angle = (i / count) * Math.PI * 2;
       return {
         key: i,
-        position: [Math.cos(angle) * radius, y, Math.sin(angle) * radius] as const,
-        rotation: [0, angle + Math.PI / 2, 0] as const,
-        args: [halfLength, halfHeight, halfThickness] as const,
+        position: [Math.cos(angle) * radius, y, Math.sin(angle) * radius] as [number, number, number],
+        rotation: [0, angle + Math.PI / 2, 0] as [number, number, number],
+        args: [halfLength, halfHeight, halfThickness] as [number, number, number],
       };
     });
   }, [scale]);
@@ -76,4 +76,3 @@ export const DiceTray: React.FC<DiceTrayProps> = ({ position = [0, 0, 0], scale 
 };
 
 useGLTF.preload('/models/casino_dice_tray/casino_dice_tray_CC0.glb');
-
