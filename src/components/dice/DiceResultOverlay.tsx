@@ -63,10 +63,10 @@ export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onCl
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center"
+            className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center border border-white/15 backdrop-blur-sm shadow-sm transition-colors"
             aria-label="关闭"
           >
-            <X size={18} />
+            <X size={16} />
           </button>
 
           <div className="max-h-[85vh] overflow-auto pt-14">
