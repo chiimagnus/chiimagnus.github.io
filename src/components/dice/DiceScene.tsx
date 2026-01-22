@@ -1,10 +1,11 @@
 import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { ContactShadows, Environment } from '@react-three/drei';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface DiceSceneProps {
   className?: string;
@@ -23,6 +24,90 @@ export interface DiceSceneProps {
    */
   onRollSettled?: (diceResult: number) => void;
 }
+
+/**
+ * GradientDrivenLighting
+ * Use the ThemeProvider's shared GradientClock palette to drive Three.js lighting colors.
+ *
+ * Important:
+ * - Runs in the R3F render loop via `useFrame` (no React 60fps rerender)
+ * - Only mutates light colors/intensities (cheap, stable)
+ */
+const GradientDrivenLighting: React.FC = () => {
+  const { getGradientPalette, getGradientPhase } = useTheme();
+
+  const ambientRef = useRef<THREE.AmbientLight>(null);
+  const hemisphereRef = useRef<THREE.HemisphereLight>(null);
+  const keySpotRef = useRef<THREE.SpotLight>(null);
+  const highlightSpotRef = useRef<THREE.SpotLight>(null);
+  const fillPointRef = useRef<THREE.PointLight>(null);
+  const underGlowRef = useRef<THREE.PointLight>(null);
+  const underSoftRef = useRef<THREE.PointLight>(null);
+  const frontFillRef = useRef<THREE.DirectionalLight>(null);
+  const rimRef = useRef<THREE.DirectionalLight>(null);
+
+  useFrame(() => {
+    const palette = getGradientPalette();
+    const phase = getGradientPhase();
+    const pulse = Math.sin(phase.raw * Math.PI * 2);
+
+    ambientRef.current?.color.set(palette.fillLight);
+    hemisphereRef.current?.color.set(palette.fillLight);
+
+    keySpotRef.current?.color.set(palette.keyLight);
+    highlightSpotRef.current?.color.set(palette.highlight);
+
+    fillPointRef.current?.color.set(palette.fillLight);
+
+    if (underGlowRef.current) {
+      underGlowRef.current.color.set(palette.underGlow);
+      underGlowRef.current.intensity = 0.72 + pulse * 0.06;
+    }
+    if (underSoftRef.current) {
+      underSoftRef.current.color.set(palette.velvetTint);
+      underSoftRef.current.intensity = 0.32 + pulse * 0.04;
+    }
+
+    frontFillRef.current?.color.set('#ffffff');
+    rimRef.current?.color.set(palette.rimLight);
+  });
+
+  return (
+    <>
+      {/* 环境光（整体提亮）：避免“夜景环境贴图”导致整体过暗 */}
+      <ambientLight ref={ambientRef} intensity={0.5} />
+      <hemisphereLight ref={hemisphereRef} intensity={0.5} color="#ffffff" groundColor="#1a0f2e" />
+
+      {/* 主光源 - 顶部暖色调光 */}
+      <spotLight
+        ref={keySpotRef}
+        position={[2, 5, 2]}
+        angle={0.4}
+        penumbra={0.5}
+        intensity={1.35}
+        color="#ff9966"
+        castShadow
+        shadow-mapSize={[1024, 1024]}
+      />
+
+      {/* 高光强化灯：更聚焦的白光，用来“打出”金属边缘高光 */}
+      <spotLight ref={highlightSpotRef} position={[-2.5, 5.2, 3.8]} angle={0.32} penumbra={0.65} intensity={1.0} color="#ffffff" />
+
+      {/* 补光 - 侧面冷色调 */}
+      <pointLight ref={fillPointRef} position={[-3, 2, -2]} intensity={0.6} color="#6699ff" distance={12} decay={2} />
+
+      {/* 底部反射光 */}
+      <pointLight ref={underGlowRef} position={[0, -0.6, 0]} intensity={0.75} color="#ff6b35" distance={8} decay={2} />
+      {/* 底部柔光 */}
+      <pointLight ref={underSoftRef} position={[0, -0.15, 0]} intensity={0.35} color="#ffb38a" distance={10} decay={2} />
+
+      {/* 前方柔和补光：避免托盘整体偏暗 */}
+      <directionalLight ref={frontFillRef} position={[0, 4, 6]} intensity={0.55} color="#ffffff" />
+      {/* 背后轮廓光：让骰子边缘更立体 */}
+      <directionalLight ref={rimRef} position={[0, 3, -6]} intensity={0.25} color="#cfe6ff" />
+    </>
+  );
+};
 
 /**
  * DiceScene
@@ -84,33 +169,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, rollRequestId, 
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
-          {/* 环境光（整体提亮）：避免“夜景环境贴图”导致整体过暗 */}
-          <ambientLight intensity={0.5} />
-          <hemisphereLight intensity={0.5} color="#ffffff" groundColor="#1a0f2e" />
-
-          {/* 主光源 - 顶部暖色调光 */}
-          <spotLight
-            position={[2, 5, 2]}
-            angle={0.4}
-            penumbra={0.5}
-            intensity={1.35}
-            color="#ff9966"
-            castShadow
-            shadow-mapSize={[1024, 1024]}
-          />
-
-          {/* 补光 - 侧面冷色调（略增强）：给金色骰子更多高光层次 */}
-          <pointLight position={[-3, 2, -2]} intensity={0.6} color="#6699ff" distance={12} decay={2} />
-
-          {/* 底部反射光（明显增强）：让骰子底部与托盘丝绒更“发亮” */}
-          <pointLight position={[0, -0.6, 0]} intensity={0.75} color="#ff6b35" distance={8} decay={2} />
-          {/* 底部柔光（明显增强）：扩大底部亮区，避免只剩中心点亮斑 */}
-          <pointLight position={[0, -0.15, 0]} intensity={0.35} color="#ffb38a" distance={10} decay={2} />
-
-          {/* 前方柔和补光（增强）：避免托盘整体偏暗 */}
-          <directionalLight position={[0, 4, 6]} intensity={0.55} color="#ffffff" />
-          {/* 背后轮廓光：让骰子边缘更立体（不抢主光） */}
-          <directionalLight position={[0, 3, -6]} intensity={0.25} color="#cfe6ff" />
+          <GradientDrivenLighting />
 
           <Physics gravity={[0, -9.81, 0]}>
             {/* 防止骰子掉出场景的“兜底地面”（不可见） */}
