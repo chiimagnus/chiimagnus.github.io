@@ -12,3 +12,6 @@ export type { DiceResultOverlayProps } from './DiceResultOverlay';
 
 export { ThemeResultCard } from './ThemeResultCard';
 export type { ThemeResultCardProps } from './ThemeResultCard';
+
+export { EnterBlogGateOverlay } from './EnterBlogGateOverlay';
+export type { EnterBlogGateOverlayProps } from './EnterBlogGateOverlay';

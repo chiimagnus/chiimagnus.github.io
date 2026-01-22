@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { DiceScene } from '../components/dice';
 import '../styles/dice.css';
 import { DiceResultOverlay } from '../components/dice/DiceResultOverlay';
+import { EnterBlogGateOverlay } from '../components/dice/EnterBlogGateOverlay';
 import { buildDicePool, drawCard, type DiceCard } from '../features/dice/dicePool';
 import { useTheme } from '../context/ThemeContext';
 
@@ -20,6 +21,7 @@ const DicePage: React.FC = () => {
   const navigate = useNavigate();
   const [rollRequestId, setRollRequestId] = useState(0);
   const [isEnteringBlog, setIsEnteringBlog] = useState(false);
+  const [enterBlogFailedRoll, setEnterBlogFailedRoll] = useState<number | null>(null);
   const enterBlogDC = 10;
 
   useEffect(() => {
@@ -40,6 +42,9 @@ const DicePage: React.FC = () => {
       if (isEnteringBlog) {
         if (diceResult >= enterBlogDC) {
           navigate('/blog');
+        }
+        if (diceResult < enterBlogDC) {
+          setEnterBlogFailedRoll(diceResult);
         }
         setIsEnteringBlog(false);
         return;
@@ -67,6 +72,8 @@ const DicePage: React.FC = () => {
             type="button"
             onClick={() => {
               setIsEnteringBlog(true);
+              setEnterBlogFailedRoll(null);
+              setResultCard(null);
               setRollRequestId((id) => id + 1);
             }}
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
@@ -92,6 +99,19 @@ const DicePage: React.FC = () => {
         <DiceResultOverlay
           card={resultCard}
           onClose={() => setResultCard(null)}
+        />
+      )}
+
+      {enterBlogFailedRoll !== null && (
+        <EnterBlogGateOverlay
+          dc={enterBlogDC}
+          roll={enterBlogFailedRoll}
+          onClose={() => setEnterBlogFailedRoll(null)}
+          onRetry={() => {
+            setEnterBlogFailedRoll(null);
+            setIsEnteringBlog(true);
+            setRollRequestId((id) => id + 1);
+          }}
         />
       )}
     </div>
