@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { CuboidCollider, RigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 
 interface DiceTrayProps {
@@ -18,6 +19,25 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
   outerColor = '#B8860B',
   runeColor = '#FFD700',
 }) => {
+  const wallColliders = useMemo(() => {
+    const count = 12;
+    const radius = 1.02;
+    const y = 0.18;
+    const halfHeight = 0.18;
+    const halfThickness = 0.05;
+    const halfLength = 0.32;
+
+    return Array.from({ length: count }, (_, i) => {
+      const angle = (i / count) * Math.PI * 2;
+      return {
+        key: i,
+        position: [Math.cos(angle) * radius, y, Math.sin(angle) * radius] as const,
+        rotation: [0, angle + Math.PI / 2, 0] as const,
+        args: [halfLength, halfHeight, halfThickness] as const,
+      };
+    });
+  }, []);
+
   // 托盘基座 - 外圈 - 增加分段数使其更圆滑
   const outerRingGeometry = useMemo(() => {
     return new THREE.TorusGeometry(1.2, 0.15, 32, 128);
@@ -75,73 +95,93 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
   }, [runeColor]);
 
   return (
-    <group position={position}>
-      {/* 外圈装饰环 */}
-      <mesh
-        geometry={outerRingGeometry}
-        material={outerMaterial}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0.08, 0]}
-        receiveShadow
+    <RigidBody type="fixed" colliders={false} position={position}>
+      {/* 托盘碰撞体：底面 + 围墙（近似圆形），用于与骰子发生真实碰撞 */}
+      <CuboidCollider
+        args={[0.95, 0.03, 0.95]}
+        position={[0, 0.06, 0]}
+        friction={1.2}
+        restitution={0.1}
       />
+      {wallColliders.map((wall) => (
+        <CuboidCollider
+          key={wall.key}
+          args={wall.args}
+          position={wall.position}
+          rotation={wall.rotation}
+          friction={1.2}
+          restitution={0.1}
+        />
+      ))}
 
-      {/* 托盘底座 */}
-      <mesh
-        geometry={baseGeometry}
-        material={outerMaterial}
-        position={[0, 0, 0]}
-        receiveShadow
-      />
+      <group>
+        {/* 外圈装饰环 */}
+        <mesh
+          geometry={outerRingGeometry}
+          material={outerMaterial}
+          rotation={[Math.PI / 2, 0, 0]}
+          position={[0, 0.08, 0]}
+          receiveShadow
+        />
 
-      {/* 内部凹陷（丝绒面） */}
-      <mesh
-        geometry={innerBaseGeometry}
-        material={baseMaterial}
-        position={[0, 0.02, 0]}
-        receiveShadow
-      />
+        {/* 托盘底座 */}
+        <mesh
+          geometry={baseGeometry}
+          material={outerMaterial}
+          position={[0, 0, 0]}
+          receiveShadow
+        />
 
-      {/* 符文环 - 第一层 */}
-      <mesh
-        geometry={runeRingGeometry}
-        material={runeMaterial}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0.07, 0]}
-      />
+        {/* 内部凹陷（丝绒面） */}
+        <mesh
+          geometry={innerBaseGeometry}
+          material={baseMaterial}
+          position={[0, 0.02, 0]}
+          receiveShadow
+        />
 
-      {/* 符文环 - 第二层（反向旋转） */}
-      <mesh
-        geometry={new THREE.TorusGeometry(0.6, 0.015, 8, 64)}
-        material={runeMaterial}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0.07, 0]}
-      />
+        {/* 符文环 - 第一层 */}
+        <mesh
+          geometry={runeRingGeometry}
+          material={runeMaterial}
+          rotation={[Math.PI / 2, 0, 0]}
+          position={[0, 0.07, 0]}
+        />
 
-      {/* 内部发光效果 */}
-      <mesh
-        geometry={new THREE.CircleGeometry(0.9, 64)}
-        material={innerGlowMaterial}
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, 0.08, 0]}
-      />
+        {/* 符文环 - 第二层（反向旋转） */}
+        <mesh
+          geometry={new THREE.TorusGeometry(0.6, 0.015, 8, 64)}
+          material={runeMaterial}
+          rotation={[Math.PI / 2, 0, 0]}
+          position={[0, 0.07, 0]}
+        />
 
-      {/* 装饰性小球 - 围绕托盘 */}
-      {Array.from({ length: 8 }).map((_, i) => {
-        const angle = (i / 8) * Math.PI * 2;
-        const x = Math.cos(angle) * 1.15;
-        const z = Math.sin(angle) * 1.15;
-        return (
-          <mesh key={i} position={[x, 0.15, z]}>
-            <sphereGeometry args={[0.04, 16, 16]} />
-            <meshStandardMaterial
-              color={runeColor}
-              emissive={runeColor}
-              emissiveIntensity={0.5}
-            />
-          </mesh>
-        );
-      })}
-    </group>
+        {/* 内部发光效果 */}
+        <mesh
+          geometry={new THREE.CircleGeometry(0.9, 64)}
+          material={innerGlowMaterial}
+          rotation={[-Math.PI / 2, 0, 0]}
+          position={[0, 0.08, 0]}
+        />
+
+        {/* 装饰性小球 - 围绕托盘 */}
+        {Array.from({ length: 8 }).map((_, i) => {
+          const angle = (i / 8) * Math.PI * 2;
+          const x = Math.cos(angle) * 1.15;
+          const z = Math.sin(angle) * 1.15;
+          return (
+            <mesh key={i} position={[x, 0.15, z]}>
+              <sphereGeometry args={[0.04, 16, 16]} />
+              <meshStandardMaterial
+                color={runeColor}
+                emissive={runeColor}
+                emissiveIntensity={0.5}
+              />
+            </mesh>
+          );
+        })}
+      </group>
+    </RigidBody>
   );
 };
 

@@ -1,13 +1,17 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { ConvexHullCollider, quat, RapierRigidBody, RigidBody } from '@react-three/rapier';
 import * as THREE from 'three';
 
 interface D20DiceProps {
   position?: [number, number, number];
   isRolling?: boolean;
+  rollId?: number;
   glowColor?: string;
   baseColor?: string;
-  onClick?: () => void;
+  onRequestRoll?: () => void;
+  onSettled?: (result: number) => void;
+  onTopFaceChange?: (result: number) => void;
 }
 
 /**
@@ -17,14 +21,21 @@ interface D20DiceProps {
 export const D20Dice: React.FC<D20DiceProps> = ({
   position = [0, 0.8, 0],
   isRolling = false,
+  rollId = 0,
   glowColor = '#FFD700', // 金色光晕
   baseColor = '#D4AF37', // 金属金基色
-  onClick,
+  onRequestRoll,
+  onSettled,
+  onTopFaceChange,
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const rigidBodyRef = useRef<RapierRigidBody>(null);
   const isDraggingRef = useRef(false);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
   const movedRef = useRef(false);
+  const lastRollIdRef = useRef(rollId);
+  const lastTopFaceRef = useRef<number | null>(null);
+  const rollingRef = useRef(false);
 
   useEffect(() => {
     return () => {
@@ -40,6 +51,11 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   const numberPlane = useMemo(() => {
     return new THREE.PlaneGeometry(0.18, 0.18);
   }, []);
+
+  const colliderVertices = useMemo(() => {
+    const positionAttr = geometry.getAttribute('position') as THREE.BufferAttribute;
+    return positionAttr.array as ArrayLike<number>;
+  }, [geometry]);
 
   const numberTextures = useMemo(() => {
     return Array.from({ length: 20 }, (_, index) => {
@@ -74,10 +90,11 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     });
   }, []);
 
-  const faceLabels = useMemo(() => {
-    const labels: Array<{
+  const faceData = useMemo(() => {
+    const faces: Array<{
       position: THREE.Vector3;
       rotation: THREE.Euler;
+      normal: THREE.Vector3;
       number: number;
     }> = [];
 
@@ -113,6 +130,8 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         .subVectors(b, a)
         .cross(new THREE.Vector3().subVectors(c, a))
         .normalize();
+      // 统一为朝外法线（用于判断“顶面”）
+      if (normal.dot(center) < 0) normal.multiplyScalar(-1);
 
       const offset = normal.clone().multiplyScalar(0.02);
       const position = center.clone().add(offset);
@@ -123,14 +142,15 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       );
       const rotation = new THREE.Euler().setFromQuaternion(quaternion);
 
-      labels.push({
+      faces.push({
         position,
         rotation,
+        normal,
         number: faceIndex + 1,
       });
     }
 
-    return labels;
+    return faces;
   }, [geometry]);
 
   // 骰子材质 - 金色金属质感
@@ -144,109 +164,225 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     });
   }, [baseColor, glowColor]);
 
-  // 动画帧更新
-  useFrame(() => {
-    if (!meshRef.current) return;
+  const getTopFace = useMemo(() => {
+    const up = new THREE.Vector3(0, 1, 0);
+    const tmp = new THREE.Vector3();
+    return (worldQuaternion: THREE.Quaternion) => {
+      let bestDot = -Infinity;
+      let bestNumber = 1;
 
-    if (isRolling) {
-      // 投掷时快速旋转
-      meshRef.current.rotation.x += 0.15;
-      meshRef.current.rotation.y += 0.12;
-      meshRef.current.rotation.z += 0.08;
-    }
+      for (const face of faceData) {
+        tmp.copy(face.normal).applyQuaternion(worldQuaternion);
+        const dot = tmp.dot(up);
+        if (dot > bestDot) {
+          bestDot = dot;
+          bestNumber = face.number;
+        }
+      }
+
+      return bestNumber;
+    };
+  }, [faceData]);
+
+  useEffect(() => {
+    if (rollId === lastRollIdRef.current) return;
+    lastRollIdRef.current = rollId;
+
+    const rb = rigidBodyRef.current;
+    if (!rb) return;
+
+    // 开始新一轮投掷：解除拖动锁定，重置速度并施加随机冲量/扭矩
+    isDraggingRef.current = false;
+    lastPointerRef.current = null;
+    movedRef.current = false;
+    rb.lockTranslations(false, true);
+    rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+    rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
+    rb.setTranslation({ x: position[0], y: position[1], z: position[2] }, true);
+    rb.setRotation(
+      new THREE.Quaternion().setFromEuler(
+        new THREE.Euler(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2),
+      ),
+      true,
+    );
+
+    rollingRef.current = true;
+    lastTopFaceRef.current = null;
+
+    rb.applyImpulse(
+      {
+        x: (Math.random() - 0.5) * 2.5,
+        y: 5 + Math.random() * 2,
+        z: (Math.random() - 0.5) * 2.5,
+      },
+      true,
+    );
+    rb.applyTorqueImpulse(
+      {
+        x: (Math.random() - 0.5) * 6,
+        y: (Math.random() - 0.5) * 6,
+        z: (Math.random() - 0.5) * 6,
+      },
+      true,
+    );
+  }, [getTopFace, position, rollId]);
+
+  // 在渲染帧里同步“顶面点数”（用于用户拖动时刷新 UI）
+  useFrame(() => {
+    const rb = rigidBodyRef.current;
+    if (!rb) return;
+
+    if (rollingRef.current) return;
+
+    const top = getTopFace(quat(rb.rotation()));
+    if (lastTopFaceRef.current === top) return;
+    lastTopFaceRef.current = top;
+    onTopFaceChange?.(top);
   });
 
   return (
-    <group
+    <RigidBody
+      ref={rigidBodyRef}
+      colliders={false}
       position={position}
-      onPointerDown={(event) => {
-        if (isRolling) return;
-        event.stopPropagation();
-        (event.target as unknown as { setPointerCapture?: (id: number) => void })?.setPointerCapture?.(
-          event.pointerId
-        );
-        isDraggingRef.current = true;
-        movedRef.current = false;
-        lastPointerRef.current = { x: event.clientX, y: event.clientY };
+      linearDamping={0.2}
+      angularDamping={0.4}
+      onSleep={() => {
+        if (!rollingRef.current) return;
+        rollingRef.current = false;
+        const rb = rigidBodyRef.current;
+        if (!rb) return;
+        const top = getTopFace(quat(rb.rotation()));
+        lastTopFaceRef.current = top;
+        onSettled?.(top);
+        onTopFaceChange?.(top);
       }}
-      onPointerMove={(event) => {
-        if (isRolling) return;
-        if (!isDraggingRef.current) return;
-        if (!meshRef.current) return;
-
-        event.stopPropagation();
-
-        const last = lastPointerRef.current;
-        if (!last) {
-          lastPointerRef.current = { x: event.clientX, y: event.clientY };
-          return;
-        }
-
-        const deltaX = event.clientX - last.x;
-        const deltaY = event.clientY - last.y;
-        lastPointerRef.current = { x: event.clientX, y: event.clientY };
-
-        if (Math.abs(deltaX) + Math.abs(deltaY) > 2) movedRef.current = true;
-
-        // 拖动仅旋转骰子本体（不动相机/托盘）
-        meshRef.current.rotation.y += deltaX * 0.01;
-        meshRef.current.rotation.x += deltaY * 0.01;
-      }}
-      onPointerUp={(event) => {
-        if (isRolling) return;
-        event.stopPropagation();
-        (event.target as unknown as { releasePointerCapture?: (id: number) => void })
-          ?.releasePointerCapture?.(event.pointerId);
-
-        const shouldClick = !movedRef.current;
-        isDraggingRef.current = false;
-        lastPointerRef.current = null;
-        movedRef.current = false;
-
-        if (shouldClick) onClick?.();
-      }}
-      onPointerCancel={(event) => {
-        if (isRolling) return;
-        event.stopPropagation();
-        isDraggingRef.current = false;
-        lastPointerRef.current = null;
-        movedRef.current = false;
-      }}
-      onPointerOver={() => {
-        document.body.style.cursor = isRolling ? 'not-allowed' : 'grab';
-      }}
-      onPointerOut={() => {
-        document.body.style.cursor = '';
+      onWake={() => {
+        // 当骰子醒来（投掷中），避免把中途变化误当最终结果
+        if (rollingRef.current) return;
+        if (isRolling) rollingRef.current = true;
       }}
     >
-      {/* 主骰子 */}
-      <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow receiveShadow>
-        {/* 数字 */}
-        {faceLabels.map((label) => (
-          <mesh
-            key={label.number}
-            geometry={numberPlane}
-            position={[label.position.x, label.position.y, label.position.z]}
-            rotation={[label.rotation.x, label.rotation.y, label.rotation.z]}
-            renderOrder={2}
-          >
-            <meshBasicMaterial
-              map={numberTextures[label.number - 1]}
-              transparent
-              toneMapped={false}
-            />
-          </mesh>
-        ))}
-      </mesh>
+      <ConvexHullCollider args={[colliderVertices]} friction={0.9} restitution={0.2} />
 
-      {/* 点光源 - 骰子自身发光 */}
-      <pointLight
-        color={glowColor}
-        intensity={0.5}
-        distance={3}
-        decay={2}
-      />
-    </group>
+      <group
+        onPointerDown={(event) => {
+          if (isRolling) return;
+          const rb = rigidBodyRef.current;
+          if (!rb) return;
+
+          event.stopPropagation();
+          (event.target as unknown as { setPointerCapture?: (id: number) => void })?.setPointerCapture?.(
+            event.pointerId,
+          );
+
+          isDraggingRef.current = true;
+          movedRef.current = false;
+          lastPointerRef.current = { x: event.clientX, y: event.clientY };
+          rb.lockTranslations(true, true);
+          rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+          rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
+          document.body.style.cursor = 'grabbing';
+        }}
+        onPointerMove={(event) => {
+          if (isRolling) return;
+          if (!isDraggingRef.current) return;
+          const rb = rigidBodyRef.current;
+          if (!rb) return;
+
+          event.stopPropagation();
+
+          const last = lastPointerRef.current;
+          if (!last) {
+            lastPointerRef.current = { x: event.clientX, y: event.clientY };
+            return;
+          }
+
+          const deltaX = event.clientX - last.x;
+          const deltaY = event.clientY - last.y;
+          lastPointerRef.current = { x: event.clientX, y: event.clientY };
+
+          if (Math.abs(deltaX) + Math.abs(deltaY) > 2) movedRef.current = true;
+
+          const current = quat(rb.rotation());
+          const delta = new THREE.Quaternion().setFromEuler(new THREE.Euler(deltaY * 0.01, deltaX * 0.01, 0));
+          current.multiply(delta);
+          rb.setRotation(current, true);
+          rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
+
+          const top = getTopFace(current);
+          if (lastTopFaceRef.current !== top) {
+            lastTopFaceRef.current = top;
+            onTopFaceChange?.(top);
+          }
+        }}
+        onPointerUp={(event) => {
+          if (isRolling) return;
+          const rb = rigidBodyRef.current;
+          if (!rb) return;
+
+          event.stopPropagation();
+          (event.target as unknown as { releasePointerCapture?: (id: number) => void })
+            ?.releasePointerCapture?.(event.pointerId);
+
+          const shouldClick = !movedRef.current;
+          isDraggingRef.current = false;
+          lastPointerRef.current = null;
+          movedRef.current = false;
+          rb.lockTranslations(false, true);
+          document.body.style.cursor = '';
+
+          if (shouldClick) onRequestRoll?.();
+        }}
+        onPointerCancel={(event) => {
+          if (isRolling) return;
+          const rb = rigidBodyRef.current;
+          if (!rb) return;
+
+          event.stopPropagation();
+          isDraggingRef.current = false;
+          lastPointerRef.current = null;
+          movedRef.current = false;
+          rb.lockTranslations(false, true);
+          document.body.style.cursor = '';
+        }}
+        onPointerOver={() => {
+          document.body.style.cursor = isRolling ? 'not-allowed' : 'grab';
+        }}
+        onPointerOut={() => {
+          if (isDraggingRef.current) return;
+          document.body.style.cursor = '';
+        }}
+      >
+        {/* 主骰子 */}
+        <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow receiveShadow>
+          {/* 数字 */}
+          {faceData.map((label) => (
+            <mesh
+              key={label.number}
+              geometry={numberPlane}
+              position={[label.position.x, label.position.y, label.position.z]}
+              rotation={[label.rotation.x, label.rotation.y, label.rotation.z]}
+              renderOrder={2}
+            >
+              <meshBasicMaterial
+                map={numberTextures[label.number - 1]}
+                transparent
+                toneMapped={false}
+              />
+            </mesh>
+          ))}
+        </mesh>
+
+        {/* 点光源 - 骰子自身发光 */}
+        <pointLight
+          color={glowColor}
+          intensity={0.5}
+          distance={3}
+          decay={2}
+        />
+      </group>
+    </RigidBody>
   );
 };
 

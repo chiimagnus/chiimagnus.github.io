@@ -1,6 +1,7 @@
-import React, { Suspense, useState, useCallback } from 'react';
+import React, { Suspense, useCallback, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, ContactShadows } from '@react-three/drei';
+import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
 
@@ -16,6 +17,8 @@ interface DiceSceneProps {
 export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [diceResult, setDiceResult] = useState<number | null>(null);
+  const [rollId, setRollId] = useState(0);
+  const lastResultRef = useRef<number | null>(null);
 
   // 投掷骰子
   const rollDice = useCallback(() => {
@@ -23,15 +26,31 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
 
     setIsRolling(true);
     setDiceResult(null);
+    lastResultRef.current = null;
+    setRollId((id) => id + 1);
+  }, [isRolling]);
 
-    // 模拟投掷动画时间
-    setTimeout(() => {
-      const result = Math.floor(Math.random() * 20) + 1;
-      setDiceResult(result);
+  const handleDiceSettled = useCallback(
+    (result: number) => {
       setIsRolling(false);
+      if (lastResultRef.current !== result) {
+        lastResultRef.current = result;
+        setDiceResult(result);
+      }
       onDiceClick?.();
-    }, 2000);
-  }, [isRolling, onDiceClick]);
+    },
+    [onDiceClick],
+  );
+
+  const handleTopFaceChange = useCallback(
+    (result: number) => {
+      if (isRolling) return;
+      if (lastResultRef.current === result) return;
+      lastResultRef.current = result;
+      setDiceResult(result);
+    },
+    [isRolling],
+  );
 
   return (
     <div className={`relative w-full h-full ${className || ''}`}>
@@ -69,22 +88,32 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
             color="#ff6b35"
           />
 
-          {/* 骰子 - 可点击 */}
-          <D20Dice
-            position={[0, 0.8, 0]}
-            isRolling={isRolling}
-            glowColor="#FFE5B4" // 浅金色光晕
-            baseColor="#D4AF37" // 金色本体
-            onClick={rollDice}
-          />
+          <Physics gravity={[0, -9.81, 0]}>
+            {/* 防止骰子掉出场景的“兜底地面”（不可见） */}
+            <RigidBody type="fixed" colliders={false}>
+              <CuboidCollider args={[20, 0.5, 20]} position={[0, -3, 0]} />
+            </RigidBody>
 
-          {/* 托盘 */}
-          <DiceTray
-            position={[0, -0.05, 0]}
-            innerColor="#2a0a12" // 深红色丝绒底座
-            outerColor="#B8860B" // 暗金色边框
-            runeColor="#FFD700"  // 金色符文
-          />
+            {/* 骰子：投掷使用物理，停下后读取顶面点数 */}
+            <D20Dice
+              position={[0, 1.2, 0]}
+              rollId={rollId}
+              isRolling={isRolling}
+              glowColor="#FFE5B4" // 浅金色光晕
+              baseColor="#D4AF37" // 金色本体
+              onRequestRoll={rollDice}
+              onSettled={handleDiceSettled}
+              onTopFaceChange={handleTopFaceChange}
+            />
+
+            {/* 托盘：固定刚体，骰子与其碰撞 */}
+            <DiceTray
+              position={[0, -0.05, 0]}
+              innerColor="#2a0a12" // 深红色丝绒底座
+              outerColor="#B8860B" // 暗金色边框
+              runeColor="#FFD700" // 金色符文
+            />
+          </Physics>
 
           {/* 接触阴影 - 调整位置到丝绒表面 */}
           <ContactShadows
@@ -106,7 +135,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center pointer-events-none">
         {/* 投掷提示 */}
         <p className="text-white/60 text-sm mb-2 font-light tracking-wider">
-          {isRolling ? '命运之轮转动中...' : '点击骰子投掷'}
+          {isRolling ? '命运之轮转动中...' : '拖动骰子旋转，点击投掷'}
         </p>
 
         {/* 结果显示 */}
