@@ -209,19 +209,24 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     rollingRef.current = true;
     lastTopFaceRef.current = null;
 
+    // 以“水平滑入托盘”为主：X/Z 较大、Y 较小（避免一脚踢飞）
+    const angle = Math.random() * Math.PI * 2;
+    const horizontalPower = 1.8 + Math.random() * 0.9;
+    const upwardPower = 0.6 + Math.random() * 0.6;
+
     rb.applyImpulse(
       {
-        x: (Math.random() - 0.5) * 2.5,
-        y: 5 + Math.random() * 2,
-        z: (Math.random() - 0.5) * 2.5,
+        x: Math.cos(angle) * horizontalPower,
+        y: upwardPower,
+        z: Math.sin(angle) * horizontalPower,
       },
       true,
     );
     rb.applyTorqueImpulse(
       {
-        x: (Math.random() - 0.5) * 6,
-        y: (Math.random() - 0.5) * 6,
-        z: (Math.random() - 0.5) * 6,
+        x: (Math.random() - 0.5) * 3,
+        y: (Math.random() - 0.5) * 3,
+        z: (Math.random() - 0.5) * 3,
       },
       true,
     );
@@ -231,6 +236,23 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   useFrame(() => {
     const rb = rigidBodyRef.current;
     if (!rb) return;
+
+    const translation = rb.translation();
+    if (
+      translation.y < -2 ||
+      Math.abs(translation.x) > 6 ||
+      Math.abs(translation.z) > 6
+    ) {
+      rollingRef.current = false;
+      rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+      rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
+      rb.setTranslation({ x: position[0], y: position[1], z: position[2] }, true);
+      rb.setRotation(
+        new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0)),
+        true,
+      );
+      lastTopFaceRef.current = null;
+    }
 
     if (rollingRef.current) return;
 
@@ -247,6 +269,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       position={position}
       linearDamping={0.2}
       angularDamping={0.4}
+      ccd
       onSleep={() => {
         if (!rollingRef.current) return;
         rollingRef.current = false;
@@ -263,7 +286,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         if (isRolling) rollingRef.current = true;
       }}
     >
-      <ConvexHullCollider args={[colliderVertices]} friction={0.9} restitution={0.2} />
+      <ConvexHullCollider args={[colliderVertices]} friction={1.0} restitution={0.08} />
 
       <group
         onPointerDown={(event) => {

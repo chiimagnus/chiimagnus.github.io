@@ -20,12 +20,13 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
   runeColor = '#FFD700',
 }) => {
   const wallColliders = useMemo(() => {
-    const count = 12;
-    const radius = 1.02;
-    const y = 0.18;
-    const halfHeight = 0.18;
-    const halfThickness = 0.05;
-    const halfLength = 0.32;
+    // “空气墙”：沿托盘外沿布一圈不可见碰撞体，避免骰子飞出托盘
+    const count = 64;
+    const radius = 1.14;
+    const y = 0.8;
+    const halfHeight = 1.2;
+    const halfThickness = 0.12;
+    const halfLength = 0.14;
 
     return Array.from({ length: count }, (_, i) => {
       const angle = (i / count) * Math.PI * 2;
@@ -98,10 +99,10 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
     <RigidBody type="fixed" colliders={false} position={position}>
       {/* 托盘碰撞体：底面 + 围墙（近似圆形），用于与骰子发生真实碰撞 */}
       <CuboidCollider
-        args={[0.95, 0.03, 0.95]}
+        args={[1.05, 0.03, 1.05]}
         position={[0, 0.06, 0]}
         friction={1.2}
-        restitution={0.1}
+        restitution={0.05}
       />
       {wallColliders.map((wall) => (
         <CuboidCollider
@@ -110,7 +111,7 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
           position={wall.position}
           rotation={wall.rotation}
           friction={1.2}
-          restitution={0.1}
+          restitution={0.05}
         />
       ))}
 

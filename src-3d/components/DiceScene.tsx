@@ -94,9 +94,17 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
               <CuboidCollider args={[20, 0.5, 20]} position={[0, -3, 0]} />
             </RigidBody>
 
+            {/* 兜底围墙：防止骰子飞出镜头范围（不可见） */}
+            <RigidBody type="fixed" colliders={false}>
+              <CuboidCollider args={[0.15, 2, 3]} position={[2.2, 1, 0]} />
+              <CuboidCollider args={[0.15, 2, 3]} position={[-2.2, 1, 0]} />
+              <CuboidCollider args={[3, 2, 0.15]} position={[0, 1, 2.2]} />
+              <CuboidCollider args={[3, 2, 0.15]} position={[0, 1, -2.2]} />
+            </RigidBody>
+
             {/* 骰子：投掷使用物理，停下后读取顶面点数 */}
             <D20Dice
-              position={[0, 1.2, 0]}
+              position={[0, 0.9, 0]}
               rollId={rollId}
               isRolling={isRolling}
               glowColor="#FFE5B4" // 浅金色光晕
