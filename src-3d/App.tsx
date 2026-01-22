@@ -13,19 +13,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="relative w-screen h-screen overflow-hidden bg-gradient-to-b from-[#0a0a15] via-[#1a0f2e] to-[#0d0d1a]">
-      {/* 背景装饰 - 神秘光晕 */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* 顶部光晕 */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-orange-600/10 blur-[100px] rounded-full" />
-        
-        {/* 底部光晕 */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-purple-600/10 blur-[80px] rounded-full" />
-        
-        {/* 侧面光晕 */}
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[200px] h-[400px] bg-blue-600/5 blur-[60px] rounded-full" />
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[200px] h-[400px] bg-red-600/5 blur-[60px] rounded-full" />
-      </div>
+    <div className="relative w-screen h-screen overflow-hidden bg-[#05050a]">
 
       {/* 顶部导航栏 */}
       <header className="absolute top-0 left-0 right-0 z-10 p-6">
@@ -62,11 +50,6 @@ const App: React.FC = () => {
         </p>
       </footer>
 
-      {/* 角落装饰 */}
-      <div className="absolute top-20 left-8 w-px h-32 bg-gradient-to-b from-transparent via-orange-500/30 to-transparent" />
-      <div className="absolute top-20 right-8 w-px h-32 bg-gradient-to-b from-transparent via-orange-500/30 to-transparent" />
-      <div className="absolute bottom-20 left-8 w-px h-32 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent" />
-      <div className="absolute bottom-20 right-8 w-px h-32 bg-gradient-to-b from-transparent via-purple-500/30 to-transparent" />
     </div>
   );
 };

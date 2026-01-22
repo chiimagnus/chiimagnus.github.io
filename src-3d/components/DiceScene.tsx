@@ -20,6 +20,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
   const [diceResult, setDiceResult] = useState<number | null>(null);
   const [rollId, setRollId] = useState(0);
   const lastResultRef = useRef<number | null>(null);
+  const trayScale = 2.2;
 
   // 投掷骰子
   const rollDice = useCallback(() => {
@@ -57,7 +58,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
     <div className={`relative w-full h-full ${className || ''}`}>
       <Canvas
         shadows
-        camera={{ position: [0, 4.2, 4.5], fov: 45 }}
+        camera={{ position: [0, 7.2, 7.2], fov: 45 }}
         dpr={[1, 2]}
         gl={{
           antialias: true,
@@ -110,12 +111,12 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
               {/* 参数说明：
                  - 盒子中心在 y=0.9，覆盖托盘上方的主要活动空间
                  - 顶面足够高，避免影响正常滚动，但防止“跳出空气墙” */}
-              <CuboidCollider args={[0.12, 1.2, 1.55]} position={[1.62, 0.9, 0]} />
-              <CuboidCollider args={[0.12, 1.2, 1.55]} position={[-1.62, 0.9, 0]} />
-              <CuboidCollider args={[1.55, 1.2, 0.12]} position={[0, 0.9, 1.62]} />
-              <CuboidCollider args={[1.55, 1.2, 0.12]} position={[0, 0.9, -1.62]} />
-              <CuboidCollider args={[1.55, 0.12, 1.55]} position={[0, -0.42, 0]} />
-              <CuboidCollider args={[1.55, 0.12, 1.55]} position={[0, 2.22, 0]} />
+              <CuboidCollider args={[0.12, 1.6, 1.75 * trayScale]} position={[1.82 * trayScale, 1.0, 0]} />
+              <CuboidCollider args={[0.12, 1.6, 1.75 * trayScale]} position={[-1.82 * trayScale, 1.0, 0]} />
+              <CuboidCollider args={[1.75 * trayScale, 1.6, 0.12]} position={[0, 1.0, 1.82 * trayScale]} />
+              <CuboidCollider args={[1.75 * trayScale, 1.6, 0.12]} position={[0, 1.0, -1.82 * trayScale]} />
+              <CuboidCollider args={[1.75 * trayScale, 0.12, 1.75 * trayScale]} position={[0, -0.65, 0]} />
+              <CuboidCollider args={[1.75 * trayScale, 0.12, 1.75 * trayScale]} position={[0, 2.65, 0]} />
             </RigidBody>
 
             {/* 骰子：投掷使用物理，停下后读取顶面点数 */}
@@ -133,6 +134,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
             {/* 托盘：固定刚体，骰子与其碰撞 */}
             <DiceTray
               position={[0, -0.05, 0]}
+              scale={trayScale}
               innerColor="#2a0a12" // 深红色丝绒底座
               outerColor="#B8860B" // 暗金色边框
               runeColor="#FFD700" // 金色符文
@@ -143,7 +145,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
           <ContactShadows
             position={[0, 0.03, 0]}
             opacity={0.4}
-            scale={4}
+            scale={7}
             blur={2}
             far={2}
             color="#000000"

@@ -35,11 +35,11 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
   const wallColliders = useMemo(() => {
     // “空气墙”：沿托盘外沿布一圈不可见碰撞体，避免骰子飞出托盘
     const count = 64;
-    const radius = 1.14;
-    const y = 0.8;
-    const halfHeight = 1.2;
-    const halfThickness = 0.12;
-    const halfLength = 0.14;
+    const radius = 1.14 * scale;
+    const y = 0.8 * scale;
+    const halfHeight = 1.2 * scale;
+    const halfThickness = 0.12 * scale;
+    const halfLength = 0.14 * scale;
 
     return Array.from({ length: count }, (_, i) => {
       const angle = (i / count) * Math.PI * 2;
@@ -50,14 +50,14 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
         args: [halfLength, halfHeight, halfThickness] as const,
       };
     });
-  }, []);
+  }, [scale]);
 
   return (
     <RigidBody type="fixed" colliders={false} position={position}>
       {/* 托盘碰撞体：底面 + 围墙（近似圆形），用于与骰子发生真实碰撞 */}
       <CuboidCollider
-        args={[1.05, 0.03, 1.05]}
-        position={[0, 0.06, 0]}
+        args={[1.05 * scale, 0.03 * scale, 1.05 * scale]}
+        position={[0, 0.06 * scale, 0]}
         friction={1.2}
         restitution={0.05}
       />
