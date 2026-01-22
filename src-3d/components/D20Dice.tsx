@@ -134,21 +134,14 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   }, [baseColor, glowColor]);
 
   // 动画帧更新
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return;
-
-    const time = state.clock.getElapsedTime();
 
     if (isRolling) {
       // 投掷时快速旋转
       meshRef.current.rotation.x += 0.15;
       meshRef.current.rotation.y += 0.12;
       meshRef.current.rotation.z += 0.08;
-    } else {
-      // 悬浮时缓慢旋转和上下浮动
-      meshRef.current.rotation.y = time * 0.3;
-      meshRef.current.rotation.x = Math.sin(time * 0.5) * 0.1;
-      meshRef.current.position.y = position[1] + Math.sin(time * 1.5) * 0.05;
     }
   });
 

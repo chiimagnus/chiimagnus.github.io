@@ -119,8 +119,6 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
             maxDistance={8}
             minPolarAngle={Math.PI / 6}
             maxPolarAngle={Math.PI / 2.5}
-            autoRotate
-            autoRotateSpeed={0.5}
           />
         </Suspense>
       </Canvas>
