@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 import { SearchProvider } from '../../context/SearchContext';
 import { Menu } from 'lucide-react';
 import LiquidGlass from './LiquidGlass';
+import { useLocation } from 'react-router-dom';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,6 +13,17 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children, showSidebar = true }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  // 支持从其它页面跳转到 `/blog#section` 时自动滚动到对应锚点
+  useEffect(() => {
+    if (!location.hash) return;
+
+    const id = decodeURIComponent(location.hash.slice(1));
+    requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }, [location.hash]);
 
   return (
     <SearchProvider>

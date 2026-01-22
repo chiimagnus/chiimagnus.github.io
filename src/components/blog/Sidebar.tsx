@@ -58,6 +58,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
     }
   };
 
+  // 在移动端点击导航后自动收起侧边栏（保持与原有锚点导航一致的体验）
+  const closeSidebarOnMobile = () => {
+    if (window.innerWidth < 1024) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       {/* Overlay for mobile, now transparent */}
@@ -97,6 +104,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
           <div>
             <nav>
               <ul className="space-y-1 p-2">
+                <li>
+                  <Link
+                    to="/"
+                    onClick={closeSidebarOnMobile}
+                    className="block py-2 px-4 rounded-lg text-left transition-all duration-200 ease-in-out text-white hover:bg-white/10 hover:pl-6"
+                  >
+                    命运骰子
+                  </Link>
+                </li>
                 {navItems.map((item) => (
                   <li key={item.label}>
                     <a

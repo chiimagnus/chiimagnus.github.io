@@ -10,6 +10,7 @@ import SyncNosOAuthCallback from './pages/SyncNosOAuthCallback'
 import SyncNosOAuthTest from './pages/SyncNosOAuthTest'
 import Layout from './components/blog/Layout'
 import { ThemeProvider } from './context/ThemeContext'
+import DicePage from './pages/DicePage'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -21,11 +22,12 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/jetjetjet" element={<JetJetJetPage />} />
           <Route path="/syncnos-oauth/callback" element={<SyncNosOAuthCallback />} />
           <Route path="/syncnos-oauth/test" element={<SyncNosOAuthTest />} />
-          <Route path="/" element={
+          <Route path="/blog" element={
             <Layout>
               <Home />
             </Layout>
           } />
+          <Route path="/" element={<DicePage />} />
         </Routes>
       </Router>
     </ThemeProvider>

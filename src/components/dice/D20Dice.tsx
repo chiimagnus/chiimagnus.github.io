@@ -4,7 +4,7 @@ import { ConvexHullCollider, quat, RapierRigidBody, RigidBody } from '@react-thr
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
-interface D20DiceProps {
+export interface D20DiceProps {
   position?: [number, number, number];
   isRolling?: boolean;
   rollId?: number;
@@ -16,15 +16,17 @@ interface D20DiceProps {
 }
 
 /**
- * D20 骰子组件 - 博德之门3风格
- * 二十面骰，带有神秘的发光效果
+ * D20Dice
+ * 二十面骰（带物理 + 顶面点数识别），支持拖动旋转与点击投掷。
+ *
+ * 注意：为了性能与稳定性，几何体、面法线与模型 clone 通过 useMemo 缓存。
  */
 export const D20Dice: React.FC<D20DiceProps> = ({
   position = [0, 0.8, 0],
   isRolling = false,
   rollId = 0,
-  glowColor = '#FFD700', // 金色光晕
-  baseColor = '#D4AF37', // 金属金基色
+  glowColor = '#FFD700',
+  baseColor = '#D4AF37',
   onRequestRoll,
   onSettled,
   onTopFaceChange,
@@ -60,17 +62,20 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       }
     });
   }, [baseColor, diceModel]);
-  
-  // 创建二十面体几何体
-  const geometry = useMemo(() => {
-    return new THREE.IcosahedronGeometry(0.5, 0);
-  }, []);
+
+  // 创建二十面体几何体（用于凸包碰撞）
+  const geometry = useMemo(() => new THREE.IcosahedronGeometry(0.5, 0), []);
 
   const colliderVertices = useMemo(() => {
     const positionAttr = geometry.getAttribute('position') as THREE.BufferAttribute;
     return positionAttr.array as ArrayLike<number>;
   }, [geometry]);
 
+  /**
+   * faceNodeNormals
+   * 读取模型内命名为 `Face_1..Face_20` 的节点，并以其 +Z 轴作为“面法线”基准。
+   * 这样就能在任何姿态下计算“哪个面朝上”。
+   */
   const faceNodeNormals = useMemo(() => {
     const faces: Array<{ number: number; normal: THREE.Vector3 }> = [];
     const root = diceModel;
@@ -91,7 +96,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       if (!Number.isFinite(number)) return;
 
       obj.getWorldQuaternion(tmpWorldQuat);
-      tmpWorldQuat.premultiply(invRootWorldQuat); // qRel = qRoot^-1 * qObjWorld
+      tmpWorldQuat.premultiply(invRootWorldQuat);
       const normal = zAxis.clone().applyQuaternion(tmpWorldQuat).normalize();
       faces.push({ number, normal });
     });
@@ -100,6 +105,10 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     return faces.length ? faces : null;
   }, [diceModel]);
 
+  /**
+   * getTopFace
+   * 给定骰子世界旋转，返回“最朝向上方（+Y）”的面编号。
+   */
   const getTopFace = useMemo(() => {
     const up = new THREE.Vector3(0, 1, 0);
     const tmp = new THREE.Vector3();
@@ -177,11 +186,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     if (!rb) return;
 
     const translation = rb.translation();
-    if (
-      translation.y < -2 ||
-      Math.abs(translation.x) > 6 ||
-      Math.abs(translation.z) > 6
-    ) {
+    if (translation.y < -2 || Math.abs(translation.x) > 6 || Math.abs(translation.z) > 6) {
       const wasRolling = rollingRef.current || isRolling;
       rollingRef.current = false;
       rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
@@ -348,17 +353,11 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         <primitive object={diceModel} />
 
         {/* 点光源 - 骰子自身发光 */}
-        <pointLight
-          color={glowColor}
-          intensity={0.5}
-          distance={3}
-          decay={2}
-        />
+        <pointLight color={glowColor} intensity={0.5} distance={3} decay={2} />
       </group>
     </RigidBody>
   );
 };
 
-export default D20Dice;
-
 useGLTF.preload('/models/d20_with_face_nodes_CC0_bundle/d20_with_face_nodes_CC0.glb');
+

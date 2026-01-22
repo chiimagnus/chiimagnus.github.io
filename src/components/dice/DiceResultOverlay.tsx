@@ -1,0 +1,108 @@
+import React, { useEffect, useMemo } from 'react';
+import { X } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import BlogCard from '../blog/BlogCard';
+import ProductCard from '../blog/ProductCard';
+import LiquidGlass from '../blog/LiquidGlass';
+import { BlogPost } from '../../types';
+import type { DiceCard } from '../../features/dice/dicePool';
+import { ThemeResultCard } from './ThemeResultCard';
+
+export interface DiceResultOverlayProps {
+  card: DiceCard;
+  onClose: () => void;
+}
+
+/**
+ * DiceResultOverlay
+ * 投掷结束后的“命运结果卡”浮层：展示并停留；用户点击卡片/链接自行跳转。
+ * UI 复用 2D 博客的卡片组件，以保证风格一致。
+ */
+export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onClose }) => {
+  const blogPost = useMemo<BlogPost | null>(() => {
+    if (card.type !== 'article') return null;
+    return {
+      id: card.id,
+      title: card.title,
+      slug: '',
+      excerpt: card.description,
+      content: card.description,
+      author: 'chiimagnus',
+      publishedAt: card.publishedAt,
+      tags: [],
+      category: 'default',
+      readingTime: 5,
+      url: card.url,
+      external: card.external,
+    };
+  }, [card]);
+
+  /**
+   * 支持 Esc 关闭：
+   * - 结果卡浮层属于短生命周期 UI，直接在挂载期间监听 keydown 即可
+   */
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-50">
+      <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" onClick={onClose} />
+
+      <div className="absolute inset-0 p-6 flex items-center justify-center">
+        <div className="relative w-full max-w-3xl">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center border border-white/15 backdrop-blur-sm shadow-sm transition-colors"
+            aria-label="关闭"
+          >
+            <X size={16} />
+          </button>
+
+          <div className="max-h-[85vh] overflow-auto pt-14">
+            <div className="space-y-4">
+            {card.type === 'article' && blogPost && <BlogCard post={blogPost} />}
+
+            {card.type === 'product' && (
+              <ProductCard
+                title={card.title}
+                description={card.description}
+                tags={card.tags}
+                status={card.status}
+                links={card.links}
+              />
+            )}
+
+            {card.type === 'about' && (
+              <LiquidGlass className="rounded-2xl overflow-hidden">
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2">关于我</h3>
+                  <p className="text-gray-200 mb-4">抽到了关于我：去博客里看看我是谁。</p>
+                  <Link
+                    to="/blog#about"
+                    className="inline-flex items-center font-semibold text-purple-300 hover:text-purple-200"
+                  >
+                    前往 /blog#about
+                  </Link>
+                </div>
+              </LiquidGlass>
+            )}
+
+            {card.type === 'theme' && <ThemeResultCard themeName={card.themeName} />}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
