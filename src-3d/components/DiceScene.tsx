@@ -37,7 +37,7 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
     <div className={`relative w-full h-full ${className || ''}`}>
       <Canvas
         shadows
-        camera={{ position: [0, 3, 4], fov: 45 }}
+        camera={{ position: [0, 4.2, 4.5], fov: 45 }}
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
