@@ -24,10 +24,41 @@ export const EnterBlogGateOverlay: React.FC<EnterBlogGateOverlayProps> = ({ dc, 
     return '失败';
   }, [roll]);
 
+  /**
+   * 失败调侃文案（轻松、无攻击性）
+   * - 按 roll 段位给不同风格
+   * - 使用 deterministic 选择，避免每次 re-render 变文案
+   */
   const subtitle = useMemo(() => {
-    if (roll === 1) return '命运拒绝了你。';
-    return '还差一点点。';
-  }, [roll]);
+    if (roll === 1) {
+      const lines = [
+        '你这一下，连命运都笑出了声。',
+        '骰子：我先撤了，你再想想。',
+        '命运：今天不让你过。',
+      ];
+      return lines[roll % lines.length];
+    }
+
+    if (roll < dc - 4) {
+      const lines = [
+        '你差得有点多，但这很有“主角成长线”的味道。',
+        '命运：先别急，练练手感再来。',
+        '你这手气…像是刚起床。',
+      ];
+      return lines[roll % lines.length];
+    }
+
+    if (roll < dc) {
+      const lines = [
+        '就差一点点——骰子故意的。',
+        '命运：很接近了，但我还想看你再掷一次。',
+        '差一口气，下一把就中。',
+      ];
+      return lines[roll % lines.length];
+    }
+
+    return '通过了。';
+  }, [dc, roll]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -103,4 +134,3 @@ export const EnterBlogGateOverlay: React.FC<EnterBlogGateOverlayProps> = ({ dc, 
     </div>
   );
 };
-
