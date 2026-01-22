@@ -84,9 +84,9 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, rollRequestId, 
         style={{ background: 'transparent' }}
       >
         <Suspense fallback={null}>
-          {/* 环境光 */}
-          <ambientLight intensity={0.35} />
-          <hemisphereLight intensity={0.35} color="#ffffff" groundColor="#1a0f2e" />
+          {/* 环境光（整体提亮）：避免“夜景环境贴图”导致整体过暗 */}
+          <ambientLight intensity={0.5} />
+          <hemisphereLight intensity={0.5} color="#ffffff" groundColor="#1a0f2e" />
 
           {/* 主光源 - 顶部暖色调光 */}
           <spotLight
@@ -99,14 +99,18 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, rollRequestId, 
             shadow-mapSize={[1024, 1024]}
           />
 
-          {/* 补光 - 侧面冷色调 */}
-          <pointLight position={[-3, 2, -2]} intensity={0.45} color="#6699ff" />
+          {/* 补光 - 侧面冷色调（略增强）：给金色骰子更多高光层次 */}
+          <pointLight position={[-3, 2, -2]} intensity={0.6} color="#6699ff" distance={12} decay={2} />
 
-          {/* 底部反射光 */}
-          <pointLight position={[0, -1, 0]} intensity={0.25} color="#ff6b35" />
+          {/* 底部反射光（明显增强）：让骰子底部与托盘丝绒更“发亮” */}
+          <pointLight position={[0, -0.6, 0]} intensity={0.75} color="#ff6b35" distance={8} decay={2} />
+          {/* 底部柔光（明显增强）：扩大底部亮区，避免只剩中心点亮斑 */}
+          <pointLight position={[0, -0.15, 0]} intensity={0.35} color="#ffb38a" distance={10} decay={2} />
 
-          {/* 前方柔和补光：避免托盘整体偏暗 */}
-          <directionalLight position={[0, 4, 6]} intensity={0.35} color="#ffffff" />
+          {/* 前方柔和补光（增强）：避免托盘整体偏暗 */}
+          <directionalLight position={[0, 4, 6]} intensity={0.55} color="#ffffff" />
+          {/* 背后轮廓光：让骰子边缘更立体（不抢主光） */}
+          <directionalLight position={[0, 3, -6]} intensity={0.25} color="#cfe6ff" />
 
           <Physics gravity={[0, -9.81, 0]}>
             {/* 防止骰子掉出场景的“兜底地面”（不可见） */}
