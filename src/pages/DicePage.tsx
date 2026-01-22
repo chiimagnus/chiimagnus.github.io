@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Sparkles } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DiceScene } from '../components/dice';
 import '../styles/dice.css';
 import { DiceResultOverlay } from '../components/dice/DiceResultOverlay';
@@ -17,6 +17,10 @@ const DicePage: React.FC = () => {
   const pool = useMemo(() => buildDicePool(), []);
   const [resultCard, setResultCard] = useState<DiceCard | null>(null);
   const { setTheme } = useTheme();
+  const navigate = useNavigate();
+  const [rollRequestId, setRollRequestId] = useState(0);
+  const [isEnteringBlog, setIsEnteringBlog] = useState(false);
+  const enterBlogDC = 10;
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
@@ -32,6 +36,15 @@ const DicePage: React.FC = () => {
    */
   const handleRollSettled = useCallback(
     (diceResult: number) => {
+      // “进入博客”检定：成功才放行；失败就停留并允许再次投掷
+      if (isEnteringBlog) {
+        if (diceResult >= enterBlogDC) {
+          navigate('/blog');
+        }
+        setIsEnteringBlog(false);
+        return;
+      }
+
       const card = drawCard({ diceResult, pool });
       if (!card) return;
       if (card.type === 'theme') {
@@ -39,7 +52,7 @@ const DicePage: React.FC = () => {
       }
       setResultCard(card);
     },
-    [pool, setTheme],
+    [enterBlogDC, isEnteringBlog, navigate, pool, setTheme],
   );
 
   return (
@@ -50,12 +63,16 @@ const DicePage: React.FC = () => {
       {/* 顶部栏 */}
       <header className="absolute top-0 left-0 right-0 z-10 p-6">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link
-            to="/blog"
+          <button
+            type="button"
+            onClick={() => {
+              setIsEnteringBlog(true);
+              setRollRequestId((id) => id + 1);
+            }}
             className="flex items-center gap-2 text-white/70 hover:text-white transition-colors"
           >
             <span className="font-light">进入博客</span>
-          </Link>
+          </button>
 
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-orange-400" />
@@ -68,7 +85,7 @@ const DicePage: React.FC = () => {
 
       {/* 3D 场景 */}
       <div className="absolute inset-0 z-0">
-        <DiceScene onRollSettled={handleRollSettled} />
+        <DiceScene rollRequestId={rollRequestId} onRollSettled={handleRollSettled} />
       </div>
 
       {resultCard && (

@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { ContactShadows, Environment } from '@react-three/drei';
 import { CuboidCollider, Physics, RigidBody } from '@react-three/rapier';
@@ -8,6 +8,11 @@ import { DiceTray } from './DiceTray';
 
 export interface DiceSceneProps {
   className?: string;
+  /**
+   * 外部触发投掷：当该值发生变化时，场景会开启一轮新的投掷。
+   * 用于“进入博客需要检定”等场景。
+   */
+  rollRequestId?: number;
   /**
    * 用于“骰子点击/投掷完成”的轻量回调（后续用于触发抽卡逻辑）。
    * 注意：当前实现会在骰子稳定后触发。
@@ -23,10 +28,11 @@ export interface DiceSceneProps {
  * DiceScene
  * 博德之门 3 风格的 3D 骰子场景（含物理、光照与托盘）。
  */
-export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick, onRollSettled }) => {
+export const DiceScene: React.FC<DiceSceneProps> = ({ className, rollRequestId, onDiceClick, onRollSettled }) => {
   const [isRolling, setIsRolling] = useState(false);
   const [rollId, setRollId] = useState(0);
   const lastResultRef = useRef<number | null>(null);
+  const lastRollRequestIdRef = useRef<number | undefined>(rollRequestId);
   const trayScale = 2.2;
 
   /**
@@ -40,6 +46,14 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick, on
     lastResultRef.current = null;
     setRollId((id) => id + 1);
   }, [isRolling]);
+
+  // 外部触发投掷：rollRequestId 变化时启动一轮投掷
+  useEffect(() => {
+    if (rollRequestId === undefined) return;
+    if (lastRollRequestIdRef.current === rollRequestId) return;
+    lastRollRequestIdRef.current = rollRequestId;
+    rollDice();
+  }, [rollDice, rollRequestId]);
 
   /**
    * handleDiceSettled
