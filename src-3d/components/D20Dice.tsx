@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { ConvexHullCollider, quat, RapierRigidBody, RigidBody } from '@react-three/rapier';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface D20DiceProps {
@@ -28,7 +29,6 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   onSettled,
   onTopFaceChange,
 }) => {
-  const meshRef = useRef<THREE.Mesh>(null);
   const rigidBodyRef = useRef<RapierRigidBody>(null);
   const isDraggingRef = useRef(false);
   const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
@@ -43,14 +43,27 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       document.body.style.cursor = '';
     };
   }, []);
+
+  // 视觉模型（CC0）
+  const { scene: diceScene } = useGLTF('/models/d20_with_face_nodes_CC0_bundle/d20_with_face_nodes_CC0.glb');
+  const diceModel = useMemo(() => diceScene.clone(true), [diceScene]);
+
+  useEffect(() => {
+    diceModel.traverse((obj) => {
+      if (obj instanceof THREE.Mesh) {
+        obj.castShadow = true;
+        obj.receiveShadow = true;
+        const material = obj.material;
+        if (material instanceof THREE.MeshStandardMaterial && !material.map) {
+          material.color = new THREE.Color(baseColor);
+        }
+      }
+    });
+  }, [baseColor, diceModel]);
   
   // 创建二十面体几何体
   const geometry = useMemo(() => {
     return new THREE.IcosahedronGeometry(0.5, 0);
-  }, []);
-
-  const numberPlane = useMemo(() => {
-    return new THREE.PlaneGeometry(0.18, 0.18);
   }, []);
 
   const colliderVertices = useMemo(() => {
@@ -58,112 +71,34 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     return positionAttr.array as ArrayLike<number>;
   }, [geometry]);
 
-  const numberTextures = useMemo(() => {
-    return Array.from({ length: 20 }, (_, index) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 256;
-      canvas.height = 256;
+  const faceNodeNormals = useMemo(() => {
+    const faces: Array<{ number: number; normal: THREE.Vector3 }> = [];
+    const root = diceModel;
+    root.updateMatrixWorld(true);
 
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return new THREE.CanvasTexture(canvas);
+    const rootWorldQuat = new THREE.Quaternion();
+    root.getWorldQuaternion(rootWorldQuat);
+    const invRootWorldQuat = rootWorldQuat.clone().invert();
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = 'rgba(0,0,0,0)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    const tmpWorldQuat = new THREE.Quaternion();
+    const zAxis = new THREE.Vector3(0, 0, 1);
 
-      ctx.font = 'bold 140px "Cinzel", "Times New Roman", serif';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+    root.traverse((obj) => {
+      const match = obj.name.match(/^Face_(\d+)$/);
+      if (!match) return;
 
-      ctx.fillStyle = '#1a0f2e';
-      ctx.strokeStyle = '#f5e6a8';
-      ctx.lineWidth = 8;
+      const number = Number(match[1]);
+      if (!Number.isFinite(number)) return;
 
-      const text = String(index + 1);
-      ctx.strokeText(text, canvas.width / 2, canvas.height / 2);
-      ctx.fillText(text, canvas.width / 2, canvas.height / 2);
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      texture.magFilter = THREE.LinearFilter;
-      texture.needsUpdate = true;
-      return texture;
+      obj.getWorldQuaternion(tmpWorldQuat);
+      tmpWorldQuat.premultiply(invRootWorldQuat); // qRel = qRoot^-1 * qObjWorld
+      const normal = zAxis.clone().applyQuaternion(tmpWorldQuat).normalize();
+      faces.push({ number, normal });
     });
-  }, []);
 
-  const faceData = useMemo(() => {
-    const faces: Array<{
-      position: THREE.Vector3;
-      rotation: THREE.Euler;
-      normal: THREE.Vector3;
-      number: number;
-    }> = [];
-
-    const positionAttr = geometry.getAttribute('position') as THREE.BufferAttribute;
-    const faceCount = positionAttr.count / 3;
-
-    for (let faceIndex = 0; faceIndex < faceCount; faceIndex += 1) {
-      const i = faceIndex * 3;
-
-      const a = new THREE.Vector3(
-        positionAttr.getX(i),
-        positionAttr.getY(i),
-        positionAttr.getZ(i)
-      );
-      const b = new THREE.Vector3(
-        positionAttr.getX(i + 1),
-        positionAttr.getY(i + 1),
-        positionAttr.getZ(i + 1)
-      );
-      const c = new THREE.Vector3(
-        positionAttr.getX(i + 2),
-        positionAttr.getY(i + 2),
-        positionAttr.getZ(i + 2)
-      );
-
-      const center = new THREE.Vector3()
-        .add(a)
-        .add(b)
-        .add(c)
-        .multiplyScalar(1 / 3);
-
-      const normal = new THREE.Vector3()
-        .subVectors(b, a)
-        .cross(new THREE.Vector3().subVectors(c, a))
-        .normalize();
-      // 统一为朝外法线（用于判断“顶面”）
-      if (normal.dot(center) < 0) normal.multiplyScalar(-1);
-
-      const offset = normal.clone().multiplyScalar(0.02);
-      const position = center.clone().add(offset);
-
-      const quaternion = new THREE.Quaternion().setFromUnitVectors(
-        new THREE.Vector3(0, 0, 1),
-        normal
-      );
-      const rotation = new THREE.Euler().setFromQuaternion(quaternion);
-
-      faces.push({
-        position,
-        rotation,
-        normal,
-        number: faceIndex + 1,
-      });
-    }
-
-    return faces;
-  }, [geometry]);
-
-  // 骰子材质 - 金色金属质感
-  const diceMaterial = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
-      color: baseColor,
-      metalness: 0.9, // 提高金属感
-      roughness: 0.1, // 降低粗糙度，增加光泽
-      emissive: glowColor,
-      emissiveIntensity: 0.2, // 微微发光
-    });
-  }, [baseColor, glowColor]);
+    faces.sort((a, b) => a.number - b.number);
+    return faces.length ? faces : null;
+  }, [diceModel]);
 
   const getTopFace = useMemo(() => {
     const up = new THREE.Vector3(0, 1, 0);
@@ -172,18 +107,20 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       let bestDot = -Infinity;
       let bestNumber = 1;
 
-      for (const face of faceData) {
-        tmp.copy(face.normal).applyQuaternion(worldQuaternion);
-        const dot = tmp.dot(up);
-        if (dot > bestDot) {
-          bestDot = dot;
-          bestNumber = face.number;
+      if (faceNodeNormals) {
+        for (const face of faceNodeNormals) {
+          tmp.copy(face.normal).applyQuaternion(worldQuaternion);
+          const dot = tmp.dot(up);
+          if (dot > bestDot) {
+            bestDot = dot;
+            bestNumber = face.number;
+          }
         }
       }
 
       return bestNumber;
     };
-  }, [faceData]);
+  }, [faceNodeNormals]);
 
   useEffect(() => {
     if (rollId === lastRollIdRef.current) return;
@@ -407,25 +344,8 @@ export const D20Dice: React.FC<D20DiceProps> = ({
           document.body.style.cursor = '';
         }}
       >
-        {/* 主骰子 */}
-        <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow receiveShadow>
-          {/* 数字 */}
-          {faceData.map((label) => (
-            <mesh
-              key={label.number}
-              geometry={numberPlane}
-              position={[label.position.x, label.position.y, label.position.z]}
-              rotation={[label.rotation.x, label.rotation.y, label.rotation.z]}
-              renderOrder={2}
-            >
-              <meshBasicMaterial
-                map={numberTextures[label.number - 1]}
-                transparent
-                toneMapped={false}
-              />
-            </mesh>
-          ))}
-        </mesh>
+        {/* 骰子视觉模型（自带贴图与数字） */}
+        <primitive object={diceModel} />
 
         {/* 点光源 - 骰子自身发光 */}
         <pointLight
@@ -440,3 +360,5 @@ export const D20Dice: React.FC<D20DiceProps> = ({
 };
 
 export default D20Dice;
+
+useGLTF.preload('/models/d20_with_face_nodes_CC0_bundle/d20_with_face_nodes_CC0.glb');
