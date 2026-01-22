@@ -1,0 +1,99 @@
+# Blog 组件规则：`LiquidGlass`（目录范围）
+
+本文件适用于 `src/components/blog/` 目录下的改动，尤其是以下文件：
+- `src/components/blog/LiquidGlass.tsx`
+- `src/components/blog/*Card.tsx`
+- `src/components/blog/Sidebar.tsx`
+
+## 使用自定义 `LiquidGlass.tsx` 实现液态玻璃效果
+
+本指南说明如何在项目中应用我们自定义的 `src/components/blog/LiquidGlass.tsx` 组件，以实现动态的、有呼吸感的液态玻璃 UI。此组件并非外部库，而是根据原生 Web 技术为本项目量身定制的。
+
+## 1. 实现原理
+
+该组件通过以下技术组合实现：
+- **React Hooks**: 使用 `useRef`, `useState`, 和 `useEffect` 管理组件生命周期和 DOM 元素。
+- **Canvas API**: 在一个隐藏的 `<canvas>` 元素上实时绘制位移图（Displacement Map）。
+- **SVG 滤镜**: 使用 `<feDisplacementMap>` SVG 滤镜来读取 Canvas 生成的图像，并将其作为扭曲效果应用到 DOM 元素上。
+- **CSS `backdrop-filter`**: 将最终的扭曲和模糊效果应用到组件背景上，使其影响下层内容。
+
+## 2. 基本用法
+
+将需要应用液态玻璃效果的 UI 块包裹在 `LiquidGlass` 组件中。
+
+```tsx
+import LiquidGlass from './LiquidGlass'; // 确保路径正确
+
+const MyCard = () => (
+  <LiquidGlass className="rounded-2xl overflow-hidden">
+    <div className="p-4">
+      {/* 你的内容，通常背景是透明的 */}
+    </div>
+  </LiquidGlass>
+);
+```
+
+## 3. 当前应用场景
+
+- **侧边栏**: 在 `src/components/blog/Sidebar.tsx` 中，个人资料、导航链接、主题选择器和搜索框等多个卡片均被独立的 `LiquidGlass` 组件包裹。
+- **内容卡片**: 在 `src/components/blog/AboutCard.tsx`, `src/components/blog/BlogCard.tsx`, 和 `src/components/blog/ProductCard.tsx` 中，用于包裹主要内容，形成统一的卡片视觉风格。
+
+## 4. 如何配置效果参数
+
+所有参数的配置都在 `src/components/blog/LiquidGlass.tsx` 文件内部完成，该组件目前不通过 props 接收配置。
+
+### a. 背景滤镜效果 (模糊度, 对比度等)
+
+- **位置**: 文件底部的 `return` 语句中，修改 `style` 对象的 `backdropFilter` 属性 (约在第 139 行)。
+- **可调参数**:
+  - `blur(1px)`: 控制背景的模糊程度。值越大越模糊。
+  - `contrast(1.2)`: 控制对比度。
+  - `brightness(1.05)`: 控制亮度。
+  - `saturate(1.1)`: 控制饱和度。
+
+```tsx
+style={{
+  backdropFilter: `url(#${id}_filter) blur(1px) contrast(1.2) brightness(1.05) saturate(1.1)`,
+  // ...
+}}
+```
+
+### b. 立体光影效果
+
+- **位置**: 同上，修改 `style` 对象的 `boxShadow` 属性 (约在第 143 行)。
+- **说明**: `boxShadow` 可以同时设置外阴影和内阴影（`inset`），以增强玻璃的立体感和悬浮感。
+
+```tsx
+style={{
+  // ...
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15)',
+}}
+```
+
+### c. 扭曲强度 (Distortion Intensity)
+
+- **位置**: `useEffect` 钩子内部的 `updateShader` 函数中。
+- **说明**: 修改 `maxScale` 计算公式中的乘数。值越小，扭曲效果越轻微。当前值为 `1`，提供一个比较明显的扭曲效果。
+
+```tsx
+// 约在第 103 行
+maxScale = Math.max(1, maxScale * 1); // 修改 1 这个值
+```
+
+### d. 边缘柔和度与形状
+
+- **位置**: `updateShader` 函数内部的 `fragment` 函数。
+- **说明**: 通过调整 `roundedRectSDF` 和 `smoothStep` 的参数可以改变玻璃效果的形状和边缘的羽化程度。
+
+```tsx
+// 约在第 79-80 行
+const distanceToEdge = roundedRectSDF(ixAdjusted, iy, 0.4 * aspectRatio, 0.4, 0.4);
+const displacement = smoothStep(0.8, 0.0, distanceToEdge - 0.15);
+```
+
+## 5. 注意事项
+
+- **性能**: 此效果涉及实时 Canvas 绘制，请避免在单个页面上过度使用，以免影响性能。
+- **浏览器兼容性**: 效果核心依赖 `backdrop-filter`，在某些旧版浏览器上可能不支持。
+- **全局修改**: 由于参数是硬编码在组件内的，任何修改都会影响到所有使用 `LiquidGlass` 的地方。
+

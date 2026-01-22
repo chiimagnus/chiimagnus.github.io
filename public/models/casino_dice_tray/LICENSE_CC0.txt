@@ -1,0 +1,6 @@
+CC0 1.0 Universal (CC0 1.0) — Public Domain Dedication
+
+I dedicate the file 'casino_dice_tray_CC0.glb' and the textures under 'textures/' to the public domain under CC0.
+You may copy, modify, distribute and use the work, even for commercial purposes, all without asking permission.
+
+No warranty is provided.
