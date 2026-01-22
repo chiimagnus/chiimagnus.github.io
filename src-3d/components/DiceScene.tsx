@@ -94,12 +94,17 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
               <CuboidCollider args={[20, 0.5, 20]} position={[0, -3, 0]} />
             </RigidBody>
 
-            {/* 兜底围墙：防止骰子飞出镜头范围（不可见） */}
+            {/* 封闭空气墙：六个面封闭，强制骰子始终在托盘范围内（不可见） */}
             <RigidBody type="fixed" colliders={false}>
-              <CuboidCollider args={[0.15, 2, 3]} position={[2.2, 1, 0]} />
-              <CuboidCollider args={[0.15, 2, 3]} position={[-2.2, 1, 0]} />
-              <CuboidCollider args={[3, 2, 0.15]} position={[0, 1, 2.2]} />
-              <CuboidCollider args={[3, 2, 0.15]} position={[0, 1, -2.2]} />
+              {/* 参数说明：
+                 - 盒子中心在 y=0.9，覆盖托盘上方的主要活动空间
+                 - 顶面足够高，避免影响正常滚动，但防止“跳出空气墙” */}
+              <CuboidCollider args={[0.12, 1.2, 1.55]} position={[1.62, 0.9, 0]} />
+              <CuboidCollider args={[0.12, 1.2, 1.55]} position={[-1.62, 0.9, 0]} />
+              <CuboidCollider args={[1.55, 1.2, 0.12]} position={[0, 0.9, 1.62]} />
+              <CuboidCollider args={[1.55, 1.2, 0.12]} position={[0, 0.9, -1.62]} />
+              <CuboidCollider args={[1.55, 0.12, 1.55]} position={[0, -0.42, 0]} />
+              <CuboidCollider args={[1.55, 0.12, 1.55]} position={[0, 2.22, 0]} />
             </RigidBody>
 
             {/* 骰子：投掷使用物理，停下后读取顶面点数 */}
