@@ -16,7 +16,7 @@
 - 主题切换复用 `ThemeContext`（同时写入 `localStorage.theme`，与现有逻辑一致）
 
 **Acceptance（验收）:**
-- 访问 `/` 进入 3D 骰子；投掷结束后展示“结果卡”浮层并停留
+- 访问 `/` 进入 3D 骰子；投掷结束后展示“结果卡”浮层并停留（不额外展示“命运揭示/返回博客”文案与按钮）
 - 结果卡类型覆盖：文章 / 产品 / 关于我 / 主题；且 **不包含** AI 小助手
 - 抽到主题卡：立即切换主题（`ThemeProvider` 生效 + `localStorage.theme` 更新），结果卡提示“已生效”
 - 抽到产品卡：展示与 2D 一致的完整 `ProductCard`（含全部 links，可点击）
@@ -28,6 +28,19 @@
 ---
 
 ## Plan A（主方案）
+
+## Execution Notes（执行记录，2026-01-22）
+
+已落地（核心结果）：
+- 路由：`/` -> Dice（3D），`/blog` -> 原 Home（Layout 包裹）；其它根路由保持不变
+- 3D：`src-3d/` 已合并并迁移到 `src/components/dice/`
+- 抽卡：投掷稳定后从 “文章/产品/关于我/主题” 扁平池等概率抽 1 张结果卡（不包含 AI 小助手）
+- 结果卡：UI 复用 `BlogCard` / `ProductCard`，主题卡用 `LiquidGlass` 同风格展示；去掉“命运揭示/返回博客”文案与按钮
+- 清理：移除 `dice.html` 与 `src-3d/` 多入口构建，Vite/Tailwind 配置回归 SPA
+
+验证：
+- `npm run lint`
+- `npm run build`
 
 ### P1（最高优先级）：路由改造 + 3D 场景并入 SPA
 
@@ -77,6 +90,9 @@
 **Verify:**
 - Run: `npm run build`
 - Manual: 在 `/` 投掷后确认结果数字的淡入动画仍正常
+
+（实际补充）：
+- 额外补充了 `/blog#about` 等 hash 导航自动滚动，避免 `Link to="/blog#about"` 时不滚动的问题。
 
 ---
 
@@ -209,4 +225,3 @@ func drawIndex(diceResult: Int, count: Int) -> Int {
 - P1 完成：`npm run lint && npm run build`
 - P2 完成：`npm run lint && npm run build`
 - P3 完成：`npm run lint && npm run build && npm run preview`
-
