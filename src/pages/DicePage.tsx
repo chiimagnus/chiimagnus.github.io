@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DiceScene } from '../components/dice';
+import '../styles/dice.css';
 
 /**
  * DicePage
@@ -58,4 +59,3 @@ const DicePage: React.FC = () => {
 };
 
 export default DicePage;
-
