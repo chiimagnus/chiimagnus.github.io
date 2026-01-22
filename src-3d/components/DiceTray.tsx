@@ -1,5 +1,4 @@
-import React, { useRef, useMemo } from 'react';
-import { useFrame } from '@react-three/fiber';
+import React, { useMemo } from 'react';
 import * as THREE from 'three';
 
 interface DiceTrayProps {
@@ -19,9 +18,6 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
   outerColor = '#B8860B',
   runeColor = '#FFD700',
 }) => {
-  const runeRingRef = useRef<THREE.Mesh>(null);
-  const innerGlowRef = useRef<THREE.Mesh>(null);
-
   // 托盘基座 - 外圈 - 增加分段数使其更圆滑
   const outerRingGeometry = useMemo(() => {
     return new THREE.TorusGeometry(1.2, 0.15, 32, 128);
@@ -78,21 +74,6 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
     });
   }, [runeColor]);
 
-  // 动画
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    // 符文环缓慢旋转
-    if (runeRingRef.current) {
-      runeRingRef.current.rotation.z = time * 0.2;
-    }
-
-    // 内部发光脉动
-    if (innerGlowRef.current && innerGlowRef.current.material instanceof THREE.MeshBasicMaterial) {
-      innerGlowRef.current.material.opacity = 0.1 + Math.sin(time * 1.5) * 0.05;
-    }
-  });
-
   return (
     <group position={position}>
       {/* 外圈装饰环 */}
@@ -122,7 +103,6 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
 
       {/* 符文环 - 第一层 */}
       <mesh
-        ref={runeRingRef}
         geometry={runeRingGeometry}
         material={runeMaterial}
         rotation={[Math.PI / 2, 0, 0]}
@@ -139,7 +119,6 @@ export const DiceTray: React.FC<DiceTrayProps> = ({
 
       {/* 内部发光效果 */}
       <mesh
-        ref={innerGlowRef}
         geometry={new THREE.CircleGeometry(0.9, 64)}
         material={innerGlowMaterial}
         rotation={[-Math.PI / 2, 0, 0]}

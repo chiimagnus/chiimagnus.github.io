@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useCallback } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows, Stars } from '@react-three/drei';
+import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
 
@@ -97,19 +97,8 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
             color="#000000"
           />
 
-          {/* 星空背景 */}
-          <Stars
-            radius={50}
-            depth={50}
-            count={2000}
-            factor={4}
-            saturation={0}
-            fade
-            speed={0.5}
-          />
-
           {/* 环境贴图 - 提供反射 */}
-          <Environment preset="night" />
+          <Environment preset="night" background={false} />
 
           {/* 轨道控制 */}
           <OrbitControls
