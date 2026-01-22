@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -7,6 +7,7 @@ interface D20DiceProps {
   isRolling?: boolean;
   glowColor?: string;
   baseColor?: string;
+  onClick?: () => void;
 }
 
 /**
@@ -18,8 +19,18 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   isRolling = false,
   glowColor = '#FFD700', // 金色光晕
   baseColor = '#D4AF37', // 金属金基色
+  onClick,
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
+  const isDraggingRef = useRef(false);
+  const lastPointerRef = useRef<{ x: number; y: number } | null>(null);
+  const movedRef = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      document.body.style.cursor = '';
+    };
+  }, []);
   
   // 创建二十面体几何体
   const geometry = useMemo(() => {
@@ -146,7 +157,68 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   });
 
   return (
-    <group position={position}>
+    <group
+      position={position}
+      onPointerDown={(event) => {
+        if (isRolling) return;
+        event.stopPropagation();
+        (event.target as unknown as { setPointerCapture?: (id: number) => void })?.setPointerCapture?.(
+          event.pointerId
+        );
+        isDraggingRef.current = true;
+        movedRef.current = false;
+        lastPointerRef.current = { x: event.clientX, y: event.clientY };
+      }}
+      onPointerMove={(event) => {
+        if (isRolling) return;
+        if (!isDraggingRef.current) return;
+        if (!meshRef.current) return;
+
+        event.stopPropagation();
+
+        const last = lastPointerRef.current;
+        if (!last) {
+          lastPointerRef.current = { x: event.clientX, y: event.clientY };
+          return;
+        }
+
+        const deltaX = event.clientX - last.x;
+        const deltaY = event.clientY - last.y;
+        lastPointerRef.current = { x: event.clientX, y: event.clientY };
+
+        if (Math.abs(deltaX) + Math.abs(deltaY) > 2) movedRef.current = true;
+
+        // 拖动仅旋转骰子本体（不动相机/托盘）
+        meshRef.current.rotation.y += deltaX * 0.01;
+        meshRef.current.rotation.x += deltaY * 0.01;
+      }}
+      onPointerUp={(event) => {
+        if (isRolling) return;
+        event.stopPropagation();
+        (event.target as unknown as { releasePointerCapture?: (id: number) => void })
+          ?.releasePointerCapture?.(event.pointerId);
+
+        const shouldClick = !movedRef.current;
+        isDraggingRef.current = false;
+        lastPointerRef.current = null;
+        movedRef.current = false;
+
+        if (shouldClick) onClick?.();
+      }}
+      onPointerCancel={(event) => {
+        if (isRolling) return;
+        event.stopPropagation();
+        isDraggingRef.current = false;
+        lastPointerRef.current = null;
+        movedRef.current = false;
+      }}
+      onPointerOver={() => {
+        document.body.style.cursor = isRolling ? 'not-allowed' : 'grab';
+      }}
+      onPointerOut={() => {
+        document.body.style.cursor = '';
+      }}
+    >
       {/* 主骰子 */}
       <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow receiveShadow>
         {/* 数字 */}

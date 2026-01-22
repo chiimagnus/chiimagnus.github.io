@@ -1,6 +1,6 @@
 import React, { Suspense, useState, useCallback } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
+import { Environment, ContactShadows } from '@react-three/drei';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
 
@@ -70,14 +70,13 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
           />
 
           {/* 骰子 - 可点击 */}
-          <group onClick={rollDice} style={{ cursor: 'pointer' }}>
-            <D20Dice
-              position={[0, 0.8, 0]}
-              isRolling={isRolling}
-              glowColor="#FFE5B4" // 浅金色光晕
-              baseColor="#D4AF37" // 金色本体
-            />
-          </group>
+          <D20Dice
+            position={[0, 0.8, 0]}
+            isRolling={isRolling}
+            glowColor="#FFE5B4" // 浅金色光晕
+            baseColor="#D4AF37" // 金色本体
+            onClick={rollDice}
+          />
 
           {/* 托盘 */}
           <DiceTray
@@ -100,15 +99,6 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
           {/* 环境贴图 - 提供反射 */}
           <Environment preset="night" background={false} />
 
-          {/* 轨道控制 */}
-          <OrbitControls
-            enablePan={false}
-            enableZoom={true}
-            minDistance={3}
-            maxDistance={8}
-            minPolarAngle={Math.PI / 6}
-            maxPolarAngle={Math.PI / 2.5}
-          />
         </Suspense>
       </Canvas>
 
