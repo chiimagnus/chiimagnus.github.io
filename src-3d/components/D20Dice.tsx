@@ -16,37 +16,26 @@ interface D20DiceProps {
 export const D20Dice: React.FC<D20DiceProps> = ({
   position = [0, 0.8, 0],
   isRolling = false,
-  glowColor = '#ff6b35',
-  baseColor = '#1a1a2e',
+  glowColor = '#FFD700', // 金色光晕
+  baseColor = '#D4AF37', // 金属金基色
 }) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const glowRef = useRef<THREE.Mesh>(null);
-
+  
   // 创建二十面体几何体
   const geometry = useMemo(() => {
     return new THREE.IcosahedronGeometry(0.5, 0);
   }, []);
 
-  // 骰子材质 - 深色金属质感
+  // 骰子材质 - 金色金属质感
   const diceMaterial = useMemo(() => {
     return new THREE.MeshStandardMaterial({
       color: baseColor,
-      metalness: 0.7,
-      roughness: 0.3,
+      metalness: 0.9, // 提高金属感
+      roughness: 0.1, // 降低粗糙度，增加光泽
       emissive: glowColor,
-      emissiveIntensity: 0.1,
+      emissiveIntensity: 0.2, // 微微发光
     });
   }, [baseColor, glowColor]);
-
-  // 边缘发光材质
-  const edgeMaterial = useMemo(() => {
-    return new THREE.MeshBasicMaterial({
-      color: glowColor,
-      transparent: true,
-      opacity: 0.6,
-      side: THREE.BackSide,
-    });
-  }, [glowColor]);
 
   // 动画帧更新
   useFrame((state) => {
@@ -65,23 +54,14 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       meshRef.current.rotation.x = Math.sin(time * 0.5) * 0.1;
       meshRef.current.position.y = position[1] + Math.sin(time * 1.5) * 0.05;
     }
-
-    // 发光层脉动效果
-    if (glowRef.current) {
-      const scale = 1.05 + Math.sin(time * 2) * 0.02;
-      glowRef.current.scale.setScalar(scale);
-    }
   });
 
   return (
     <group position={position}>
       {/* 主骰子 */}
-      <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow>
+      <mesh ref={meshRef} geometry={geometry} material={diceMaterial} castShadow receiveShadow>
         {/* 数字纹理会在后续添加 */}
       </mesh>
-
-      {/* 发光边缘效果 */}
-      <mesh ref={glowRef} geometry={geometry} material={edgeMaterial} scale={1.05} />
 
       {/* 点光源 - 骰子自身发光 */}
       <pointLight

@@ -15,31 +15,31 @@ interface DiceTrayProps {
  */
 export const DiceTray: React.FC<DiceTrayProps> = ({
   position = [0, 0, 0],
-  innerColor = '#2d1b4e',
-  outerColor = '#1a0f2e',
-  runeColor = '#ff6b35',
+  innerColor = '#2a0a12',
+  outerColor = '#B8860B',
+  runeColor = '#FFD700',
 }) => {
   const runeRingRef = useRef<THREE.Mesh>(null);
   const innerGlowRef = useRef<THREE.Mesh>(null);
 
-  // 托盘基座 - 外圈
+  // 托盘基座 - 外圈 - 增加分段数使其更圆滑
   const outerRingGeometry = useMemo(() => {
-    return new THREE.TorusGeometry(1.2, 0.15, 16, 64);
+    return new THREE.TorusGeometry(1.2, 0.15, 32, 128);
   }, []);
 
   // 托盘底部 - 圆盘
   const baseGeometry = useMemo(() => {
-    return new THREE.CylinderGeometry(1.1, 1.0, 0.1, 64);
+    return new THREE.CylinderGeometry(1.2, 1.1, 0.1, 64);
   }, []);
 
-  // 内部凹陷
+  // 内部凹陷 - 稍微加大半径以嵌入外圈
   const innerBaseGeometry = useMemo(() => {
-    return new THREE.CylinderGeometry(0.95, 0.9, 0.08, 64);
+    return new THREE.CylinderGeometry(1.1, 1.05, 0.08, 64);
   }, []);
 
   // 符文环
   const runeRingGeometry = useMemo(() => {
-    return new THREE.TorusGeometry(0.8, 0.02, 8, 64);
+    return new THREE.TorusGeometry(0.8, 0.02, 16, 128);
   }, []);
 
   // 外圈材质 - 深色金属

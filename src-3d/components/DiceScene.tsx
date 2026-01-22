@@ -74,26 +74,27 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, onDiceClick }) 
             <D20Dice
               position={[0, 0.8, 0]}
               isRolling={isRolling}
-              glowColor="#ff6b35"
-              baseColor="#1a1a2e"
+              glowColor="#FFE5B4" // 浅金色光晕
+              baseColor="#D4AF37" // 金色本体
             />
           </group>
 
           {/* 托盘 */}
           <DiceTray
             position={[0, -0.05, 0]}
-            innerColor="#2d1b4e"
-            outerColor="#1a0f2e"
-            runeColor="#ff6b35"
+            innerColor="#2a0a12" // 深红色丝绒底座
+            outerColor="#B8860B" // 暗金色边框
+            runeColor="#FFD700"  // 金色符文
           />
 
-          {/* 接触阴影 */}
+          {/* 接触阴影 - 调整位置到丝绒表面 */}
           <ContactShadows
-            position={[0, -0.04, 0]}
-            opacity={0.6}
+            position={[0, 0.03, 0]}
+            opacity={0.4}
             scale={4}
             blur={2}
             far={2}
+            color="#000000"
           />
 
           {/* 星空背景 */}
