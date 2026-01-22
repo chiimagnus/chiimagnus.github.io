@@ -71,13 +71,6 @@ const DicePage: React.FC = () => {
         <DiceScene onRollSettled={handleRollSettled} />
       </div>
 
-      {/* 底部装饰文字 */}
-      <footer className="absolute bottom-4 left-0 right-0 z-10 text-center">
-        <p className="text-white/30 text-xs font-light tracking-widest">
-          &quot;命运的齿轮开始转动...&quot;
-        </p>
-      </footer>
-
       {resultCard && (
         <DiceResultOverlay
           card={resultCard}

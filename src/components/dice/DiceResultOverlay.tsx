@@ -53,8 +53,6 @@ export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onCl
           </button>
 
           <div className="space-y-4">
-            <p className="text-white/70 text-sm tracking-widest text-center">命运揭示</p>
-
             {card.type === 'article' && blogPost && <BlogCard post={blogPost} />}
 
             {card.type === 'product' && (
@@ -83,16 +81,9 @@ export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onCl
             )}
 
             {card.type === 'theme' && <ThemeResultCard themeName={card.themeName} />}
-
-            <div className="text-center">
-              <Link to="/blog" className="text-white/70 hover:text-white transition-colors text-sm">
-                返回博客
-              </Link>
-            </div>
           </div>
         </div>
       </div>
     </div>
   );
 };
-

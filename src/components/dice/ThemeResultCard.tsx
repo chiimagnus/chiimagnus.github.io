@@ -45,12 +45,7 @@ export const ThemeResultCard: React.FC<ThemeResultCardProps> = ({ themeName }) =
           className="rounded-xl border border-white/15 overflow-hidden h-20"
           style={{ backgroundImage: theme.colors.gradient, backgroundSize: 'cover' }}
         />
-
-        <p className="text-white/70 text-sm">
-          你可以点击下方“返回博客”查看整体视觉变化。
-        </p>
       </div>
     </LiquidGlass>
   );
 };
-
