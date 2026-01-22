@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import BlogCard from '../blog/BlogCard';
@@ -37,22 +37,40 @@ export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onCl
     };
   }, [card]);
 
+  /**
+   * 支持 Esc 关闭：
+   * - 结果卡浮层属于短生命周期 UI，直接在挂载期间监听 keydown 即可
+   */
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      onClose();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-black/55 backdrop-blur-sm" onClick={onClose} />
 
       <div className="absolute inset-0 p-6 flex items-center justify-center">
-        <div className="relative w-full max-w-3xl max-h-[85vh] overflow-auto">
+        <div className="relative w-full max-w-3xl">
           <button
             type="button"
             onClick={onClose}
-            className="absolute -top-3 -right-3 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center"
+            className="absolute top-3 right-3 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 text-white flex items-center justify-center"
             aria-label="关闭"
           >
             <X size={18} />
           </button>
 
-          <div className="space-y-4">
+          <div className="max-h-[85vh] overflow-auto pt-14">
+            <div className="space-y-4">
             {card.type === 'article' && blogPost && <BlogCard post={blogPost} />}
 
             {card.type === 'product' && (
@@ -81,6 +99,7 @@ export const DiceResultOverlay: React.FC<DiceResultOverlayProps> = ({ card, onCl
             )}
 
             {card.type === 'theme' && <ThemeResultCard themeName={card.themeName} />}
+            </div>
           </div>
         </div>
       </div>
