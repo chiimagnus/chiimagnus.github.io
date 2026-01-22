@@ -36,6 +36,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   const lastRollIdRef = useRef(rollId);
   const lastTopFaceRef = useRef<number | null>(null);
   const rollingRef = useRef(false);
+  const settleTimerRef = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -195,6 +196,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     isDraggingRef.current = false;
     lastPointerRef.current = null;
     movedRef.current = false;
+    settleTimerRef.current = 0;
     rb.lockTranslations(false, true);
     rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
     rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
@@ -233,7 +235,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   }, [getTopFace, position, rollId]);
 
   // 在渲染帧里同步“顶面点数”（用于用户拖动时刷新 UI）
-  useFrame(() => {
+  useFrame((_, delta) => {
     const rb = rigidBodyRef.current;
     if (!rb) return;
 
@@ -243,18 +245,46 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       Math.abs(translation.x) > 6 ||
       Math.abs(translation.z) > 6
     ) {
+      const wasRolling = rollingRef.current || isRolling;
       rollingRef.current = false;
       rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
       rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
       rb.setTranslation({ x: position[0], y: position[1], z: position[2] }, true);
-      rb.setRotation(
-        new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0)),
-        true,
-      );
-      lastTopFaceRef.current = null;
+      const resetQuat = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
+      rb.setRotation(resetQuat, true);
+
+      const top = getTopFace(resetQuat);
+      lastTopFaceRef.current = top;
+      onTopFaceChange?.(top);
+      if (wasRolling) onSettled?.(top);
     }
 
-    if (rollingRef.current) return;
+    if (rollingRef.current && isRolling && !isDraggingRef.current) {
+      const linearVelocity = rb.linvel();
+      const angularVelocity = rb.angvel();
+      const linearSpeed = Math.hypot(linearVelocity.x, linearVelocity.y, linearVelocity.z);
+      const angularSpeed = Math.hypot(angularVelocity.x, angularVelocity.y, angularVelocity.z);
+
+      // Rapier 的 onSleep 往往会比“肉眼静止”慢一点，这里用速度阈值提前判定
+      if (linearSpeed < 0.12 && angularSpeed < 0.6) {
+        settleTimerRef.current += delta;
+        if (settleTimerRef.current > 0.25) {
+          rollingRef.current = false;
+          settleTimerRef.current = 0;
+          rb.setLinvel({ x: 0, y: 0, z: 0 }, true);
+          rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
+          const top = getTopFace(quat(rb.rotation()));
+          lastTopFaceRef.current = top;
+          onSettled?.(top);
+          onTopFaceChange?.(top);
+        }
+      } else {
+        settleTimerRef.current = 0;
+      }
+      return;
+    }
+
+    settleTimerRef.current = 0;
 
     const top = getTopFace(quat(rb.rotation()));
     if (lastTopFaceRef.current === top) return;
