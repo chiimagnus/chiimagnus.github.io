@@ -6,7 +6,6 @@ import Home from './pages/Home'
 import LifeWealth from './pages/LifeWealth'
 import AiChat from './pages/AiChat'
 import JetJetJetPage from './pages/JetJetJetPage'
-import Dice3DPage from './pages/Dice3DPage'
 import SyncNosOAuthCallback from './pages/SyncNosOAuthCallback'
 import SyncNosOAuthTest from './pages/SyncNosOAuthTest'
 import Layout from './components/blog/Layout'
@@ -20,7 +19,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/lifewealth" element={<LifeWealth />} />
           <Route path="/ai-chat" element={<AiChat />} />
           <Route path="/jetjetjet" element={<JetJetJetPage />} />
-          <Route path="/dice" element={<Dice3DPage />} />
           <Route path="/syncnos-oauth/callback" element={<SyncNosOAuthCallback />} />
           <Route path="/syncnos-oauth/test" element={<SyncNosOAuthTest />} />
           <Route path="/" element={
