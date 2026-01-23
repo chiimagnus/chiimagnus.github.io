@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { ConvexHullCollider, quat, RapierRigidBody, RigidBody } from '@react-three/rapier';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
-import { playDiceCollisionSfx } from '../../features/dice/diceSfx';
+import { playBounceSfx, playDiceCollisionSfx, playScrapeSfx, playSettleSfx, playThrowSfx } from '../../features/dice/diceSfx';
 
 export interface D20DiceProps {
   position?: [number, number, number];
@@ -159,6 +159,9 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     rollingRef.current = true;
     lastTopFaceRef.current = null;
 
+    // 播放起手音效（需要在用户手势已解锁音频后才能响）。
+    playThrowSfx();
+
     // 以“水平滑入托盘”为主：X/Z 较大、Y 较小（避免一脚踢飞）
     const angle = Math.random() * Math.PI * 2;
     const horizontalPower = 1.8 + Math.random() * 0.9;
@@ -219,6 +222,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
           rb.setAngvel({ x: 0, y: 0, z: 0 }, true);
           const top = getTopFace(quat(rb.rotation()));
           lastTopFaceRef.current = top;
+          playSettleSfx();
           onSettled?.(top);
           onTopFaceChange?.(top);
         }
@@ -256,17 +260,31 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         const selfVelocity = target.rigidBody?.linvel?.() as { x: number; y: number; z: number } | undefined;
         const otherVelocity = other.rigidBody?.linvel?.() as { x: number; y: number; z: number } | undefined;
 
-        const relativeSpeed = Math.hypot(
-          (selfVelocity?.x ?? 0) - (otherVelocity?.x ?? 0),
-          (selfVelocity?.y ?? 0) - (otherVelocity?.y ?? 0),
-          (selfVelocity?.z ?? 0) - (otherVelocity?.z ?? 0),
-        );
+        const relVelX = (selfVelocity?.x ?? 0) - (otherVelocity?.x ?? 0);
+        const relVelY = (selfVelocity?.y ?? 0) - (otherVelocity?.y ?? 0);
+        const relVelZ = (selfVelocity?.z ?? 0) - (otherVelocity?.z ?? 0);
+
+        const relativeSpeed = Math.hypot(relVelX, relVelY, relVelZ);
 
         // Ignore tiny resting contacts.
         if (relativeSpeed < 0.35) return;
 
-        lastCollisionSoundAtRef.current = nowMs;
-        playDiceCollisionSfx({ relativeSpeed });
+        // Compute vertical/horizontal components for effect selection.
+        const verticalSpeed = Math.abs(relVelY);
+        const horizontalSpeed = Math.hypot(relVelX, relVelZ);
+
+        // Priority: bounce > scrape > normal collision (mutually exclusive).
+        let played = false;
+        if (verticalSpeed > 2.0 && playBounceSfx({ impactSpeed: verticalSpeed })) {
+          played = true;
+        } else if (playScrapeSfx({ horizontalSpeed, verticalSpeed })) {
+          played = true;
+        } else {
+          playDiceCollisionSfx({ relativeSpeed });
+          played = true;
+        }
+
+        if (played) lastCollisionSoundAtRef.current = nowMs;
       }}
       onSleep={() => {
         if (!rollingRef.current) return;
@@ -275,6 +293,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         if (!rb) return;
         const top = getTopFace(quat(rb.rotation()));
         lastTopFaceRef.current = top;
+        playSettleSfx();
         onSettled?.(top);
         onTopFaceChange?.(top);
       }}
