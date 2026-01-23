@@ -1,12 +1,100 @@
 [
 	{
-		"title": "收获｜你无聊的生活，可能需要一份「意外」？",
-		"date": "2025年09月19日 17:16",
-		"description": "编译运行项目时意外的惊喜让心情好转，讨论生活中一份意外带来的收获与感悟。",
-		"url": "https://mp.weixin.qq.com/s/EAH57sJK-akl9CxvK9T9ww",
+		"title": "2025年的回顾，从对未来的焦虑开始",
+		"date": "2026年01月08日 12:56",
+		"description": "回顾 2025 年的经历与焦虑，反思技术与产品的成长与计划。",
+		"url": "https://mp.weixin.qq.com/s/Ihr9S2y2_ECr_7XWOuIzgg",
 		"slug": "",
 		"external": true
 	},
+	{
+		"title": "记录｜一块钱换来的思考，逐渐看见对方",
+		"date": "2026年01月06日 23:39",
+		"description": "讲述一块钱的小事件，引发对他人真实生活与同理心的反思。",
+		"url": "https://mp.weixin.qq.com/s/qwaMMuitZt1CSQSSYxknog",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "AI出稿？我也想啊😭",
+		"date": "2026年01月06日 02:37",
+		"description": "表达对 AI 帮助出稿的不满与个人稿件处理偏好。",
+		"url": "https://mp.weixin.qq.com/s/Rv2c8bkcWBnjlam4EXkYOg",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "记录｜第一次入伙别人的创业项目",
+		"date": "2025年12月19日 02:39",
+		"description": "记录加入早期创业项目的经历、协作冲突与后续反思。",
+		"url": "https://mp.weixin.qq.com/s/PKJS1KRwIyHdeLi47-yRrA",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "开发｜试了一晚上 spec-kit（规范驱动开发），我决定放弃了。",
+		"date": "2025年11月25日 08:20",
+		"description": "记录在 Cursor 与 spec-kit 之间尝试后的体验，讨论文档成本与个人开发效率取舍。",
+		"url": "https://mp.weixin.qq.com/s/EzvJRmsZOngFuYB8_9zt0w",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "一个悲催的现实｜因现实压力太大而差点死去的想法。",
+		"date": "2025年11月19日 18:41",
+		"description": "分享在现实压力下的挣扎与自我调适，以及如何从小步骤重建动力。",
+		"url": "https://mp.weixin.qq.com/s/2Hy1b-NG3_DdJAl0Z78AVQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "记录｜买了一个极其便宜的鼠标，却能完美适配macOS，为什么？",
+		"date": "2025年11月02日 16:00",
+		"description": "分享如何用开源工具让廉价鼠标在 macOS 上有良好体验，并致敬相关开源项目。",
+		"url": "https://mp.weixin.qq.com/s/cANDcDX4urwUirtNVwf-nA",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "从个人的角度，反思一下为什么“逃离鸭克夫”好玩",
+		"date": "2025年11月02日 11:22",
+		"description": "从沉迷机制与正反馈角度分析《逃离鸭克夫》为何容易上瘾，讨论游戏设计的体验要点。",
+		"url": "https://mp.weixin.qq.com/s/tv0pGsFR5Uq2qY6YFVs5HQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "教程｜将华为平板、安卓平板作为Mac有线连接的镜像屏、扩展屏",
+		"date": "2025年10月16日 01:17",
+		"description": "提供基于开源项目将安卓平板作为 Mac 副屏的有线/无线连接教程与注意事项。",
+		"url": "https://mp.weixin.qq.com/s/-l4a-o-cC4F5ON-futjapQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "macOS26 Tahoe鼠标光标太丑了，换回经典的米老鼠光标。",
+		"date": "2025年09月22日 16:04",
+		"description": "介绍如何使用工具与光标资源替换 macOS26 的光标以恢复经典样式。",
+		"url": "https://mp.weixin.qq.com/s/NpLRx5vs0Un1iXMxGc65fQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "回溯：逃跑、规则、美好，一场梦",
+		"date": "2025年09月20日 11:49",
+		"description": "一篇基于梦境与黑客松经历的叙事，探讨规则、逃离与最终的觉醒。",
+		"url": "https://mp.weixin.qq.com/s/1afGiWSH45JxVFtvDDn2zg",
+		"slug": "",
+		"external": true
+	},
+	{
+ 		"title": "收获｜你无聊的生活，可能需要一份「意外」？",
+ 		"date": "2025年09月19日 17:16",
+ 		"description": "编译运行项目时意外的惊喜让心情好转，讨论生活中一份意外带来的收获与感悟。",
+ 		"url": "https://mp.weixin.qq.com/s/EAH57sJK-akl9CxvK9T9ww",
+ 		"slug": "",
+ 		"external": true
+ 	},
 	{
 		"title": "方法论｜如何让大模型帮你找到你想要的「积木」",
 		"date": "2025年09月14日 08:20",
