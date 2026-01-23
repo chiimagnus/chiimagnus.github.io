@@ -1,5 +1,21 @@
 [
 	{
+		"title": "一次记录：需求梳理，我的需求到底是什么？",
+		"date": "2025年09月04日 17:29",
+		"description": "需求梳理：讨论本地与远程桌面/游戏串流、游戏存档同步，以及在 Mac 与 Windows 之间的游戏方案与取舍。",
+		"url": "https://mp.weixin.qq.com/s/hyA8H0nNEVRDsdTsFn96uA",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "笔记app的切换，从Logseq到Notion，经过Obsidian和飞书。",
+		"date": "2025年09月03日 13:04",
+		"description": "讨论在 Logseq、Obsidian、Notion 与飞书之间切换笔记应用的经验与疑虑，比较同步、块/页面结构与项目管理等差异。",
+		"url": "https://mp.weixin.qq.com/s/giMLndPvcVAqT7Pj9NOLUw",
+		"slug": "",
+		"external": true
+	},
+	{
 		"title": "还在使用豆包AI，你还有隐私可言吗？",
 		"date": "2025年07月05日 01:28",
 		"description": "你在AI大模型时代，还有所谓的隐私吗？作者描述豆包AI疑似在未经许可情况下获取位置信息，引发对用户隐私的强烈担忧。",
