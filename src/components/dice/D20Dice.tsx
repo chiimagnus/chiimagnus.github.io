@@ -163,9 +163,10 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     playThrowSfx();
 
     // 以“水平滑入托盘”为主：X/Z 较大、Y 较小（避免一脚踢飞）
+    // Note: Increase impulse/torque so the physical roll lasts longer and spins more.
     const angle = Math.random() * Math.PI * 2;
-    const horizontalPower = 1.8 + Math.random() * 0.9;
-    const upwardPower = 0.6 + Math.random() * 0.6;
+    const horizontalPower = 2.8 + Math.random() * 1.3;
+    const upwardPower = 1.0 + Math.random() * 0.7;
 
     rb.applyImpulse(
       {
@@ -177,9 +178,9 @@ export const D20Dice: React.FC<D20DiceProps> = ({
     );
     rb.applyTorqueImpulse(
       {
-        x: (Math.random() - 0.5) * 3,
-        y: (Math.random() - 0.5) * 3,
-        z: (Math.random() - 0.5) * 3,
+        x: (Math.random() - 0.5) * 7.5,
+        y: (Math.random() - 0.5) * 7.5,
+        z: (Math.random() - 0.5) * 7.5,
       },
       true,
     );
@@ -245,8 +246,10 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       ref={rigidBodyRef}
       colliders={false}
       position={position}
-      linearDamping={0.2}
-      angularDamping={0.4}
+      // Reduce damping to keep the roll a bit longer (otherwise it settles too quickly).
+      linearDamping={0.08}
+      // Lower angular damping so the dice spins more.
+      angularDamping={0.12}
       ccd
       onCollisionEnter={({ target, other }) => {
         // Avoid noise while not actively rolling (and while user is dragging).
@@ -303,7 +306,8 @@ export const D20Dice: React.FC<D20DiceProps> = ({
         if (isRolling) rollingRef.current = true;
       }}
     >
-      <ConvexHullCollider args={[colliderVertices]} friction={1.0} restitution={0.08} />
+      {/* Slightly lower friction + a touch more restitution => longer rolling without feeling like "ice". */}
+      <ConvexHullCollider args={[colliderVertices]} friction={0.75} restitution={0.12} />
 
       <group
         onPointerDown={(event) => {

@@ -55,8 +55,9 @@ export const DiceTray: React.FC<DiceTrayProps> = ({ position = [0, 0, 0], scale 
       <CuboidCollider
         args={[1.05 * scale, 0.03 * scale, 1.05 * scale]}
         position={[0, 0.06 * scale, 0]}
-        friction={1.2}
-        restitution={0.05}
+        // Slightly lower friction so the dice keeps rolling longer.
+        friction={0.95}
+        restitution={0.06}
       />
       {wallColliders.map((wall) => (
         <CuboidCollider
@@ -64,8 +65,8 @@ export const DiceTray: React.FC<DiceTrayProps> = ({ position = [0, 0, 0], scale 
           args={wall.args}
           position={wall.position}
           rotation={wall.rotation}
-          friction={1.2}
-          restitution={0.05}
+          friction={0.95}
+          restitution={0.06}
         />
       ))}
 
