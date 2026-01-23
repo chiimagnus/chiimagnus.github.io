@@ -1,9 +1,57 @@
 [
 	{
-		"title": "一次记录：需求梳理，我的需求到底是什么？",
-		"date": "2025年09月04日 17:29",
-		"description": "需求梳理：讨论本地与远程桌面/游戏串流、游戏存档同步，以及在 Mac 与 Windows 之间的游戏方案与取舍。",
-		"url": "https://mp.weixin.qq.com/s/hyA8H0nNEVRDsdTsFn96uA",
+		"title": "收获｜你无聊的生活，可能需要一份「意外」？",
+		"date": "2025年09月19日 17:16",
+		"description": "编译运行项目时意外的惊喜让心情好转，讨论生活中一份意外带来的收获与感悟。",
+		"url": "https://mp.weixin.qq.com/s/EAH57sJK-akl9CxvK9T9ww",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "方法论｜如何让大模型帮你找到你想要的「积木」",
+		"date": "2025年09月14日 08:20",
+		"description": "讨论如何让大模型协助检索并比对开发所需的‘积木’，以提升开发效率与解决方案匹配度。",
+		"url": "https://mp.weixin.qq.com/s/k7B0mLq6-bCeNd32AWyWvQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "一个感悟：你敢梭哈吗？",
+		"date": "2025年09月13日 15:44",
+		"description": "关于把握当下、敢于尝试与拥抱变化的感悟，鼓励在机会面前勇于投入与行动。",
+		"url": "https://mp.weixin.qq.com/s/BC90T-g1vGbLUYJHcnnpTQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "开发了一个小工具，SyncNos。将Apple Books中的读书笔记同步到Notion",
+		"date": "2025年09月12日 23:33",
+		"description": "介绍开源工具 SyncNos 的功能与计划：将 Apple Books 的读书笔记无感同步到 Notion，隐私优先并开源源码。",
+		"url": "https://mp.weixin.qq.com/s/jeTko_mQbCe3DXUNpmjHHA",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "减压、幸福、满意、快乐的秘诀：做减法。如何缩小圆圈的半径。",
+		"date": "2025年09月10日 14:51",
+		"description": "提出通过减少不重要事务、专注核心任务来减压并提升幸福感的实践建议。",
+		"url": "https://mp.weixin.qq.com/s/G-MvrngmZUpRo5Yfv16hgQ",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "记录｜丝之歌出来了，这是一种情绪营销？",
+		"date": "2025年09月05日 12:02",
+		"description": "记录对游戏《丝之歌》发布过程与情绪营销现象的观察与个人感受。",
+		"url": "https://mp.weixin.qq.com/s/rBXp_h6RLsNr0NbAriMKtw",
+		"slug": "",
+		"external": true
+	},
+	{
+		"title": "反思与自我打脸：AI 新闻不算多时，要做什么？",
+		"date": "2025年09月04日 18:54",
+		"description": "反思测评与实践的关系，强调把 AI 工具应用到真实场景与长期方法沉淀的重要性。",
+		"url": "https://mp.weixin.qq.com/s/noyDL45L7BBhpEw_PMXhNQ",
 		"slug": "",
 		"external": true
 	},
