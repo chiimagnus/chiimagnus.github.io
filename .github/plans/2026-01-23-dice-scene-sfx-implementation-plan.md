@@ -1,8 +1,8 @@
-# 骰子场景音效增强 实施计划（v2 - 已更新）
+# 骰子场景音效增强 实施计划（v3 - 已更新）
 
 > 执行方式：建议使用 `executing-plans` 按批次实现与验收。
 
-**Goal（目标）:** 为骰子场景添加完整的声音叙事，包含 5 种新音效：起手音效、滚动摩擦声、落定音效、弹跳音效、边缘摩擦声。全部使用 Web Audio API 合成，无需外部音频文件。
+**Goal（目标）:** 为骰子场景添加完整的声音叙事，包含 4 种新音效：起手音效、落定音效、弹跳音效、边缘摩擦声。全部使用 Web Audio API 合成，无需外部音频文件。
 
 **Non-goals（非目标）:**
 - 不做材质区分（木头/毛毡/金属碰撞音的差异）— 留待后续迭代
@@ -10,15 +10,13 @@
 - 不修改现有碰撞音效的核心逻辑（但会添加互斥判断）
 
 **Approach（方案）:**
-- 在现有 `diceSfx.ts` 基础上扩展，新增 5 个音效合成函数
-- 滚动摩擦声需要持续播放机制（start/stop/update），使用单例模式管理生命周期
+- 在现有 `diceSfx.ts` 基础上扩展，新增 4 个音效合成函数
 - 弹跳音效与普通碰撞音效互斥，避免重叠
 - 在 `D20Dice.tsx` 和 `DiceScene.tsx` 中添加触发点
 - 音效参数（音量、音调）根据物理状态（速度、角速度）动态调整
 
 **Acceptance（验收）:**
 - [ ] 点击投掷时播放起手音效
-- [ ] 骰子滚动时播放持续的摩擦声（角速度越快声音越明显）
 - [ ] 骰子从高处落下时播放弹跳音效（与普通碰撞音互斥）
 - [ ] 骰子贴边滑动时播放刮擦声
 - [ ] 骰子完全静止时播放落定音效
@@ -143,173 +141,9 @@ Expected: 无 TypeScript 编译错误
 
 ---
 
-#### Task 3: 实现滚动摩擦声 `RollingSfx`（单例模式）
-
-**Files:**
-- Modify: `src/features/dice/diceSfx.ts`
-
-**Step 1: 设计音效特征**
-
-滚动摩擦声是骰子滚动时的持续「咕噜」声，需要：
-- 持续播放机制（start/stop/update）
-- **单例模式**：确保只有一个实例，避免快速连续投掷时资源泄漏
-- 根据角速度动态调整音量和音调
-- 低频隆隆声 + 中频颗粒感
-- 音量整体偏低，作为背景音
-
-**Step 2: 添加单例类**
-
-```typescript
-/**
- * RollingSfx
- * 滚动摩擦声管理器（单例）：持续播放的「咕噜」声。
- * 使用方式：
- *   RollingSfx.instance.start();
- *   RollingSfx.instance.update({ angularSpeed: 5 }); // 每帧调用
- *   RollingSfx.instance.stop();
- */
-export class RollingSfx {
-  private static _instance: RollingSfx | null = null;
-  
-  static get instance(): RollingSfx {
-    if (!RollingSfx._instance) {
-      RollingSfx._instance = new RollingSfx();
-    }
-    return RollingSfx._instance;
-  }
-
-  private noiseSource: AudioBufferSourceNode | null = null;
-  private noiseGain: GainNode | null = null;
-  private noiseFilter: BiquadFilterNode | null = null;
-  private rumbleOsc: OscillatorNode | null = null;
-  private rumbleGain: GainNode | null = null;
-  private isPlaying = false;
-
-  private constructor() {} // 私有构造函数，强制使用单例
-
-  start(): void {
-    // 先停止旧实例，确保资源清理
-    if (this.isPlaying) {
-      this.stopImmediate();
-    }
-
-    const context = getOrCreateContext();
-    if (!context || !masterGain) return;
-    if (context.state !== 'running') return;
-
-    this.isPlaying = true;
-
-    // 低频隆隆声
-    this.rumbleOsc = context.createOscillator();
-    this.rumbleOsc.type = 'sine';
-    this.rumbleOsc.frequency.value = 45;
-
-    this.rumbleGain = context.createGain();
-    this.rumbleGain.gain.value = 0;
-    this.rumbleOsc.connect(this.rumbleGain);
-    this.rumbleGain.connect(masterGain);
-
-    // 中频颗粒噪声（循环播放）- 音量降低作为背景
-    this.noiseSource = context.createBufferSource();
-    this.noiseSource.buffer = getNoiseBuffer(context);
-    this.noiseSource.loop = true;
-    this.noiseSource.playbackRate.value = 0.6;
-
-    this.noiseFilter = context.createBiquadFilter();
-    this.noiseFilter.type = 'bandpass';
-    this.noiseFilter.frequency.value = 400;
-    this.noiseFilter.Q.value = 0.8;
-
-    this.noiseGain = context.createGain();
-    this.noiseGain.gain.value = 0;
-
-    this.noiseSource.connect(this.noiseFilter);
-    this.noiseFilter.connect(this.noiseGain);
-    this.noiseGain.connect(masterGain);
-
-    this.rumbleOsc.start();
-    this.noiseSource.start();
-  }
-
-  update({ angularSpeed }: { angularSpeed: number }): void {
-    if (!this.isPlaying) return;
-
-    // 角速度映射到音量和音调 - 整体音量降低
-    const normalized = clamp01(angularSpeed / 12);
-    const targetVolume = normalized * 0.12; // 降低音量，作为背景
-
-    if (this.rumbleGain) {
-      this.rumbleGain.gain.value += (targetVolume * 0.5 - this.rumbleGain.gain.value) * 0.15;
-    }
-    if (this.noiseGain) {
-      this.noiseGain.gain.value += (targetVolume - this.noiseGain.gain.value) * 0.15;
-    }
-    if (this.noiseFilter) {
-      const targetFreq = 300 + normalized * 600;
-      this.noiseFilter.frequency.value += (targetFreq - this.noiseFilter.frequency.value) * 0.1;
-    }
-    if (this.noiseSource) {
-      const targetRate = 0.5 + normalized * 0.8;
-      this.noiseSource.playbackRate.value += (targetRate - this.noiseSource.playbackRate.value) * 0.1;
-    }
-    if (this.rumbleOsc) {
-      const targetFreq = 40 + normalized * 30;
-      this.rumbleOsc.frequency.value += (targetFreq - this.rumbleOsc.frequency.value) * 0.1;
-    }
-  }
-
-  stop(): void {
-    if (!this.isPlaying) return;
-    this.isPlaying = false;
-
-    // 快速淡出后停止
-    const context = getOrCreateContext();
-    const now = context?.currentTime ?? 0;
-
-    if (this.rumbleGain && context) {
-      this.rumbleGain.gain.setValueAtTime(this.rumbleGain.gain.value, now);
-      this.rumbleGain.gain.linearRampToValueAtTime(0, now + 0.05);
-    }
-    if (this.noiseGain && context) {
-      this.noiseGain.gain.setValueAtTime(this.noiseGain.gain.value, now);
-      this.noiseGain.gain.linearRampToValueAtTime(0, now + 0.05);
-    }
-
-    setTimeout(() => this.cleanup(), 80);
-  }
-
-  /** 立即停止，不淡出（用于 start() 前清理） */
-  private stopImmediate(): void {
-    this.isPlaying = false;
-    this.cleanup();
-  }
-
-  private cleanup(): void {
-    try {
-      this.rumbleOsc?.stop();
-    } catch { /* ignore */ }
-    try {
-      this.noiseSource?.stop();
-    } catch { /* ignore */ }
-    this.rumbleOsc = null;
-    this.noiseSource = null;
-    this.rumbleGain = null;
-    this.noiseGain = null;
-    this.noiseFilter = null;
-  }
-}
-```
-
-**Step 3: 验证**
-
-Run: `pnpm run build`
-Expected: 无 TypeScript 编译错误
-
----
-
 ### P1b（高优先级）：增强音效
 
-#### Task 4: 实现弹跳音效 `playBounceSfx`（返回是否播放）
+#### Task 3: 实现弹跳音效 `playBounceSfx`（返回是否播放）
 
 **Files:**
 - Modify: `src/features/dice/diceSfx.ts`
@@ -394,7 +228,7 @@ Expected: 无 TypeScript 编译错误
 
 ---
 
-#### Task 5: 实现边缘摩擦音效 `playScrapeSfx`（简化版）
+#### Task 4: 实现边缘摩擦音效 `playScrapeSfx`（简化版）
 
 **Files:**
 - Modify: `src/features/dice/diceSfx.ts`
@@ -471,7 +305,7 @@ Expected: 无 TypeScript 编译错误
 
 ### P2（中优先级）：触发点集成
 
-#### Task 6: 在 `D20Dice.tsx` 集成起手音效
+#### Task 5: 在 `D20Dice.tsx` 集成起手音效
 
 **Files:**
 - Modify: `src/components/dice/D20Dice.tsx`
@@ -499,7 +333,7 @@ Expected: 点击骰子投掷时听到短促「咔」声
 
 ---
 
-#### Task 7: 在 `D20Dice.tsx` 集成落定音效
+#### Task 6: 在 `D20Dice.tsx` 集成落定音效
 
 **Files:**
 - Modify: `src/components/dice/D20Dice.tsx`
@@ -532,51 +366,7 @@ Expected: 骰子停止时听到低沉的「笃」声
 
 ---
 
-#### Task 8: 在 `D20Dice.tsx` 集成滚动摩擦声
-
-**Files:**
-- Modify: `src/components/dice/D20Dice.tsx`
-
-**Step 1: 导入 RollingSfx 类**
-
-更新导入：
-```typescript
-import { playDiceCollisionSfx, playThrowSfx, playSettleSfx, RollingSfx } from '../../features/dice/diceSfx';
-```
-
-**Step 2: 在投掷开始时启动滚动声**
-
-在处理 `rollId` 变化的 `useEffect` 中，施加冲量后添加：
-```typescript
-// 启动滚动摩擦声（单例自动处理重复调用）
-RollingSfx.instance.start();
-```
-
-**Step 3: 在 useFrame 中更新滚动声**
-
-在 `useFrame` 中，当骰子正在滚动时（`rollingRef.current && isRolling`），添加：
-```typescript
-// 更新滚动摩擦声
-RollingSfx.instance.update({ angularSpeed });
-```
-
-**Step 4: 在骰子稳定时停止滚动声**
-
-在判定骰子稳定的地方，调用 `playSettleSfx()` 之前添加：
-```typescript
-RollingSfx.instance.stop();
-```
-
-同样在 `onSleep` 回调中添加停止逻辑。
-
-**Step 5: 验证**
-
-Run: `pnpm run dev`
-Expected: 骰子滚动时听到持续的低沉「咕噜」声（作为背景），停止时声音淡出
-
----
-
-#### Task 9: 集成弹跳音效（与碰撞音效互斥）
+#### Task 7: 集成弹跳音效（与碰撞音效互斥）
 
 **Files:**
 - Modify: `src/components/dice/D20Dice.tsx`
@@ -590,7 +380,7 @@ import {
   playThrowSfx, 
   playSettleSfx, 
   playBounceSfx, 
-  RollingSfx 
+  playScrapeSfx
 } from '../../features/dice/diceSfx';
 ```
 
@@ -647,7 +437,7 @@ Expected:
 
 ---
 
-#### Task 10: 导入 playScrapeSfx
+#### Task 8: 导入 playScrapeSfx
 
 **Files:**
 - Modify: `src/components/dice/D20Dice.tsx`
@@ -661,8 +451,7 @@ import {
   playThrowSfx, 
   playSettleSfx, 
   playBounceSfx, 
-  playScrapeSfx,
-  RollingSfx 
+  playScrapeSfx
 } from '../../features/dice/diceSfx';
 ```
 
@@ -675,7 +464,7 @@ Expected: 无 TypeScript 编译错误
 
 ### P3（回归验证）
 
-#### Task 11: 完整功能验证
+#### Task 9: 完整功能验证
 
 **验证清单：**
 
@@ -684,7 +473,6 @@ Expected: 无 TypeScript 编译错误
 
 2. **桌面端测试**（`pnpm run dev`）
    - [ ] 点击骰子 → 听到起手「咔」声
-   - [ ] 骰子滚动中 → 听到持续低沉「咕噜」声（背景音量）
    - [ ] 骰子普通碰撞 → 听到原有碰撞音
    - [ ] 骰子从高处落下 → 听到弹跳「砰」声（与碰撞音互斥）
    - [ ] 骰子贴边滑动 → 听到刮擦「刺啦」声
@@ -694,7 +482,6 @@ Expected: 无 TypeScript 编译错误
    - [ ] 碰撞音效最响（主角）
    - [ ] 弹跳音效次之
    - [ ] 起手/落定音效适中
-   - [ ] 滚动声最轻（背景）
    - [ ] 刮擦声适中
 
 4. **移动端测试**（iOS Safari）
@@ -717,20 +504,18 @@ Expected: 无 TypeScript 编译错误
 | 起手 | 0.28 | 0.28 | 固定，短促 |
 | 落定 | 0.22 | 0.22 | 固定，收尾 |
 | 刮擦 | 0.08 | 0.26 | 中等 |
-| 滚动 | 0 | 0.12 | 背景，最轻 |
 
 ---
 
 ## 不确定项
 
-1. **滚动声的角速度阈值**：需要实际测试调整 `angularSpeed / 12` 的分母值
-2. **弹跳触发阈值**：`verticalSpeed > 2.0` 可能需要根据实际效果调整
-3. **刮擦判断条件**：`horizontalSpeed > verticalSpeed * 2` 可能需要微调
+1. **弹跳触发阈值**：`verticalSpeed > 2.0` 可能需要根据实际效果调整
+2. **刮擦判断条件**：`horizontalSpeed > verticalSpeed * 2` 可能需要微调
 
 ---
 
 ## 下一步
 
-计划已更新（v2），请选择：
+计划已更新（v3），请选择：
 - **直接进入执行**：使用 `executing-plans` 分批实现
 - **继续 review**：对更新后的计划提出进一步意见
