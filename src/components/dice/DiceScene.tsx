@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { D20Dice } from './D20Dice';
 import { DiceTray } from './DiceTray';
 import { useTheme } from '../../context/ThemeContext';
+import { unlockDiceAudio } from '../../features/dice/diceSfx';
 
 export interface DiceSceneProps {
   className?: string;
@@ -119,6 +120,13 @@ export const DiceScene: React.FC<DiceSceneProps> = ({ className, rollRequestId, 
   const lastResultRef = useRef<number | null>(null);
   const lastRollRequestIdRef = useRef<number | undefined>(rollRequestId);
   const trayScale = 2.2;
+
+  // Web Audio needs a user gesture to start; unlock once on the first interaction.
+  useEffect(() => {
+    const handleFirstPointerDown = () => unlockDiceAudio();
+    window.addEventListener('pointerdown', handleFirstPointerDown, { once: true });
+    return () => window.removeEventListener('pointerdown', handleFirstPointerDown);
+  }, []);
 
   /**
    * rollDice

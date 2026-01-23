@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import { ConvexHullCollider, quat, RapierRigidBody, RigidBody } from '@react-three/rapier';
 import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import { playDiceCollisionSfx } from '../../features/dice/diceSfx';
 
 export interface D20DiceProps {
   position?: [number, number, number];
@@ -39,6 +40,7 @@ export const D20Dice: React.FC<D20DiceProps> = ({
   const lastTopFaceRef = useRef<number | null>(null);
   const rollingRef = useRef(false);
   const settleTimerRef = useRef(0);
+  const lastCollisionSoundAtRef = useRef(0);
 
   useEffect(() => {
     return () => {
@@ -242,6 +244,30 @@ export const D20Dice: React.FC<D20DiceProps> = ({
       linearDamping={0.2}
       angularDamping={0.4}
       ccd
+      onCollisionEnter={({ target, other }) => {
+        // Avoid noise while not actively rolling (and while user is dragging).
+        if (!isRolling && !rollingRef.current) return;
+        if (isDraggingRef.current) return;
+
+        // Cooldown to prevent rapid-fire sounds when the dice keeps contacting surfaces.
+        const nowMs = performance.now();
+        if (nowMs - lastCollisionSoundAtRef.current < 55) return;
+
+        const selfVelocity = target.rigidBody?.linvel?.() as { x: number; y: number; z: number } | undefined;
+        const otherVelocity = other.rigidBody?.linvel?.() as { x: number; y: number; z: number } | undefined;
+
+        const relativeSpeed = Math.hypot(
+          (selfVelocity?.x ?? 0) - (otherVelocity?.x ?? 0),
+          (selfVelocity?.y ?? 0) - (otherVelocity?.y ?? 0),
+          (selfVelocity?.z ?? 0) - (otherVelocity?.z ?? 0),
+        );
+
+        // Ignore tiny resting contacts.
+        if (relativeSpeed < 0.35) return;
+
+        lastCollisionSoundAtRef.current = nowMs;
+        playDiceCollisionSfx({ relativeSpeed });
+      }}
       onSleep={() => {
         if (!rollingRef.current) return;
         rollingRef.current = false;
@@ -360,4 +386,3 @@ export const D20Dice: React.FC<D20DiceProps> = ({
 };
 
 useGLTF.preload('/models/d20_with_face_nodes_CC0_bundle/d20_with_face_nodes_CC0.glb');
-
