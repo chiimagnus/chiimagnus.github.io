@@ -10,7 +10,8 @@ import SyncNosOAuthCallback from './pages/SyncNosOAuthCallback'
 import SyncNosOAuthTest from './pages/SyncNosOAuthTest'
 import Layout from './components/blog/Layout'
 import { ThemeProvider } from './context/ThemeContext'
-import DicePage from './pages/DicePage'
+import HomeEntry from './pages/HomeEntry'
+import SyncNosRedirect from './pages/SyncNosRedirect'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -20,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route path="/lifewealth" element={<LifeWealth />} />
           <Route path="/ai-chat" element={<AiChat />} />
           <Route path="/jetjetjet" element={<JetJetJetPage />} />
+          <Route path="/syncnos" element={<SyncNosRedirect to="https://chiimagnus.notion.site/syncnos" />} />
           <Route path="/syncnos-oauth/callback" element={<SyncNosOAuthCallback />} />
           <Route path="/syncnos-oauth/test" element={<SyncNosOAuthTest />} />
           <Route path="/blog" element={
@@ -27,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Home />
             </Layout>
           } />
-          <Route path="/" element={<DicePage />} />
+          <Route path="/" element={<HomeEntry />} />
         </Routes>
       </Router>
     </ThemeProvider>
