@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 /**
@@ -12,10 +12,38 @@ import { useSearchParams } from 'react-router-dom';
 const SyncNosOAuthCallback: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState<'pending' | 'webclipper' | 'app'>('pending');
+  const [webclipperProcessing, setWebclipperProcessing] = useState(false);
+  const [showCloseBlockedHint, setShowCloseBlockedHint] = useState(false);
+  const [showAppFallback, setShowAppFallback] = useState(false);
   const [detail, setDetail] = useState<{ title: string; subtitle: string }>({
     title: '正在处理 OAuth 回调...',
     subtitle: '请稍候'
   });
+
+  const tryCloseCurrentPage = useCallback(() => {
+    setShowCloseBlockedHint(false);
+
+    try {
+      window.close();
+    } catch (_e) {
+      // ignore
+    }
+
+    try {
+      // 某些浏览器对直接 close 有限制，这个是常见兜底写法。
+      window.open('', '_self');
+      window.close();
+    } catch (_e) {
+      // ignore
+    }
+
+    window.setTimeout(() => {
+      // 如果页面仍可见，说明浏览器策略阻止了脚本关闭标签页。
+      if (document.visibilityState === 'visible') {
+        setShowCloseBlockedHint(true);
+      }
+    }, 500);
+  }, []);
 
   const parsed = useMemo(() => {
     const code = searchParams.get('code');
@@ -31,30 +59,56 @@ const SyncNosOAuthCallback: React.FC = () => {
 
     if (isWebClipper) {
       setMode('webclipper');
+      setShowAppFallback(false);
       if (error) {
+        setWebclipperProcessing(false);
         setDetail({
           title: 'WebClipper 授权失败',
           subtitle: errorDescription ? `${error}: ${errorDescription}` : error
         });
+        return;
       } else if (code && state) {
+        setWebclipperProcessing(true);
+        setShowCloseBlockedHint(false);
         setDetail({
-          title: 'WebClipper 授权完成',
-          subtitle: '你可以关闭此页面并回到浏览器扩展（WebClipper）继续操作。'
+          title: '正在完成 WebClipper 授权…',
+          subtitle: '授权结果已发送到扩展，通常会在几秒内自动关闭此页。'
         });
+
+        const autoCloseTimer = window.setTimeout(() => {
+          tryCloseCurrentPage();
+        }, 1200);
+
+        const settleTimer = window.setTimeout(() => {
+          setWebclipperProcessing(false);
+          setDetail({
+            title: 'WebClipper 授权已回传',
+            subtitle: '如果页面尚未自动关闭，请手动关闭此页并返回 WebClipper。'
+          });
+        }, 8500);
+
+        return () => {
+          window.clearTimeout(autoCloseTimer);
+          window.clearTimeout(settleTimer);
+        };
       } else {
+        setWebclipperProcessing(false);
         setDetail({
           title: 'WebClipper 回调参数缺失',
           subtitle: '请返回扩展重新发起 Connect。'
         });
+        return;
       }
-      return;
     }
 
     setMode('app');
+    setWebclipperProcessing(false);
+    setShowCloseBlockedHint(false);
     setDetail({
       title: '正在重定向到 SyncNos...',
-      subtitle: '请稍候，正在完成 OAuth 授权流程'
+      subtitle: '请稍候，正在尝试打开 SyncNos 应用并完成 OAuth 授权流程。'
     });
+    setShowAppFallback(false);
 
     // 构建自定义 URL scheme 回调
     const customScheme = 'syncnos://oauth/callback';
@@ -74,23 +128,26 @@ const SyncNosOAuthCallback: React.FC = () => {
 
     const callbackURL = `${customScheme}?${params.toString()}`;
 
-    // 重定向到自定义 URL scheme
-    // 这会触发 macOS 应用打开并接收回调
-    window.location.href = callbackURL;
+    const redirectTimer = window.setTimeout(() => {
+      // 重定向到自定义 URL scheme
+      // 这会触发 macOS 应用打开并接收回调
+      window.location.href = callbackURL;
+    }, 250);
 
     // 如果应用没有安装或无法处理 URL scheme，
     // 显示友好的提示信息
-    setTimeout(() => {
+    const appFallbackTimer = window.setTimeout(() => {
       // 如果 2 秒后还在这个页面，说明应用可能没有安装
-      // 显示提示信息
-      const messageDiv = document.getElementById('oauth-message');
-      if (messageDiv) {
-        messageDiv.style.display = 'block';
-      }
+      setShowAppFallback(true);
     }, 2000);
-  }, [parsed]);
 
-  const isLoading = mode === 'pending' || mode === 'app';
+    return () => {
+      window.clearTimeout(redirectTimer);
+      window.clearTimeout(appFallbackTimer);
+    };
+  }, [parsed, tryCloseCurrentPage]);
+
+  const isLoading = mode === 'pending' || mode === 'app' || (mode === 'webclipper' && webclipperProcessing);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -114,15 +171,9 @@ const SyncNosOAuthCallback: React.FC = () => {
             <button
               type="button"
               className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow-sm hover:bg-blue-700 transition-colors"
-              onClick={() => {
-                try {
-                  window.close();
-                } catch (_e) {
-                  // ignore
-                }
-              }}
+              onClick={tryCloseCurrentPage}
             >
-              关闭此页
+              {webclipperProcessing ? '关闭此页（可手动）' : '关闭此页'}
             </button>
             <div className="px-4 py-2 rounded-lg bg-white/70 text-gray-900 font-semibold border border-white/60 shadow-sm">
               回到 WebClipper 扩展
@@ -130,7 +181,16 @@ const SyncNosOAuthCallback: React.FC = () => {
           </div>
         ) : null}
 
-        <div id="oauth-message" className="hidden mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+        {mode === 'webclipper' && showCloseBlockedHint ? (
+          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+            <p className="text-amber-800">
+              浏览器阻止了脚本自动关闭标签页，请手动关闭此页后回到 WebClipper。
+            </p>
+          </div>
+        ) : null}
+
+        {mode === 'app' && showAppFallback ? (
+          <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
           <p className="text-yellow-800">
             如果 SyncNos 应用没有自动打开，请确保：
           </p>
@@ -139,7 +199,8 @@ const SyncNosOAuthCallback: React.FC = () => {
             <li>• 应用已正确配置 URL scheme</li>
             <li>• 尝试手动打开 SyncNos 应用</li>
           </ul>
-        </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
