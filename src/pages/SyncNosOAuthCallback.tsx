@@ -12,8 +12,6 @@ import { useSearchParams } from 'react-router-dom';
 const SyncNosOAuthCallback: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [mode, setMode] = useState<'pending' | 'webclipper' | 'app'>('pending');
-  const [webclipperProcessing, setWebclipperProcessing] = useState(false);
-  const [showCloseBlockedHint, setShowCloseBlockedHint] = useState(false);
   const [showAppFallback, setShowAppFallback] = useState(false);
   const [detail, setDetail] = useState<{ title: string; subtitle: string }>({
     title: '正在处理 OAuth 回调...',
@@ -21,8 +19,6 @@ const SyncNosOAuthCallback: React.FC = () => {
   });
 
   const tryCloseCurrentPage = useCallback(() => {
-    setShowCloseBlockedHint(false);
-
     try {
       window.close();
     } catch (_e) {
@@ -36,13 +32,6 @@ const SyncNosOAuthCallback: React.FC = () => {
     } catch (_e) {
       // ignore
     }
-
-    window.setTimeout(() => {
-      // 如果页面仍可见，说明浏览器策略阻止了脚本关闭标签页。
-      if (document.visibilityState === 'visible') {
-        setShowCloseBlockedHint(true);
-      }
-    }, 500);
   }, []);
 
   const parsed = useMemo(() => {
@@ -61,38 +50,25 @@ const SyncNosOAuthCallback: React.FC = () => {
       setMode('webclipper');
       setShowAppFallback(false);
       if (error) {
-        setWebclipperProcessing(false);
         setDetail({
           title: 'WebClipper 授权失败',
           subtitle: errorDescription ? `${error}: ${errorDescription}` : error
         });
         return;
       } else if (code && state) {
-        setWebclipperProcessing(true);
-        setShowCloseBlockedHint(false);
         setDetail({
-          title: '正在完成 WebClipper 授权…',
-          subtitle: '授权结果已发送到扩展，通常会在几秒内自动关闭此页。'
+          title: 'WebClipper 授权已回传',
+          subtitle: '页面将自动关闭；若未关闭，请手动关闭并返回 WebClipper。'
         });
 
         const autoCloseTimer = window.setTimeout(() => {
           tryCloseCurrentPage();
         }, 1200);
 
-        const settleTimer = window.setTimeout(() => {
-          setWebclipperProcessing(false);
-          setDetail({
-            title: 'WebClipper 授权已回传',
-            subtitle: '如果页面尚未自动关闭，请手动关闭此页并返回 WebClipper。'
-          });
-        }, 8500);
-
         return () => {
           window.clearTimeout(autoCloseTimer);
-          window.clearTimeout(settleTimer);
         };
       } else {
-        setWebclipperProcessing(false);
         setDetail({
           title: 'WebClipper 回调参数缺失',
           subtitle: '请返回扩展重新发起 Connect。'
@@ -102,8 +78,6 @@ const SyncNosOAuthCallback: React.FC = () => {
     }
 
     setMode('app');
-    setWebclipperProcessing(false);
-    setShowCloseBlockedHint(false);
     setDetail({
       title: '正在重定向到 SyncNos...',
       subtitle: '请稍候，正在尝试打开 SyncNos 应用并完成 OAuth 授权流程。'
@@ -147,7 +121,7 @@ const SyncNosOAuthCallback: React.FC = () => {
     };
   }, [parsed, tryCloseCurrentPage]);
 
-  const isLoading = mode === 'pending' || mode === 'app' || (mode === 'webclipper' && webclipperProcessing);
+  const isLoading = mode === 'pending' || mode === 'app';
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
@@ -173,19 +147,11 @@ const SyncNosOAuthCallback: React.FC = () => {
               className="px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold shadow-sm hover:bg-blue-700 transition-colors"
               onClick={tryCloseCurrentPage}
             >
-              {webclipperProcessing ? '关闭此页（可手动）' : '关闭此页'}
+              关闭此页
             </button>
             <div className="px-4 py-2 rounded-lg bg-white/70 text-gray-900 font-semibold border border-white/60 shadow-sm">
               回到 WebClipper 扩展
             </div>
-          </div>
-        ) : null}
-
-        {mode === 'webclipper' && showCloseBlockedHint ? (
-          <div className="mt-4 p-4 bg-amber-50 border border-amber-200 rounded-lg">
-            <p className="text-amber-800">
-              浏览器阻止了脚本自动关闭标签页，请手动关闭此页后回到 WebClipper。
-            </p>
           </div>
         ) : null}
 
