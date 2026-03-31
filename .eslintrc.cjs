@@ -5,7 +5,7 @@ module.exports = {
     es2020: true,
     node: true,
   },
-  ignorePatterns: ['dist/', 'node_modules/', '.github/', 'public/models/'],
+  ignorePatterns: ['dist/', 'node_modules/', '.github/'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',

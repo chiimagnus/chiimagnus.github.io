@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import DicePage from './DicePage';
+import Home from './Home';
+import Layout from '../components/blog/Layout';
 
 const NOTION_SYNCNOS_URL = 'https://chiimagnus.notion.site/syncnos';
 
@@ -70,7 +71,11 @@ const HomeEntry: React.FC = () => {
     );
   }
 
-  return <DicePage />;
+  return (
+    <Layout>
+      <Home />
+    </Layout>
+  );
 };
 
 export default HomeEntry;
