@@ -1,7 +1,7 @@
 /**
  * Gradient runtime utilities
- * - Used to drive both DOM background animation and Three.js lighting/material colors
- * - Keeps logic pure and reusable (no DOM/Three dependencies)
+ * - Used to drive DOM background animation and color interpolation helpers
+ * - Keeps logic pure and reusable (no DOM dependencies)
  */
 
 /**
