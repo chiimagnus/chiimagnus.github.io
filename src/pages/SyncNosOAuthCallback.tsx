@@ -40,11 +40,12 @@ const SyncNosOAuthCallback: React.FC = () => {
     const error = searchParams.get('error');
     const errorDescription = searchParams.get('error_description');
     const isWebClipper = Boolean(state && state.startsWith('webclipper_'));
-    return { code, state, error, errorDescription, isWebClipper };
+    const isHealthIOS = Boolean(state && state.startsWith('syncnos_health_ios_'));
+    return { code, state, error, errorDescription, isWebClipper, isHealthIOS };
   }, [searchParams]);
 
   useEffect(() => {
-    const { code, state, error, errorDescription, isWebClipper } = parsed;
+    const { code, state, error, errorDescription, isWebClipper, isHealthIOS } = parsed;
 
     if (isWebClipper) {
       setMode('webclipper');
@@ -85,7 +86,7 @@ const SyncNosOAuthCallback: React.FC = () => {
     setShowAppFallback(false);
 
     // 构建自定义 URL scheme 回调
-    const customScheme = 'syncnos://oauth/callback';
+    const customScheme = isHealthIOS ? 'syncnos-health-ios://oauth/callback' : 'syncnos://oauth/callback';
     const params = new URLSearchParams();
     
     if (error) {
