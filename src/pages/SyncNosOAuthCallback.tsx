@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
  * 
  * Notion OAuth 会重定向到此页面（GitHub Pages），
  * - iOS Health App：此页面会将回调重定向到自定义 URL scheme（syncnos-health-ios://），以便应用接收回调。
- * - WebClipper：此页面不会跳转到 syncnos://，避免被 Universal Link 拉起 App；
+ * - WebClipper：此页面不会跳转到自定义 URL scheme，避免被 Universal Link 拉起 App；
  *   由扩展通过 webNavigation 监听此 URL 来完成授权。
  */
 const SyncNosOAuthCallback: React.FC = () => {
