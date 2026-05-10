@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
  * SyncNos OAuth 回调页面
  * 
  * Notion OAuth 会重定向到此页面（GitHub Pages），
- * - macOS App：此页面会将回调重定向到自定义 URL scheme（syncnos://），以便应用接收回调。
+ * - iOS Health App：此页面会将回调重定向到自定义 URL scheme（syncnos-health-ios://），以便应用接收回调。
  * - WebClipper：此页面不会跳转到 syncnos://，避免被 Universal Link 拉起 App；
  *   由扩展通过 webNavigation 监听此 URL 来完成授权。
  */
@@ -78,6 +78,26 @@ const SyncNosOAuthCallback: React.FC = () => {
       }
     }
 
+    if (!isHealthIOS) {
+      setMode('app');
+      setShowAppFallback(false);
+      setDetail({
+        title: '无法识别的回调请求',
+        subtitle: '缺少 state 或 state 前缀不受支持；请返回发起授权的应用重新尝试。'
+      });
+      return;
+    }
+
+    if (!error && !(code && state)) {
+      setMode('app');
+      setShowAppFallback(false);
+      setDetail({
+        title: '回调参数缺失',
+        subtitle: '未收到 code/state 或 error；请返回应用重新发起授权。'
+      });
+      return;
+    }
+
     setMode('app');
     setDetail({
       title: '正在重定向到 SyncNos...',
@@ -86,7 +106,7 @@ const SyncNosOAuthCallback: React.FC = () => {
     setShowAppFallback(false);
 
     // 构建自定义 URL scheme 回调
-    const customScheme = isHealthIOS ? 'syncnos-health-ios://oauth/callback' : 'syncnos://oauth/callback';
+    const customScheme = 'syncnos-health-ios://oauth/callback';
     const params = new URLSearchParams();
     
     if (error) {
