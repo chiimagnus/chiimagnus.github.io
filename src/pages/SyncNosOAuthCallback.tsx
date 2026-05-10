@@ -125,7 +125,7 @@ const SyncNosOAuthCallback: React.FC = () => {
 
     const redirectTimer = window.setTimeout(() => {
       // 重定向到自定义 URL scheme
-      // 这会触发 macOS 应用打开并接收回调
+      // 这会触发 iOS 应用打开并接收回调
       window.location.href = callbackURL;
     }, 250);
 
