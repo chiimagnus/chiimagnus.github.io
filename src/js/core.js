@@ -6,8 +6,13 @@ const products = window.PRODUCTS || [];
 
 const $ = (selector) => document.querySelector(selector);
 
+const _params = new URLSearchParams(location.search);
+const _m = _params.get('mode');
+
 const state = {
   articlesExpanded: false,
+  // 「产品 / 文章」双板块切换（参考 thariq.io 的 ?mode=）。兼容旧的 ?mode=personal → 文章。
+  mode: (_m === 'articles' || _m === 'personal') ? 'articles' : 'products',
 };
 
 const escapeHtml = (value = '') => String(value)

@@ -1,8 +1,7 @@
 /* ===========================================================
-   base.css — 「时辰流动」主题
-   首页背景随访客的本地时间流动，夜里的月亮按真实月相
-   逐日变化，星空亦按日期逐日生成。全部本地计算，无网络依赖。
-   /syncnos + oauth 工具页仍用 styles.css 的编译 Tailwind，不受影响。
+   base.css — 「时辰流动」主题 · 单栏 · 点击头像循环切换 产品/文章
+   背景随访客本地时间流动；夜里的月亮按真实月相逐日变化，星空亦逐日生成。
+   全部本地计算，无网络依赖。/syncnos + oauth 工具页仍用 styles.css 的 Tailwind。
    =========================================================== */
 :root{
   --sky-top:#12131f; --sky-bot:#20222f;
@@ -16,43 +15,73 @@
 html,body{margin:0;padding:0}
 body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
 
-/* ---------- 天空层(仅首页，由 render.js 注入) ---------- */
+/* ---------- 天空层（仅首页，由 render.js 注入） ---------- */
 .sky{position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,var(--sky-top),var(--sky-bot));transition:background 1.2s ease}
 .stars{position:fixed;inset:0;z-index:-3;opacity:var(--stars);transition:opacity 1.2s ease;pointer-events:none}
 .star{position:absolute;border-radius:50%;background:#fff;animation:tw ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}
-.skyfield{position:absolute;top:0;left:0;right:0;height:520px;overflow:hidden;pointer-events:none;z-index:-2}
+.skyfield{position:absolute;top:0;left:0;right:0;height:480px;overflow:hidden;pointer-events:none;z-index:-2}
 .cel{position:absolute;width:82px;height:82px;border-radius:50%;transition:left 1.2s ease,top 1.2s ease,background 1.2s ease}
 .cel.sun{background:var(--cel);box-shadow:0 0 74px 24px var(--cel-glow)}
 .cel.moon{background:var(--cel);filter:drop-shadow(0 0 16px var(--cel-glow))}
 
-/* ---------- 首页内容 ---------- */
-.wrap{position:relative;max-width:720px;margin:0 auto;padding:56px 24px 96px;color:var(--ink);transition:color 1.2s ease}
-.skybar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.skybar .phase{color:var(--ink);letter-spacing:.16em}
-.avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;margin-bottom:18px;box-shadow:0 2px 20px rgba(0,0,0,.14)}
-.name{font-family:var(--serif);font-size:44px;line-height:1.06;font-weight:600;margin:0 0 16px;color:var(--ink)}
-.about{font-family:var(--serif);font-size:19px;line-height:1.85;color:var(--muted);margin:0;max-width:26em}
-.social{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px;font-size:14px}
+/* ---------- 单栏外框 ---------- */
+.wrap{position:relative;max-width:640px;margin:0 auto;padding:64px 28px 104px;color:var(--ink);transition:color 1.2s ease}
+
+/* ---------- 头像（可点击循环切换） ---------- */
+.avatar-btn{display:block;width:72px;height:72px;padding:0;margin:0 0 24px;border:0;background:none;border-radius:50%;cursor:pointer;position:relative;outline:none;-webkit-tap-highlight-color:transparent}
+.avatar-btn::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--ink);opacity:0;transform:scale(.9);transition:opacity .25s ease,transform .25s ease}
+.avatar-btn:hover::after,.avatar-btn:focus-visible::after{opacity:.4;transform:scale(1)}
+.avatar{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;box-shadow:0 3px 26px rgba(0,0,0,.2);transition:opacity .35s ease}
+.av-articles{display:none}
+.wrap.mode-articles .av-products{display:none}
+.wrap.mode-articles .av-articles{display:block}
+
+/* ---------- hero ---------- */
+.name{font-family:var(--serif);font-size:50px;line-height:1.02;font-weight:600;margin:0 0 20px;color:var(--ink);letter-spacing:.005em}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.about{font-family:var(--serif);font-size:19px;line-height:1.8;color:var(--muted);margin:0;max-width:26em}
+.about.articles{display:none;font-style:italic}
+.wrap.mode-articles .about.products{display:none}
+.wrap.mode-articles .about.articles{display:block}
+.wrap.mode-products .about.products,.wrap.mode-articles .about.articles{animation:fadein .4s ease}
+.social{display:flex;flex-wrap:wrap;gap:26px;margin-top:28px;font-size:13.5px;letter-spacing:.03em}
 .social a{color:var(--accent);text-decoration:none}
-.social a:hover{text-decoration:underline}
-.section-title{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:var(--faint);font-weight:600;margin:52px 0 12px}
-.entry{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color 1.2s ease}
-.entry .title{flex:1;font-family:var(--serif);font-size:17px;color:var(--ink)}
-.entry .date{color:var(--faint);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.entry:hover .title{text-decoration:underline}
-.more{background:none;border:0;color:var(--accent);cursor:pointer;padding:14px 0;font-size:14px}
-.more:hover{text-decoration:underline}
-.product{padding:16px 0;border-bottom:1px solid var(--line)}
-.product .title{font-weight:600;font-family:var(--serif);font-size:17px;color:var(--ink)}
-.product .status{color:var(--faint);font-size:13px;margin-left:8px}
-.product .desc{color:var(--muted);font-size:15px;margin:5px 0;max-width:44em}
-.product .meta{font-size:13px;color:var(--faint)}
-.product .meta a{color:var(--accent)}
-footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+.social a:hover{opacity:.66}
+
+/* ---------- 板块切换：产品 / 文章 ---------- */
+.wrap.mode-products .block-articles{display:none}
+.wrap.mode-articles .block-products{display:none}
+
+/* section */
+.section-title{font-size:11.5px;text-transform:uppercase;letter-spacing:.2em;color:var(--faint);font-weight:600;margin:0 0 8px}
+.block{margin-top:60px}
+
+/* articles */
+.entry{display:flex;justify-content:space-between;align-items:baseline;gap:28px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color 1.2s ease,opacity .2s ease}
+.entry:last-of-type{border-bottom:none}
+.entry .title{flex:1;font-family:var(--serif);font-size:16.5px;line-height:1.5;color:var(--ink)}
+.entry .date{color:var(--faint);font-size:12px;white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.entry:hover .title{opacity:.58}
+.more{background:none;border:0;color:var(--accent);cursor:pointer;padding:18px 0 0;font-size:13px;letter-spacing:.04em}
+.more:hover{opacity:.66}
+
+/* products */
+.product{padding:24px 0;border-bottom:1px solid var(--line)}
+.product:last-of-type{border-bottom:none}
+.phead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.product .title{font-weight:600;font-family:var(--serif);font-size:19px;color:var(--ink)}
+.product .status{color:var(--faint);font-size:12px;font-weight:400;letter-spacing:.03em}
+.product .desc{color:var(--muted);font-size:15px;line-height:1.72;margin:7px 0 10px;max-width:44em}
+.product .meta{font-size:12.5px}
+.product .plink{color:var(--accent);text-decoration:none;letter-spacing:.03em}
+.product .plink:hover{opacity:.66}
+
+footer{margin-top:72px;padding-top:24px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;letter-spacing:.03em}
+.phase{margin-left:10px;letter-spacing:.2em;text-transform:uppercase}
 
 @media (max-width:480px){
-  .wrap{padding:40px 20px 80px}
-  .name{font-size:36px}
-  .skyfield{height:440px}
+  .wrap{padding:52px 22px 84px}
+  .name{font-size:40px}
+  .skyfield{height:420px}
 }

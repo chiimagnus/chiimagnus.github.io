@@ -6,10 +6,26 @@ function renderHome() {
   if (window.initSky) window.initSky();
 }
 
+function setMode(m) {
+  state.mode = m;
+  const wrap = document.querySelector('.wrap');
+  if (wrap) {
+    wrap.classList.remove('mode-products', 'mode-articles');
+    wrap.classList.add('mode-' + m);
+  }
+  const url = new URL(location.href);
+  url.searchParams.set('mode', m);
+  history.replaceState(null, '', url);
+}
+
 function bindHome() {
   $('#more')?.addEventListener('click', () => {
     state.articlesExpanded = true;
     renderHome();
+  });
+  // 点击头像在【产品 ↔ 文章】之间循环切换
+  $('#avatarBtn')?.addEventListener('click', () => {
+    setMode(state.mode === 'products' ? 'articles' : 'products');
   });
 }
 
