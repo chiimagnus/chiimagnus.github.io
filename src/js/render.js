@@ -1,9 +1,3 @@
-// render.js — 首页视图（「时辰流动」主题 · 头像与名字并排）。
-// 不复刻别人的 style：专属基因 = 时辰天色 + 花体名 + Frost 诗 + 「」角括号板块标题。
-// 产品 mode 用全名 Chii Magnus（创造者）；文章 mode 只用花名 Chii（写作者）。
-// 两个列表：产品 = 竖脉时间线；文章 = 紧凑索引。
-// 默认产品。无顶栏。点击头像循环切换。
-
 function homeView() {
   const workArticles = articles.filter((a) => a.category === 'work');
   const lifeArticles = articles.filter((a) => a.category !== 'work');
