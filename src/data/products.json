@@ -12,34 +12,6 @@
     ]
   },
   {
-    "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
-    "description": "LifeWealth 关系财富管理",
-    "tags": ["swiftUI","iOS", "macOS"],
-    "status": "🚀 即将发布！",
-    "links": [
-      {
-        "text": "详细介绍",
-        "url": "/LifeWealth"
-      }
-    ]
-  },
-  {
-    "title": "JETJETJET ✈️",
-    "description": "飞机运动追踪应用，使用手机传感器实时记录运动状态，以3D飞机模型展示完整的飞行轨迹动画",
-    "tags": ["SwiftUI","iOS","CoreMotion","SceneKit"],
-    "status": "🚧 开发中",
-    "links": [
-      {
-        "text": "详细介绍",
-        "url": "/jetjetjet"
-      },
-      {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/JETJETJET"
-      }
-    ]
-  },
-  {
     "title": "AI-Search 🔌",
     "description": "Logseq插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
     "tags": ["React","TypeScript","Plugin"],

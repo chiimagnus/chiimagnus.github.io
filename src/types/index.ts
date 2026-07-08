@@ -52,28 +52,3 @@ export interface SiteConfig {
   url: string;
   postsPerPage: number;
 }
-
-// JETJETJET 项目相关类型定义
-export interface FeatureCard {
-  id: string;
-  icon: string;
-  title: string;
-  description: string;
-}
-
-export interface TechItem {
-  id: string;
-  icon: string;
-  title: string;
-  description: string;
-}
-
-export interface NavItem {
-  id: string;
-  label: string;
-  href: string;
-}
-
-export interface JetJetJetProps {
-  className?: string;
-}
