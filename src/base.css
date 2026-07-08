@@ -58,7 +58,7 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 
 /* ---------- 板块切换：产品 / 文章 ---------- */
 .wrap.mode-products .block-articles{display:none}
-.wrap.mode-articles .block-products{display:none}
+.wrap.mode-articles .block-products,.wrap.mode-articles .block-worknotes{display:none}
 .block{margin-top:66px;max-width:760px}
 
 /* 「」角括号板块标题——Chii 专属引号风格 */

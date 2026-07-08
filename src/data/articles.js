@@ -1,6 +1,7 @@
 window.ARTICLES = [
 	{
 		"title": "2025年的回顾，从对未来的焦虑开始",
+		"category": "life",
 		"date": "2026年01月08日 12:56",
 		"description": "回顾 2025 年的经历与焦虑，反思技术与产品的成长与计划。",
 		"url": "https://mp.weixin.qq.com/s/Ihr9S2y2_ECr_7XWOuIzgg",
@@ -9,6 +10,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "记录｜一块钱换来的思考，逐渐看见对方",
+		"category": "life",
 		"date": "2026年01月06日 23:39",
 		"description": "讲述一块钱的小事件，引发对他人真实生活与同理心的反思。",
 		"url": "https://mp.weixin.qq.com/s/qwaMMuitZt1CSQSSYxknog",
@@ -17,6 +19,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "AI出稿？我也想啊😭",
+		"category": "life",
 		"date": "2026年01月06日 02:37",
 		"description": "表达对 AI 帮助出稿的不满与个人稿件处理偏好。",
 		"url": "https://mp.weixin.qq.com/s/Rv2c8bkcWBnjlam4EXkYOg",
@@ -25,6 +28,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "记录｜第一次入伙别人的创业项目",
+		"category": "work",
 		"date": "2025年12月19日 02:39",
 		"description": "记录加入早期创业项目的经历、协作冲突与后续反思。",
 		"url": "https://mp.weixin.qq.com/s/PKJS1KRwIyHdeLi47-yRrA",
@@ -33,6 +37,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "开发｜试了一晚上 spec-kit（规范驱动开发），我决定放弃了。",
+		"category": "work",
 		"date": "2025年11月25日 08:20",
 		"description": "记录在 Cursor 与 spec-kit 之间尝试后的体验，讨论文档成本与个人开发效率取舍。",
 		"url": "https://mp.weixin.qq.com/s/EzvJRmsZOngFuYB8_9zt0w",
@@ -41,6 +46,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "一个悲催的现实｜因现实压力太大而差点死去的想法。",
+		"category": "life",
 		"date": "2025年11月19日 18:41",
 		"description": "分享在现实压力下的挣扎与自我调适，以及如何从小步骤重建动力。",
 		"url": "https://mp.weixin.qq.com/s/2Hy1b-NG3_DdJAl0Z78AVQ",
@@ -49,6 +55,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "记录｜买了一个极其便宜的鼠标，却能完美适配macOS，为什么？",
+		"category": "work",
 		"date": "2025年11月02日 16:00",
 		"description": "分享如何用开源工具让廉价鼠标在 macOS 上有良好体验，并致敬相关开源项目。",
 		"url": "https://mp.weixin.qq.com/s/cANDcDX4urwUirtNVwf-nA",
@@ -57,6 +64,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "从个人的角度，反思一下为什么“逃离鸭克夫”好玩",
+		"category": "work",
 		"date": "2025年11月02日 11:22",
 		"description": "从沉迷机制与正反馈角度分析《逃离鸭克夫》为何容易上瘾，讨论游戏设计的体验要点。",
 		"url": "https://mp.weixin.qq.com/s/tv0pGsFR5Uq2qY6YFVs5HQ",
@@ -65,6 +73,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "教程｜将华为平板、安卓平板作为Mac有线连接的镜像屏、扩展屏",
+		"category": "work",
 		"date": "2025年10月16日 01:17",
 		"description": "提供基于开源项目将安卓平板作为 Mac 副屏的有线/无线连接教程与注意事项。",
 		"url": "https://mp.weixin.qq.com/s/-l4a-o-cC4F5ON-futjapQ",
@@ -73,6 +82,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "macOS26 Tahoe鼠标光标太丑了，换回经典的米老鼠光标。",
+		"category": "work",
 		"date": "2025年09月22日 16:04",
 		"description": "介绍如何使用工具与光标资源替换 macOS26 的光标以恢复经典样式。",
 		"url": "https://mp.weixin.qq.com/s/NpLRx5vs0Un1iXMxGc65fQ",
@@ -81,6 +91,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "回溯：逃跑、规则、美好，一场梦",
+		"category": "life",
 		"date": "2025年09月20日 11:49",
 		"description": "一篇基于梦境与黑客松经历的叙事，探讨规则、逃离与最终的觉醒。",
 		"url": "https://mp.weixin.qq.com/s/1afGiWSH45JxVFtvDDn2zg",
@@ -89,6 +100,7 @@ window.ARTICLES = [
 	},
 	{
  		"title": "收获｜你无聊的生活，可能需要一份「意外」？",
+		"category": "life",
  		"date": "2025年09月19日 17:16",
  		"description": "编译运行项目时意外的惊喜让心情好转，讨论生活中一份意外带来的收获与感悟。",
  		"url": "https://mp.weixin.qq.com/s/EAH57sJK-akl9CxvK9T9ww",
@@ -97,6 +109,7 @@ window.ARTICLES = [
  	},
 	{
 		"title": "方法论｜如何让大模型帮你找到你想要的「积木」",
+		"category": "work",
 		"date": "2025年09月14日 08:20",
 		"description": "讨论如何让大模型协助检索并比对开发所需的‘积木’，以提升开发效率与解决方案匹配度。",
 		"url": "https://mp.weixin.qq.com/s/k7B0mLq6-bCeNd32AWyWvQ",
@@ -105,6 +118,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "一个感悟：你敢梭哈吗？",
+		"category": "life",
 		"date": "2025年09月13日 15:44",
 		"description": "关于把握当下、敢于尝试与拥抱变化的感悟，鼓励在机会面前勇于投入与行动。",
 		"url": "https://mp.weixin.qq.com/s/BC90T-g1vGbLUYJHcnnpTQ",
@@ -113,6 +127,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "开发了一个小工具，SyncNos。将Apple Books中的读书笔记同步到Notion",
+		"category": "work",
 		"date": "2025年09月12日 23:33",
 		"description": "介绍开源工具 SyncNos 的功能与计划：将 Apple Books 的读书笔记无感同步到 Notion，隐私优先并开源源码。",
 		"url": "https://mp.weixin.qq.com/s/jeTko_mQbCe3DXUNpmjHHA",
@@ -121,6 +136,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "减压、幸福、满意、快乐的秘诀：做减法。如何缩小圆圈的半径。",
+		"category": "life",
 		"date": "2025年09月10日 14:51",
 		"description": "提出通过减少不重要事务、专注核心任务来减压并提升幸福感的实践建议。",
 		"url": "https://mp.weixin.qq.com/s/G-MvrngmZUpRo5Yfv16hgQ",
@@ -129,6 +145,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "记录｜丝之歌出来了，这是一种情绪营销？",
+		"category": "work",
 		"date": "2025年09月05日 12:02",
 		"description": "记录对游戏《丝之歌》发布过程与情绪营销现象的观察与个人感受。",
 		"url": "https://mp.weixin.qq.com/s/rBXp_h6RLsNr0NbAriMKtw",
@@ -137,6 +154,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "反思与自我打脸：AI 新闻不算多时，要做什么？",
+		"category": "work",
 		"date": "2025年09月04日 18:54",
 		"description": "反思测评与实践的关系，强调把 AI 工具应用到真实场景与长期方法沉淀的重要性。",
 		"url": "https://mp.weixin.qq.com/s/noyDL45L7BBhpEw_PMXhNQ",
@@ -145,6 +163,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "笔记app的切换，从Logseq到Notion，经过Obsidian和飞书。",
+		"category": "work",
 		"date": "2025年09月03日 13:04",
 		"description": "讨论在 Logseq、Obsidian、Notion 与飞书之间切换笔记应用的经验与疑虑，比较同步、块/页面结构与项目管理等差异。",
 		"url": "https://mp.weixin.qq.com/s/giMLndPvcVAqT7Pj9NOLUw",
@@ -153,6 +172,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "还在使用豆包AI，你还有隐私可言吗？",
+		"category": "work",
 		"date": "2025年07月05日 01:28",
 		"description": "你在AI大模型时代，还有所谓的隐私吗？作者描述豆包AI疑似在未经许可情况下获取位置信息，引发对用户隐私的强烈担忧。",
 		"url": "https://mp.weixin.qq.com/s/sgh1lwjUYaapa9_OcyBY8g",
@@ -161,6 +181,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "个人平板绘画习作，《变形与扭曲》",
+		"category": "life",
 		"date": "2025年05月16日 08:20",
 		"description": "个人平板绘画习作，非AI绘画，非AI创作。无意间就画出了这么一个东西，看着有了点意义，于是停笔。",
 		"url": "https://mp.weixin.qq.com/s/JNVUg4K6VblBu291bJeh6w",
@@ -169,6 +190,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "Stay in The Reality, Please",
+		"category": "life",
 		"date": "2025年03月25日 08:20",
 		"description": "我们太习惯于虚拟的世界，甚至都以为那才是现实生活。",
 		"url": "https://mp.weixin.qq.com/s/r8MUYu5ZaTW8QpkjXSKORQ",
@@ -177,6 +199,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "AI辅助人，而不是AI替代人",
+		"category": "work",
 		"date": "2025年03月19日 08:20",
 		"description": "所以至关重要的是，不能啥事都只让AI做，我们也需要在这个过程中不断成长，掌握更多的专业技术，学会使用恰当的字词描述更准确的需求。",
 		"url": "https://mp.weixin.qq.com/s/retLsQU3VumOUmRXKEpdzA",
@@ -185,6 +208,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "LifeWealth，你还能与他们见面多少次？",
+		"category": "life",
 		"date": "2025年03月12日 08:20",
 		"description": "为什么我们对金钱特别敏感，对陪伴父母的次数不敏感？因为金钱是非常可测量的。你很清楚自己每个月收入多少。 但是并没有一个倒计时表，告诉你还剩下15次见到父母的机会，还能再陪孩子度过多少个完整的周末。",
 		"url": "https://mp.weixin.qq.com/s/ssAIYgTS9dOn6DEZfQMnNA",
@@ -193,6 +217,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "再论电车难题",
+		"category": "life",
 		"date": "2025年03月07日 08:20",
 		"description": "如果你欠思考只会感性用事，缺乏理性判断，那就会被牵着鼻子走。同时，你也可以利用这一点，影响甚至是引导人们的价值判断。",
 		"url": "https://mp.weixin.qq.com/s/MQ9bc_F2M9ck1YXBNgOXfQ",
@@ -201,6 +226,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "深度使用AI之后的“巨婴”该有的样子",
+		"category": "work",
 		"date": "2025年03月01日 08:20",
 		"description": "此文如将冰冷的工具链编织成智慧的琴弦——秘塔搜索为弓，ima作谱，cursor化刃，在科研查证的严谨赋格、代码编织的逻辑狂想与哲学思辨的云端独白间，让数字工具成为人类思维的延伸触角，于代码褶皱与论文雪原中炼出黄金般的思维结晶。",
 		"url": "https://mp.weixin.qq.com/s/qCb7m6zUbQSpvwEr6A7Vdw",
@@ -209,6 +235,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "大教堂和市集",
+		"category": "work",
 		"date": "2025年02月26日 08:20",
 		"description": "我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。",
 		"url": "https://mp.weixin.qq.com/s/qCb7m6zUbQSpvwEr6A7Vdw",
@@ -217,6 +244,7 @@ window.ARTICLES = [
 	},
     {
 		"title": "做个2024年度总结：stop wishing start doing",
+		"category": "life",
 		"date": "2025年01月03日 08:20",
 		"description": "此文最妙处，恰似将冰冷的代码与滚烫的诗意熔铸成剑——以苹果生态为画布，用VR眼镜作望远镜，在键盘敲击间让理性与浪漫共舞，让每个电子元件都成为丈量世界的诗意标尺，见证着一位数字游侠从“愿望收集者”蜕变为“行动炼金术士”的生命轨迹。",
 		"url": "https://mp.weixin.qq.com/s/fKgUwbDHt4Cx5FTa3OY1gQ",
@@ -225,6 +253,7 @@ window.ARTICLES = [
 	},
     {
 		"title": "梳理并分享个人使用AI的工作流",
+		"category": "work",
 		"date": "2024年12月28日 08:20",
 		"description": "此文如精密齿轮咬合的AI工具图谱：以「场景需求」为经线（日常/创作/开发/学术），以「工具特性」为纬线（记忆/思考/隐私/聚焦），经纬交织间既有庖丁解牛般的流程拆解（如语音转文字三套方案对比），又含北斗导航式的精准推荐（如学术场景锁定Perplexity）。更妙在「工具哲学」暗藏：ChatGPT如记忆宫殿，DeepSeek似军师推演，Cursor若巧匠之手——人机协作的智慧跃然纸上，堪称数字时代生产力进化的微型百科全书。",
 		"url": "https://mp.weixin.qq.com/s/pQR84Z55yVqhoaqcN3EuwA",
@@ -233,6 +262,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "沉浸式游戏的设计思考，增加用户下一个行动的期待",
+		"category": "work",
 		"date": "2024年11月18日 08:20",
 		"description": "最后，我想知道，为什么我会如此执着于「着急完成」呢？或许这只是一种对游戏着迷上头、对想法实现的无比投入？可能在我眼里，就没有缓慢享受，只有快速榨干的享受吧：）",
 		"url": "https://mp.weixin.qq.com/s?__biz=Mzg2MzczNDY5MA%3D%3D&mid=2247483888&idx=1&sn=c5099058a0295350b2d233189aada813&chksm=ce755f3df902d62b5ece386311d4d362f8763bf5fe85ac9dc7c5240d262ec638c6d1a70f09fa&token=245502106&lang=zh_CN#rd",
@@ -241,6 +271,7 @@ window.ARTICLES = [
 	},
     {
 		"title": "插件开发结束啦，回顾一下！",
+		"category": "work",
 		"date": "2024年12月06日 08:20",
 		"description": "此文妙在将技术探索化作诗意叙事，以“隐形设计”的禅意对抗工具冗余的浮华，用简约代码织就思维之网，在代码与文字的碰撞间，映照出工程师最本真的浪漫：以实用为舟，以问题为桨，在知识的汪洋中劈开一道理性与诗意并存的航迹。",
 		"url": "https://mp.weixin.qq.com/s/iuI180rlvS6xDFPRgCopzw",
@@ -249,6 +280,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "键盘设计厂商们，别做你们该死的MacOS键盘了吧！",
+		"category": "work",
 		"date": "2024年11月11日 08:20",
 		"description": "我想写篇公众号，关于键盘设计厂商门完全没必要开发适配macOS系统的键盘，因为其实已经有了一个统一的解决方案，那就是GitHub上的开源项目：karabiner-elements。",
 		"url": "https://mp.weixin.qq.com/s?__biz=Mzg2MzczNDY5MA%3D%3D&mid=2247483876&idx=1&sn=14a77cc1d8de4a583d38d9c25af8f5dd&chksm=ce755f29f902d63f587ded71520c2ba54590ed95e2f4ecb911d9815b317bb6e6a4a4bfec2125&token=245502106&lang=zh_CN#rd",
@@ -257,6 +289,7 @@ window.ARTICLES = [
 	},
 	{
 		"title": "认知之外的问题，我也不知道怎么做，哈哈哈：）",
+		"category": "life",
 		"date": "2024年11月06日 08:20",
 		"description": "或许，当你面对上面这样一个建筑的时候，跟我一样很好奇为什么会存在这样的奇怪家伙，可究竟是为什么，多年前的你肯定是无从知晓的，但现在的你完全清楚，这只是AI画出来的抽象作品。",
 		"url": "https://mp.weixin.qq.com/s?__biz=Mzg2MzczNDY5MA%3D%3D&mid=2247483858&idx=1&sn=741b775cc4d7c58c4cf6d653be49ebcf&chksm=ce755f1ff902d609a70f2d464fcdb0b164afdb6cf2cfa8aabdacaa3ab3788a82542e454db579&token=245502106&lang=zh_CN#rd",

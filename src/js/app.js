@@ -19,10 +19,10 @@ function setMode(m) {
 }
 
 function bindHome() {
-  $('#more')?.addEventListener('click', () => {
+  document.querySelectorAll('.more').forEach((b) => b.addEventListener('click', () => {
     state.articlesExpanded = true;
     renderHome();
-  });
+  }));
   // 点击头像在【产品 ↔ 文章】之间循环切换
   $('#avatarBtn')?.addEventListener('click', () => {
     setMode(state.mode === 'products' ? 'articles' : 'products');
