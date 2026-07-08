@@ -43,9 +43,9 @@ function homeView() {
             <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
             <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
           </button>
-          <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
+          <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
         </div>
-        <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
+        <p class="about products">狂热的开源玩家。</p>
         <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
       </header>
 
