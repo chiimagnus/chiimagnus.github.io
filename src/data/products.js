@@ -1,4 +1,4 @@
-[
+window.PRODUCTS = [
   {
     "title": "FrameWeavers 🎬",
     "description": "用连环画重讲你们的故事",
@@ -8,34 +8,6 @@
       {
         "text": "GitHub",
         "url": "https://github.com/chiimagnus/FrameWeavers"
-      }
-    ]
-  },
-  {
-    "title": "𝓛𝓲𝓯𝓮𝓦𝓮𝓪𝓵𝓽𝓱 💰",
-    "description": "LifeWealth 关系财富管理",
-    "tags": ["swiftUI","iOS", "macOS"],
-    "status": "🚀 即将发布！",
-    "links": [
-      {
-        "text": "详细介绍",
-        "url": "/LifeWealth"
-      }
-    ]
-  },
-  {
-    "title": "JETJETJET ✈️",
-    "description": "飞机运动追踪应用，使用手机传感器实时记录运动状态，以3D飞机模型展示完整的飞行轨迹动画",
-    "tags": ["SwiftUI","iOS","CoreMotion","SceneKit"],
-    "status": "🚧 开发中",
-    "links": [
-      {
-        "text": "详细介绍",
-        "url": "/jetjetjet"
-      },
-      {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/JETJETJET"
       }
     ]
   },
@@ -95,4 +67,4 @@
       }
     ]
   }
-]
+];

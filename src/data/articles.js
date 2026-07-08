@@ -1,4 +1,4 @@
-[
+window.ARTICLES = [
 	{
 		"title": "2025年的回顾，从对未来的焦虑开始",
 		"date": "2026年01月08日 12:56",
@@ -263,4 +263,4 @@
 		"slug": "beyond-cognition",
 		"external": true
 	}
-] 
+];
