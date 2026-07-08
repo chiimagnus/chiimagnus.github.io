@@ -1,9 +1,10 @@
-// render.js — 首页视图（「时辰流动」主题 · 单栏 · 点击头像循环切换 产品/文章）。
-// 默认产品。无顶栏。产品/文章各用不同头像，点击头像切换。
-// 产品不再展示技术栈标签；仅保留真实状态（已发布/获奖/已归档）与 GitHub 链接。
+// render.js — 首页视图（「时辰流动」主题 · 左对齐非对称 · 花体大字名当主角）。
+// 不复刻别人的 style：专属基因 = 时辰天色 + 花体名 + Frost 诗 + 「」角括号板块标题。
+// 产品 mode 用全名 Chii Magnus（创造者身份）；文章 mode 只用花名 Chii（写作者笔名）。
+// 默认产品。无顶栏。点击头像循环切换 产品/文章（两板块各用不同头像）。
 
 function homeView() {
-  const visibleArticles = state.articlesExpanded ? articles : articles.slice(0, 10);
+  const visibleArticles = state.articlesExpanded ? articles : articles.slice(0, 12);
 
   const entries = visibleArticles.map((a) => `
     <a class="entry" href="${escapeHtml(a.url)}" target="_blank" rel="noopener noreferrer">
@@ -11,8 +12,8 @@ function homeView() {
       <span class="date">${escapeHtml(fmtDate(a.date))}</span>
     </a>`).join('');
 
-  const more = (!state.articlesExpanded && articles.length > 10)
-    ? `<button class="more" id="more">展开全部 ${articles.length} 篇</button>`
+  const more = (!state.articlesExpanded && articles.length > 12)
+    ? `<button class="more" id="more">展开全部 ${articles.length} 篇 →</button>`
     : '';
 
   const productList = products.map((p) => {
@@ -21,13 +22,12 @@ function homeView() {
     const statusText = p.status || (archived ? '📁 已归档' : '');
     const status = statusText ? `<span class="status">${escapeHtml(statusText)}</span>` : '';
     const linkHtml = link
-      ? `<div class="meta"><a class="plink" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)} ↗</a></div>`
+      ? `<a class="plink" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)} ↗</a>`
       : '';
     return `
     <div class="product">
-      <div class="phead"><span class="title">${escapeHtml(p.title)}</span>${status}</div>
+      <div class="phead"><span class="title">${escapeHtml(p.title)}</span>${status}${linkHtml}</div>
       <p class="desc">${escapeHtml(p.description)}</p>
-      ${linkHtml}
     </div>`;
   }).join('');
 
@@ -36,29 +36,32 @@ function homeView() {
     <div class="stars" id="stars"></div>
     <div class="skyfield"><div class="cel sun" id="cel"></div></div>
     <div class="wrap mode-${state.mode}">
-      <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 产品 / 文章" aria-label="点击头像切换 产品 / 文章">
-        <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
-        <img class="avatar av-articles" src="public/avatar.png" alt="Chii Magnus" />
-      </button>
-      <h1 class="name">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</h1>
-      <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
-      <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
-      <div class="social">
-        <a href="mailto:chii_magnus@outlook.com">Email</a>
-        <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
-      </div>
+      <header class="hero">
+        <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 产品 / 文章" aria-label="点击头像切换 产品 / 文章">
+          <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
+          <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
+        </button>
+        <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
+        <p class="tick"><span class="phase" id="phaseLab">—</span></p>
+        <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
+        <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
+        <div class="social">
+          <a href="mailto:chii_magnus@outlook.com">Email</a>
+          <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </header>
 
       <section class="block block-products">
-        <div class="section-title">产品开发</div>
+        <h2 class="stitle">「产品」</h2>
         <div class="products">${productList}</div>
       </section>
 
       <section class="block block-articles">
-        <div class="section-title">文章</div>
+        <h2 class="stitle">「文章」</h2>
         <div class="entries">${entries}</div>
         ${more}
       </section>
 
-      <footer>© ${new Date().getFullYear()} Chii Magnus <span class="phase" id="phaseLab">—</span></footer>
+      <footer>© ${new Date().getFullYear()} Chii Magnus</footer>
     </div>`;
 }
