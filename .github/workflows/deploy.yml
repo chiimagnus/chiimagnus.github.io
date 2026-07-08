@@ -21,7 +21,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/index.html
-          cp index.html _site/404.html
+          sed -E 's#(href|src)="(src|public)/#\1="/\2/#g' index.html > _site/404.html
           cp -R src public _site/
 
       - name: Setup Pages
