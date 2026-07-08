@@ -95,7 +95,8 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .product .plink:hover{opacity:.66}
 .product .desc{color:var(--muted);font-size:15px;line-height:1.74;margin:9px 0 0;max-width:50em}
 
-footer{margin-top:84px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;letter-spacing:.03em}
+footer{margin-top:84px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;letter-spacing:.03em;display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+footer .social{margin-top:0;font-size:12.5px}
 
 @media (max-width:640px){
   .wrap{padding:60px 24px 96px}

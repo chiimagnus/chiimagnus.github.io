@@ -53,10 +53,6 @@ function homeView() {
         </div>
         <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
         <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
-        <div class="social">
-          <a href="mailto:chii_magnus@outlook.com">Email</a>
-          <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
       </header>
 
       <section class="block block-products">
@@ -76,6 +72,12 @@ function homeView() {
         ${lifeMore}
       </section>
 
-      <footer>© ${new Date().getFullYear()} Chii Magnus</footer>
+      <footer>
+        <span class="copyright">© ${new Date().getFullYear()} Chii Magnus</span>
+        <span class="social">
+          <a href="mailto:chii_magnus@outlook.com">Email</a>
+          <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </span>
+      </footer>
     </div>`;
 }
