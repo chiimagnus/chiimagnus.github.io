@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Build project
-        run: npm run build # 这里会使用你修改后的 vite.config.ts 来构建
+        run: npm run build
 
       - name: Create 404.html for SPA fallback
         run: cp dist/index.html dist/404.html
