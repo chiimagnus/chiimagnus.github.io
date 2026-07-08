@@ -39,7 +39,7 @@ function homeView() {
       <header class="hero">
         <div class="idrow">
           <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 工作思考 / 个人生活思考" aria-label="点击头像切换 工作思考 / 个人生活思考">
-            <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
+            <img class="avatar av-products" src="public/avatar-products.png" alt="𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼" />
             <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
           </button>
           <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
@@ -66,7 +66,7 @@ function homeView() {
       </section>
 
       <footer>
-        <span class="copyright">© ${new Date().getFullYear()} Chii Magnus</span>
+        <span class="copyright">© ${new Date().getFullYear()} 𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼</span>
         <span class="social">
           <a href="mailto:chii_magnus@outlook.com">Email</a>
           <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
