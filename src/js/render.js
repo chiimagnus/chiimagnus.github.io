@@ -16,7 +16,11 @@ function homeView() {
   const lifeEntries = renderEntries(sliced(lifeArticles));
   const lifeMore = moreBtn(lifeArticles);
 
-  const productList = products.map((p) => {
+  const connectorSvg = `<svg class="connector" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true">
+        <path class="connector-base" d="M6,0 C11,28 1,72 6,100" pathLength="100"/>
+        <path class="connector-flow" d="M6,0 C11,28 1,72 6,100" pathLength="100"/>
+      </svg>`;
+  const productList = products.map((p, i) => {
     const link = (p.links || [])[0];
     const statusText = p.status || '';
     const status = statusText ? `<span class="status">${escapeHtml(statusText)}</span>` : '';
@@ -24,10 +28,12 @@ function homeView() {
       ? `<a class="plink" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)} ↗</a>`
       : '';
     const desc = p.description ? `<p class="desc">${escapeHtml(p.description)}</p>` : '';
+    const connector = i < products.length - 1 ? connectorSvg : '';
     return `
     <div class="product">
       <div class="phead"><span class="title">${escapeHtml(p.title)}</span>${status}${linkHtml}</div>
       ${desc}
+      ${connector}
     </div>`;
   }).join('');
 
@@ -39,7 +45,7 @@ function homeView() {
       <header class="hero">
         <div class="idrow">
           <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 工作思考 / 个人生活思考" aria-label="点击头像切换 工作思考 / 个人生活思考">
-            <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
+            <img class="avatar av-products" src="public/avatar-products.png" alt="𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼" />
             <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
           </button>
           <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
@@ -66,7 +72,7 @@ function homeView() {
       </section>
 
       <footer>
-        <span class="copyright">© ${new Date().getFullYear()} Chii Magnus</span>
+        <span class="copyright">© ${new Date().getFullYear()} 𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼</span>
         <span class="social">
           <a href="mailto:chii_magnus@outlook.com">Email</a>
           <a href="https://github.com/chiimagnus" target="_blank" rel="noopener noreferrer">GitHub</a>
