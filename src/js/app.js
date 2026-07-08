@@ -32,7 +32,7 @@ function route() {
   if (path === '/syncnos') return SyncNosRedirects.renderRedirect(SyncNosRedirects.notionUrl);
   if (path === '/syncnos-oauth/callback') return SyncNosOAuth.renderCallback();
   if (path === '/syncnos-oauth/test') return SyncNosOAuth.renderTest();
-  if (path !== '/' && path !== '/blog') {
+  if (path !== '/') {
     history.replaceState(null, '', '/');
     return renderHome();
   }

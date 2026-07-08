@@ -18,8 +18,7 @@ function homeView() {
 
   const productList = products.map((p) => {
     const link = (p.links || [])[0];
-    const archived = (p.tags || []).some((t) => t.indexOf('归档') !== -1);
-    const statusText = p.status || (archived ? '已归档' : '');
+    const statusText = p.status || '';
     const status = statusText ? `<span class="status">${escapeHtml(statusText)}</span>` : '';
     const linkHtml = link
       ? `<a class="plink" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)} ↗</a>`
