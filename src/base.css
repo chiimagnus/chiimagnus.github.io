@@ -1,0 +1,58 @@
+/* ===========================================================
+   base.css — 「时辰流动」主题
+   首页背景随访客的本地时间流动，夜里的月亮按真实月相
+   逐日变化，星空亦按日期逐日生成。全部本地计算，无网络依赖。
+   /syncnos + oauth 工具页仍用 styles.css 的编译 Tailwind，不受影响。
+   =========================================================== */
+:root{
+  --sky-top:#12131f; --sky-bot:#20222f;
+  --ink:oklch(0.9 0.02 275); --muted:oklch(0.7 0.02 275); --faint:oklch(0.55 0.02 275);
+  --line:oklch(0.34 0.02 275); --accent:oklch(0.82 0.05 90);
+  --cel:oklch(0.93 0.03 95); --cel-glow:oklch(0.88 0.05 95 / 0.35); --stars:0.85;
+  --serif: Georgia, "Songti SC", "Noto Serif CJK SC", "Times New Roman", serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+
+/* ---------- 天空层(仅首页，由 render.js 注入) ---------- */
+.sky{position:fixed;inset:0;z-index:-3;background:linear-gradient(180deg,var(--sky-top),var(--sky-bot));transition:background 1.2s ease}
+.stars{position:fixed;inset:0;z-index:-3;opacity:var(--stars);transition:opacity 1.2s ease;pointer-events:none}
+.star{position:absolute;border-radius:50%;background:#fff;animation:tw ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}
+.skyfield{position:absolute;top:0;left:0;right:0;height:520px;overflow:hidden;pointer-events:none;z-index:-2}
+.cel{position:absolute;width:82px;height:82px;border-radius:50%;transition:left 1.2s ease,top 1.2s ease,background 1.2s ease}
+.cel.sun{background:var(--cel);box-shadow:0 0 74px 24px var(--cel-glow)}
+.cel.moon{background:var(--cel);filter:drop-shadow(0 0 16px var(--cel-glow))}
+
+/* ---------- 首页内容 ---------- */
+.wrap{position:relative;max-width:720px;margin:0 auto;padding:56px 24px 96px;color:var(--ink);transition:color 1.2s ease}
+.skybar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.skybar .phase{color:var(--ink);letter-spacing:.16em}
+.avatar{width:64px;height:64px;border-radius:50%;object-fit:cover;display:block;margin-bottom:18px;box-shadow:0 2px 20px rgba(0,0,0,.14)}
+.name{font-family:var(--serif);font-size:44px;line-height:1.06;font-weight:600;margin:0 0 16px;color:var(--ink)}
+.about{font-family:var(--serif);font-size:19px;line-height:1.85;color:var(--muted);margin:0;max-width:26em}
+.social{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px;font-size:14px}
+.social a{color:var(--accent);text-decoration:none}
+.social a:hover{text-decoration:underline}
+.section-title{font-size:12px;text-transform:uppercase;letter-spacing:.15em;color:var(--faint);font-weight:600;margin:52px 0 12px}
+.entry{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color 1.2s ease}
+.entry .title{flex:1;font-family:var(--serif);font-size:17px;color:var(--ink)}
+.entry .date{color:var(--faint);font-size:13px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.entry:hover .title{text-decoration:underline}
+.more{background:none;border:0;color:var(--accent);cursor:pointer;padding:14px 0;font-size:14px}
+.more:hover{text-decoration:underline}
+.product{padding:16px 0;border-bottom:1px solid var(--line)}
+.product .title{font-weight:600;font-family:var(--serif);font-size:17px;color:var(--ink)}
+.product .status{color:var(--faint);font-size:13px;margin-left:8px}
+.product .desc{color:var(--muted);font-size:15px;margin:5px 0;max-width:44em}
+.product .meta{font-size:13px;color:var(--faint)}
+.product .meta a{color:var(--accent)}
+footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13px}
+
+@media (max-width:480px){
+  .wrap{padding:40px 20px 80px}
+  .name{font-size:36px}
+  .skyfield{height:440px}
+}
