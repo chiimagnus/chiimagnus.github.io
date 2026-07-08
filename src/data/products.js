@@ -1,4 +1,4 @@
-[
+window.PRODUCTS = [
   {
     "title": "FrameWeavers 🎬",
     "description": "用连环画重讲你们的故事",
@@ -67,4 +67,4 @@
       }
     ]
   }
-]
+];
