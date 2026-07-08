@@ -1,9 +1,9 @@
 window.PRODUCTS = [
   {
-    "title": "FrameWeavers 🎬",
-    "description": "用连环画重讲你们的故事",
-    "tags": ["swiftUI","iOS"],
-    "status": "🏆 AdventureX2025",
+    "title": "吱吱连环画",
+    "description": "用连环画重讲你们的故事。",
+    "tags": ["SwiftUI", "iOS"],
+    "status": "AdventureX2025 获奖",
     "links": [
       {
         "text": "GitHub",
@@ -12,58 +12,26 @@ window.PRODUCTS = [
     ]
   },
   {
-    "title": "AI-Search 🔌",
-    "description": "Logseq插件，基于当前block内容，进行logseq文档内的全局搜索，返回笔记来源，并可以进行AI总结。",
-    "tags": ["React","TypeScript","Plugin"],
-    "status": "✅ 已发布",
+    "title": "SyncNos",
+    "description": "将 Apple Books 的读书笔记无感同步到 Notion，隐私优先，完全开源。",
+    "tags": ["macOS", "iOS", "Notion"],
+    "status": "已发布",
     "links": [
       {
         "text": "GitHub",
-        "url": "https://github.com/chiimagnus/logseq-AIsearch"
+        "url": "https://github.com/chiimagnus/SyncNos"
       }
     ]
   },
   {
-    "title": "Vniverse 🎯",
-    "description": "markdown、PDF、AI Chat聊天记录阅读器，能够自然语音文本朗读和自动高亮朗读文本。",
-    "tags": ["macOS", "语音合成","📁 已归档"],
+    "title": "LonelyPianist",
+    "description": "visionOS 上的 AI 钢琴对弹：你弹一句、AI 接一句，在沉浸空间里即兴接力。",
+    "tags": ["visionOS", "Swift", "RealityKit"],
+    "status": "南客松 S2 金奖",
     "links": [
       {
         "text": "GitHub",
-        "url": "https://github.com/chiimagnus/VoiceVerse"
-      }
-    ]
-  },
-  {
-    "title": "ChatHistoryBox 📦",
-    "description": "Chrome扩展，保存各个AI Chat对话记录为JSON文件。",
-    "tags": ["Plugin","TypeScript","📁 已归档"],
-    "links": [
-      {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/ChatHistoryBoxChromePlugin"
-      }
-    ]
-  },
-  {
-    "title": "File-Path-to-Embed-Converter 🔗",
-    "description": "Logseq 插件，用于快速将文件路径转换为 Logseq 的嵌入语法",
-    "tags": ["React","TypeScript","Plugin","📁 已归档"],
-    "links": [
-      {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/File-Path-to-Embed-Converter"
-      }
-    ]
-  },
-  {
-    "title": "StreamVoice 🎙️",
-    "description": "macOS应用，为 GPT-SoVITS 语音合成引擎提供图形界面，支持实时语音合成和流式音频输出。",
-    "tags": ["macOS", "语音合成","📁 已归档"],
-    "links": [
-      {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/StreamVoice"
+        "url": "https://github.com/chiimagnus/LonelyPianist"
       }
     ]
   }

@@ -1,7 +1,7 @@
-// render.js — 首页视图（「时辰流动」主题 · 左对齐非对称 · 花体大字名当主角）。
+// render.js — 首页视图（「时辰流动」主题 · 头像与名字并排）。
 // 不复刻别人的 style：专属基因 = 时辰天色 + 花体名 + Frost 诗 + 「」角括号板块标题。
 // 产品 mode 用全名 Chii Magnus（创造者）；文章 mode 只用花名 Chii（写作者）。
-// 两个列表的 UI/UX 有意拉开：文章 = 紧凑索引（标题+日期+细线）；产品 = 编号作品陈列（序号+胶囊状态+描述）。
+// 两个列表：产品 = 竖脉时间线；文章 = 紧凑索引。
 // 默认产品。无顶栏。点击头像循环切换。
 
 function homeView() {
@@ -20,15 +20,16 @@ function homeView() {
   const productList = products.map((p) => {
     const link = (p.links || [])[0];
     const archived = (p.tags || []).some((t) => t.indexOf('归档') !== -1);
-    const statusText = p.status || (archived ? '📁 已归档' : '');
+    const statusText = p.status || (archived ? '已归档' : '');
     const status = statusText ? `<span class="status">${escapeHtml(statusText)}</span>` : '';
     const linkHtml = link
       ? `<a class="plink" href="${escapeHtml(link.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(link.text)} ↗</a>`
       : '';
+    const desc = p.description ? `<p class="desc">${escapeHtml(p.description)}</p>` : '';
     return `
     <div class="product">
       <div class="phead"><span class="title">${escapeHtml(p.title)}</span>${status}${linkHtml}</div>
-      <p class="desc">${escapeHtml(p.description)}</p>
+      ${desc}
     </div>`;
   }).join('');
 
@@ -38,11 +39,13 @@ function homeView() {
     <div class="skyfield"><div class="cel sun" id="cel"></div></div>
     <div class="wrap mode-${state.mode}">
       <header class="hero">
-        <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 产品 / 文章" aria-label="点击头像切换 产品 / 文章">
-          <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
-          <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
-        </button>
-        <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
+        <div class="idrow">
+          <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 产品 / 文章" aria-label="点击头像切换 产品 / 文章">
+            <img class="avatar av-products" src="public/avatar-products.png" alt="Chii Magnus" />
+            <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
+          </button>
+          <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
+        </div>
         <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
         <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
         <div class="social">
