@@ -1,6 +1,7 @@
 /* ===========================================================
    base.css — 「时辰流动」主题 · 左对齐非对称 · 花体大字名当主角
    专属基因：时辰天色（日月弧行/月相/星空）+ 花体名 + Frost 诗 + 「」角括号标题。
+   两列差异：产品 = 竖脉时间线（脉线+节点）；文章 = 紧凑索引（标题+日期+细线）。
    全部本地计算，无网络依赖。/syncnos + oauth 工具页仍用 styles.css 的 Tailwind。
    =========================================================== */
 :root{
@@ -10,6 +11,7 @@
   --cel:oklch(0.93 0.03 95); --cel-glow:oklch(0.88 0.05 95 / 0.35); --stars:0.85;
   --serif: Georgia, "Songti SC", "Noto Serif CJK SC", "Times New Roman", serif;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  --mono: "SF Mono", "JetBrains Mono", "Menlo", ui-monospace, monospace;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -25,7 +27,7 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .cel.sun{background:var(--cel);box-shadow:0 0 74px 24px var(--cel-glow)}
 .cel.moon{background:var(--cel);filter:drop-shadow(0 0 16px var(--cel-glow))}
 
-/* ---------- 左对齐外框（非对称：内容靠左，留出右侧天空） ---------- */
+/* ---------- 左对齐外框（非对称：内容靠左，右侧留白给天空） ---------- */
 .wrap{position:relative;max-width:920px;margin:0 auto;padding:84px 52px 128px;color:var(--ink);transition:color 1.2s ease}
 
 /* ---------- hero（左对齐，花体名当主角） ---------- */
@@ -38,15 +40,10 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .wrap.mode-articles .av-products{display:none}
 .wrap.mode-articles .av-articles{display:block}
 
-.name{font-family:var(--serif);font-size:74px;line-height:.98;font-weight:600;margin:0 0 14px;color:var(--ink);letter-spacing:.01em}
+.name{font-family:var(--serif);font-size:74px;line-height:.98;font-weight:600;margin:0 0 26px;color:var(--ink);letter-spacing:.01em}
 .name-articles{display:none}
 .wrap.mode-articles .name-products{display:none}
 .wrap.mode-articles .name-articles{display:inline}
-
-/* 时辰落款：“此刻 中午 · Noon”——专属的天色身份符号 */
-.tick{margin:0 0 26px}
-.phase{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--faint);letter-spacing:.06em}
-.phase::before{content:"此刻 ";font-style:normal;letter-spacing:.16em}
 
 @keyframes fadein{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .about{font-family:var(--serif);font-size:22px;line-height:1.72;color:var(--muted);margin:0;max-width:28em}
@@ -64,26 +61,38 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .block{margin-top:66px;max-width:760px}
 
 /* 「」角括号板块标题——Chii 专属引号风格 */
-.stitle{font-family:var(--serif);font-size:27px;font-weight:600;color:var(--ink);margin:0 0 22px;letter-spacing:.02em}
+.stitle{font-family:var(--serif);font-size:27px;font-weight:600;color:var(--ink);margin:0 0 30px;letter-spacing:.02em}
 
-/* 文章 */
-.entry{display:flex;justify-content:space-between;align-items:baseline;gap:32px;padding:11px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;transition:border-color 1.2s ease,opacity .2s ease}
+/* ============================================================
+   文章 = 紧凑“索引”：单行行，标题左 · 日期右 · 细线分隔
+   hover：左侧划出 accent 短横 + 标题右滑（不再变暗）
+   ============================================================ */
+.entry{position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:32px;padding:10px 0;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none}
 .entry:last-of-type{border-bottom:none}
-.entry .title{flex:1;font-family:var(--serif);font-size:18px;line-height:1.5;color:var(--ink)}
-.entry .date{color:var(--faint);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:.04em}
-.entry:hover .title{opacity:.56}
-.more{background:none;border:0;color:var(--accent);cursor:pointer;padding:20px 0 0;font-size:13px;letter-spacing:.04em}
+.entry::before{content:"";position:absolute;left:0;top:50%;width:14px;height:1.5px;background:var(--accent);opacity:0;transform:translateY(-50%) scaleX(0);transform-origin:left center;transition:opacity .24s ease,transform .24s cubic-bezier(.2,.7,.3,1)}
+.entry:hover::before{opacity:1;transform:translateY(-50%) scaleX(1)}
+.entry .title{flex:1;font-family:var(--serif);font-size:17.5px;line-height:1.5;color:var(--ink);transition:transform .24s cubic-bezier(.2,.7,.3,1),color .2s ease}
+.entry:hover .title{transform:translateX(24px);color:var(--accent)}
+.entry .date{color:var(--faint);font-size:12px;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.02em;transition:color .2s ease}
+.entry:hover .date{color:var(--muted)}
+.more{background:none;border:0;color:var(--accent);cursor:pointer;padding:22px 0 0;font-size:13px;letter-spacing:.04em}
 .more:hover{opacity:.66}
 
-/* 产品 */
-.product{padding:22px 0;border-bottom:1px solid var(--line)}
-.product:last-of-type{border-bottom:none}
-.phead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
-.product .title{font-weight:600;font-family:var(--serif);font-size:20px;color:var(--ink)}
-.product .status{color:var(--faint);font-size:12.5px;font-weight:400;letter-spacing:.03em}
+/* ============================================================
+   产品 = 竖脉“时间线”：左侧脉线 + 节点圆点，每个产品一个节点
+   ============================================================ */
+.products{position:relative;padding-left:2px}
+.products::before{content:"";position:absolute;left:5px;top:9px;bottom:12px;width:1.5px;background:linear-gradient(var(--line),transparent);background:var(--line)}
+.product{position:relative;padding:0 0 32px 34px}
+.product:last-child{padding-bottom:0}
+.product::before{content:"";position:absolute;left:0;top:7px;width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--cel-glow);transition:box-shadow .25s ease,transform .25s ease}
+.product:hover::before{transform:scale(1.15);box-shadow:0 0 0 6px var(--cel-glow)}
+.phead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.product .title{font-weight:600;font-family:var(--serif);font-size:21px;color:var(--ink);line-height:1.3}
+.product .status{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:11.5px;color:var(--muted);letter-spacing:.03em;line-height:1.5}
 .product .plink{margin-left:auto;color:var(--accent);text-decoration:none;font-size:12.5px;letter-spacing:.03em;white-space:nowrap}
 .product .plink:hover{opacity:.66}
-.product .desc{color:var(--muted);font-size:15px;line-height:1.72;margin:8px 0 0;max-width:50em}
+.product .desc{color:var(--muted);font-size:15px;line-height:1.74;margin:9px 0 0;max-width:50em}
 
 footer{margin-top:84px;padding-top:26px;border-top:1px solid var(--line);color:var(--faint);font-size:12.5px;letter-spacing:.03em}
 
@@ -94,5 +103,6 @@ footer{margin-top:84px;padding-top:26px;border-top:1px solid var(--line);color:v
   .about{font-size:19px}
   .avatar-btn,.avatar{width:84px;height:84px}
   .block{margin-top:52px}
+  .entry:hover .title{transform:translateX(18px)}
   .skyfield{height:440px}
 }

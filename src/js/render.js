@@ -1,7 +1,8 @@
 // render.js — 首页视图（「时辰流动」主题 · 左对齐非对称 · 花体大字名当主角）。
 // 不复刻别人的 style：专属基因 = 时辰天色 + 花体名 + Frost 诗 + 「」角括号板块标题。
-// 产品 mode 用全名 Chii Magnus（创造者身份）；文章 mode 只用花名 Chii（写作者笔名）。
-// 默认产品。无顶栏。点击头像循环切换 产品/文章（两板块各用不同头像）。
+// 产品 mode 用全名 Chii Magnus（创造者）；文章 mode 只用花名 Chii（写作者）。
+// 两个列表的 UI/UX 有意拉开：文章 = 紧凑索引（标题+日期+细线）；产品 = 编号作品陈列（序号+胶囊状态+描述）。
+// 默认产品。无顶栏。点击头像循环切换。
 
 function homeView() {
   const visibleArticles = state.articlesExpanded ? articles : articles.slice(0, 12);
@@ -42,7 +43,6 @@ function homeView() {
           <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
         </button>
         <h1 class="name"><span class="name-products">𝓒𝓱𝓲𝓲 𝓜𝓪𝓭𝓷𝓾𝓼</span><span class="name-articles">𝓒𝓱𝓲𝓲</span></h1>
-        <p class="tick"><span class="phase" id="phaseLab">—</span></p>
         <p class="about products">热爱创造与表达，做 iOS / macOS 产品与工具。</p>
         <p class="about articles">我的前面有两条路，我选择了人迹更少的道路，因此生命迥然不同。</p>
         <div class="social">
