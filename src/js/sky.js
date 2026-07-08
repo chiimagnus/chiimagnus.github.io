@@ -23,6 +23,22 @@
   function place(h){var cel=document.getElementById('cel');if(!cel)return;var frac,night;if(h>=5&&h<19){frac=(h-5)/14;night=false;}else{frac=((h-19+24)%24)/10;night=true;}var H=(window.innerWidth<=480?440:520);var x=6+frac*88;var topPx=((76-Math.sin(frac*Math.PI)*62)/100)*H;cel.style.left=x+'%';cel.style.top=topPx.toFixed(1)+'px';if(night){cel.className='cel moon';applyMoon(cel);}else{cel.className='cel sun';cel.style.webkitMask='none';cel.style.mask='none';}}
   function apply(h){var ph=phaseFor(h);setVars(ph.p);place(h);var lab=document.getElementById('phaseLab');if(lab)lab.textContent=ph.key+' · '+ph.en;}
   function hourNow(){var u=new URLSearchParams(location.search);if(u.has('t'))return parseFloat(u.get('t'));var d=new Date();return d.getHours()+d.getMinutes()/60;}
+  // 视差：滚动时让“星空（远景）”与“日月（中景）”以不同速度上移，慢于正文（前景），形成纵深。
+  var parallaxBound=false;
+  function parallaxTick(){
+    var y=window.scrollY||window.pageYOffset||0;
+    var stars=document.getElementById('stars');
+    var field=document.querySelector('.skyfield');
+    if(stars)stars.style.transform='translate3d(0,'+(y*-0.10).toFixed(1)+'px,0)';
+    if(field)field.style.transform='translate3d(0,'+(y*-0.24).toFixed(1)+'px,0)';
+  }
+  function setupParallax(){
+    parallaxTick();
+    if(parallaxBound)return;parallaxBound=true;
+    var scheduled=false;
+    window.addEventListener('scroll',function(){if(scheduled)return;scheduled=true;requestAnimationFrame(function(){parallaxTick();scheduled=false;});},{passive:true});
+    window.addEventListener('resize',parallaxTick,{passive:true});
+  }
   var timer=null;
-  window.initSky=function(){buildStars();apply(hourNow());if(!timer){timer=setInterval(function(){apply(hourNow());},60000);}};
+  window.initSky=function(){buildStars();apply(hourNow());setupParallax();if(!timer){timer=setInterval(function(){apply(hourNow());},60000);}};
 })();

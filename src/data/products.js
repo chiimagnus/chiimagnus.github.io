@@ -13,13 +13,13 @@ window.PRODUCTS = [
   },
   {
     "title": "SyncNos",
-    "description": "将 Apple Books 的读书笔记无感同步到 Notion，隐私优先，完全开源。",
-    "tags": ["macOS", "iOS", "Notion"],
+    "description": "开源浏览器剪藏工具：把 AI 对话、网页文章、视频字幕一键存进 Notion / Obsidian / 飞书。",
+    "tags": ["浏览器扩展", "Notion", "Obsidian"],
     "status": "已发布",
     "links": [
       {
         "text": "GitHub",
-        "url": "https://github.com/chiimagnus/SyncNos"
+        "url": "https://github.com/SyncNos/SyncNos-Webclipper"
       }
     ]
   },
