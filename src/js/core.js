@@ -1,7 +1,6 @@
 const articles = window.ARTICLES || [];
 const products = window.PRODUCTS || [];
 
-const NOTION_SYNCNOS_URL = 'https://chiimagnus.notion.site/syncnos';
 const $ = (selector) => document.querySelector(selector);
 
 const themes = [
