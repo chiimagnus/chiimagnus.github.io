@@ -1,5 +1,3 @@
-// sky.js — 「时辰流动 + 逐日月相 + 逐日星空」
-// 纯客户端计算，零网络请求：天色按本地时间，月相按天文朔望周期(29.53天)，星空按日期做种子生成。
 (function(){
   var PHASES=[
     {s:0.0,key:'深夜',en:'Late night',p:{skyTop:'oklch(0.13 0.03 265)',skyBot:'oklch(0.20 0.04 270)',ink:'oklch(0.91 0.02 275)',muted:'oklch(0.66 0.025 270)',faint:'oklch(0.52 0.02 270)',line:'oklch(0.30 0.02 270)',accent:'oklch(0.82 0.05 90)',cel:'oklch(0.93 0.03 95)',glow:'oklch(0.88 0.05 95 / 0.35)',stars:0.85}},
@@ -23,7 +21,6 @@
   function place(h){var cel=document.getElementById('cel');if(!cel)return;var frac,night;if(h>=5&&h<19){frac=(h-5)/14;night=false;}else{frac=((h-19+24)%24)/10;night=true;}var H=(window.innerWidth<=480?440:520);var x=6+frac*88;var topPx=((76-Math.sin(frac*Math.PI)*62)/100)*H;cel.style.left=x+'%';cel.style.top=topPx.toFixed(1)+'px';if(night){cel.className='cel moon';applyMoon(cel);}else{cel.className='cel sun';cel.style.webkitMask='none';cel.style.mask='none';}}
   function apply(h){var ph=phaseFor(h);setVars(ph.p);place(h);var lab=document.getElementById('phaseLab');if(lab)lab.textContent=ph.key+' · '+ph.en;}
   function hourNow(){var u=new URLSearchParams(location.search);if(u.has('t'))return parseFloat(u.get('t'));var d=new Date();return d.getHours()+d.getMinutes()/60;}
-  // 视差：滚动时让“星空（远景）”与“日月（中景）”以不同速度上移，慢于正文（前景），形成纵深。
   var parallaxBound=false;
   function parallaxTick(){
     var y=window.scrollY||window.pageYOffset||0;

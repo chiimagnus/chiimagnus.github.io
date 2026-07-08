@@ -1,6 +1,3 @@
-// core.js — shared state, data, and helpers.
-// escapeHtml + $ are also used by the syncnos-oauth pages, so keep them here.
-
 const articles = window.ARTICLES || [];
 const products = window.PRODUCTS || [];
 
@@ -11,8 +8,7 @@ const _m = _params.get('mode');
 
 const state = {
   articlesExpanded: false,
-  // 「产品 / 文章」双板块切换（参考 thariq.io 的 ?mode=）。兼容旧的 ?mode=personal → 文章。
-  mode: (_m === 'articles' || _m === 'personal') ? 'articles' : 'products',
+  mode: _m === 'thinker' ? 'articles' : 'products',
 };
 
 const escapeHtml = (value = '') => String(value)

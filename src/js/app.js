@@ -1,5 +1,3 @@
-// app.js — render + routing. SyncNos redirect/oauth routes preserved as-is.
-
 function renderHome() {
   $('#app').innerHTML = homeView();
   bindHome();
@@ -14,16 +12,15 @@ function setMode(m) {
     wrap.classList.add('mode-' + m);
   }
   const url = new URL(location.href);
-  url.searchParams.set('mode', m);
+  url.searchParams.set('mode', m === 'articles' ? 'thinker' : 'producer');
   history.replaceState(null, '', url);
 }
 
 function bindHome() {
-  $('#more')?.addEventListener('click', () => {
+  document.querySelectorAll('.more').forEach((b) => b.addEventListener('click', () => {
     state.articlesExpanded = true;
     renderHome();
-  });
-  // 点击头像在【产品 ↔ 文章】之间循环切换
+  }));
   $('#avatarBtn')?.addEventListener('click', () => {
     setMode(state.mode === 'products' ? 'articles' : 'products');
   });
@@ -35,7 +32,7 @@ function route() {
   if (path === '/syncnos') return SyncNosRedirects.renderRedirect(SyncNosRedirects.notionUrl);
   if (path === '/syncnos-oauth/callback') return SyncNosOAuth.renderCallback();
   if (path === '/syncnos-oauth/test') return SyncNosOAuth.renderTest();
-  if (path !== '/' && path !== '/blog') {
+  if (path !== '/') {
     history.replaceState(null, '', '/');
     return renderHome();
   }
