@@ -49,7 +49,7 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 
 .wrap.mode-products .block-articles{display:none}
 .wrap.mode-articles .block-products,.wrap.mode-articles .block-worknotes{display:none}
-.block{margin-top:66px;max-width:760px}
+.block{margin-top:66px}
 
 .stitle{font-family:var(--serif);font-size:27px;font-weight:600;color:var(--ink);margin:0 0 30px;letter-spacing:.02em}
 
