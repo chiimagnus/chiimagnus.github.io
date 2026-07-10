@@ -12,7 +12,8 @@
     {s:22.0,key:'深夜',en:'Late night',p:{skyTop:'oklch(0.13 0.03 265)',skyBot:'oklch(0.20 0.04 270)',ink:'oklch(0.91 0.02 275)',muted:'oklch(0.66 0.025 270)',faint:'oklch(0.52 0.02 270)',line:'oklch(0.30 0.02 270)',accent:'oklch(0.82 0.05 90)',cel:'oklch(0.93 0.03 95)',glow:'oklch(0.88 0.05 95 / 0.35)',stars:0.85}}
   ];
   function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
-  function curDate(){var u=new URLSearchParams(location.search);if(u.has('d')){var p=u.get('d').split('-');return new Date(+p[0],(+p[1])-1,+p[2],12,0,0);}return new Date();}
+  var debugHour=null,debugDateStr=null;
+  function curDate(){if(debugDateStr){var p=debugDateStr.split('-');return new Date(+p[0],(+p[1])-1,+p[2],12,0,0);}var u=new URLSearchParams(location.search);if(u.has('d')){var p=u.get('d').split('-');return new Date(+p[0],(+p[1])-1,+p[2],12,0,0);}return new Date();}
   function buildStars(){var box=document.getElementById('stars');if(!box)return;var d=curDate();var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();var rnd=mulberry32(seed);var n=58+Math.floor(rnd()*22);box.innerHTML='';for(var i=0;i<n;i++){var el=document.createElement('i');el.className='star';var x=(rnd()*100).toFixed(2);var y=(rnd()*56).toFixed(2);var s=(1+rnd()*1.5).toFixed(2);var o=(0.35+rnd()*0.6).toFixed(2);var dl=(rnd()*6).toFixed(2);var du=(2.6+rnd()*3.6).toFixed(2);el.style.cssText='left:'+x+'%;top:'+y+'%;width:'+s+'px;height:'+s+'px;opacity:'+o+';animation-delay:'+dl+'s;animation-duration:'+du+'s';box.appendChild(el);}}
   function moonPhase(date){var ref=Date.UTC(2000,0,6,18,14);var syn=29.530588853;var days=(date.getTime()-ref)/86400000;var p=(((days/syn)%1)+1)%1;var f=(1-Math.cos(2*Math.PI*p))/2;f=Math.max(0.10,f);var dir=p<0.5?1:-1;return{f:f,dir:dir};}
   function applyMoon(cel){var mp=moonPhase(curDate());var cx=(41+mp.dir*mp.f*82).toFixed(1);var m='radial-gradient(41px at '+cx+'px 41px, transparent 0 40px, #000 41px)';cel.style.webkitMask=m;cel.style.mask=m;}
@@ -20,7 +21,7 @@
   function setVars(p){var r=document.documentElement.style;r.setProperty('--sky-top',p.skyTop);r.setProperty('--sky-bot',p.skyBot);r.setProperty('--ink',p.ink);r.setProperty('--muted',p.muted);r.setProperty('--faint',p.faint);r.setProperty('--line',p.line);r.setProperty('--accent',p.accent);r.setProperty('--cel',p.cel);r.setProperty('--cel-glow',p.glow);r.setProperty('--stars',p.stars);}
   function place(h){var cel=document.getElementById('cel');if(!cel)return;var frac,night;if(h>=5&&h<19){frac=(h-5)/14;night=false;}else{frac=((h-19+24)%24)/10;night=true;}var H=(window.innerWidth<=480?440:520);var x=6+frac*88;var topPx=((76-Math.sin(frac*Math.PI)*62)/100)*H;cel.style.left=x+'%';cel.style.top=topPx.toFixed(1)+'px';if(night){cel.className='cel moon';applyMoon(cel);}else{cel.className='cel sun';cel.style.webkitMask='none';cel.style.mask='none';}}
   function apply(h){var ph=phaseFor(h);setVars(ph.p);place(h);var lab=document.getElementById('phaseLab');if(lab)lab.textContent=ph.key+' · '+ph.en;}
-  function hourNow(){var u=new URLSearchParams(location.search);if(u.has('t'))return parseFloat(u.get('t'));var d=new Date();return d.getHours()+d.getMinutes()/60;}
+  function hourNow(){if(debugHour!==null)return debugHour;var u=new URLSearchParams(location.search);if(u.has('t'))return parseFloat(u.get('t'));var d=new Date();return d.getHours()+d.getMinutes()/60;}
   var parallaxBound=false;
   function parallaxTick(){
     var y=window.scrollY||window.pageYOffset||0;
@@ -38,4 +39,11 @@
   }
   var timer=null;
   window.initSky=function(){buildStars();apply(hourNow());setupParallax();if(!timer){timer=setInterval(function(){apply(hourNow());},60000);}};
+  window.SkyDebug={
+    setHour:function(h){debugHour=h;apply(h);},
+    setDate:function(dateStr){debugDateStr=dateStr;buildStars();apply(hourNow());},
+    clear:function(){debugHour=null;debugDateStr=null;buildStars();apply(hourNow());},
+    getHour:hourNow,
+    getDateStr:function(){var d=curDate();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();}
+  };
 })();

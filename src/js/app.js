@@ -2,6 +2,7 @@ function renderHome() {
   $('#app').innerHTML = homeView();
   bindHome();
   if (window.initSky) window.initSky();
+  if (window.initDebug) window.initDebug();
 }
 
 function setMode(m) {
