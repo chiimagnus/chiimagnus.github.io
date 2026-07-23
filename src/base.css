@@ -16,8 +16,11 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .star{position:absolute;border-radius:50%;background:#fff;animation:tw ease-in-out infinite}
 @keyframes tw{0%,100%{opacity:.35}50%{opacity:1}}
 .skyfield{position:fixed;top:0;left:0;right:0;height:520px;overflow:hidden;pointer-events:none;z-index:-2;will-change:transform}
-.cel{position:absolute;width:82px;height:82px;border-radius:50%;transition:left 1.2s ease,top 1.2s ease,background 1.2s ease}
-.cel.sun{background:var(--cel);box-shadow:0 0 74px 24px var(--cel-glow)}
+.cel{position:absolute;width:82px;height:82px;border-radius:50%;transition:left 1.2s ease,top 1.2s ease,background-color 1.2s ease}
+.cel.sun{background-position:center;background-repeat:no-repeat;background-size:contain;filter:drop-shadow(0 0 16px var(--cel-glow))}
+.cel.sun-morning{background-image:url("../public/sun-morning.png")}
+.cel.sun-noon{background-image:url("../public/sun-noon.png")}
+.cel.sun-evening{background-image:url("../public/sun-evening.png")}
 .cel.moon{background:var(--cel);filter:drop-shadow(0 0 16px var(--cel-glow))}
 
 .wrap{position:relative;max-width:920px;margin:0 auto;padding:84px 52px 128px;color:var(--ink);transition:color 1.2s ease}
