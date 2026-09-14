@@ -17,7 +17,7 @@ window.PRODUCTS = [
     "links": [
       {
         "text": "GitHub",
-        "url": "https://github.com/SyncNos/SyncNos-Webclipper"
+        "url": "https://github.com/chiimagnus/SyncNos"
       }
     ]
   },
