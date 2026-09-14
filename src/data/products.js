@@ -12,7 +12,7 @@ window.PRODUCTS = [
   },
   {
     "title": "SyncNos",
-    "description": "开源浏览器剪藏工具：把 AI 对话、网页文章、视频字幕一键存进 Notion / Obsidian / 飞书。",
+    "description": "开源浏览器剪藏工具：把 AI 对话、网页文章、视频字幕一键存进 Notion / Obsidian / 飞书 / GitHub。",
     "status": "已发布",
     "links": [
       {
