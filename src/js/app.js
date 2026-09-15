@@ -28,17 +28,11 @@ function bindHome() {
 }
 
 function route() {
-  if (location.protocol === 'file:') return renderHome();
-  const path = location.pathname.replace(/\/$/, '') || '/';
-  if (path === '/syncnos') return SyncNosRedirects.renderRedirect(SyncNosRedirects.siteUrl);
-  if (path === '/syncnos-oauth/callback') return SyncNosOAuth.renderCallback();
-  if (path === '/syncnos-oauth/test') return SyncNosOAuth.renderTest();
-  if (path !== '/') {
-    history.replaceState(null, '', '/');
-    return renderHome();
+  if (location.protocol !== 'file:') {
+    const path = location.pathname.replace(/\/$/, '') || '/';
+    if (path !== '/') history.replaceState(null, '', '/');
   }
-  if (SyncNosRedirects.shouldRedirectHome()) return SyncNosRedirects.renderRedirect(SyncNosRedirects.siteUrl);
-  return renderHome();
+  renderHome();
 }
 
 route();
