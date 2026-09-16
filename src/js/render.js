@@ -1,20 +1,13 @@
 function homeView() {
-  const workArticles = articles.filter((a) => a.category === 'work');
-  const lifeArticles = articles.filter((a) => a.category !== 'work');
-
   const renderEntries = (list) => list.map((a) => `
     <a class="entry" href="${escapeHtml(a.url)}" target="_blank" rel="noopener noreferrer">
       <span class="title">${escapeHtml(a.title)}</span>
       <span class="date">${escapeHtml(fmtDate(a.date))}</span>
     </a>`).join('');
-  const sliced = (list) => state.articlesExpanded ? list : list.slice(0, 12);
-  const moreBtn = (list) => (!state.articlesExpanded && list.length > 12)
-    ? `<button class="more">展开全部 ${list.length} 篇 →</button>` : '';
-
-  const workEntries = renderEntries(sliced(workArticles));
-  const workMore = moreBtn(workArticles);
-  const lifeEntries = renderEntries(sliced(lifeArticles));
-  const lifeMore = moreBtn(lifeArticles);
+  const visibleArticles = state.articlesExpanded ? articles : articles.slice(0, 12);
+  const articleEntries = renderEntries(visibleArticles);
+  const articleMore = (!state.articlesExpanded && articles.length > 12)
+    ? `<button class="more">展开全部 ${articles.length} 篇 →</button>` : '';
 
   const connectorSvg = `<svg class="connector" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true">
         <path class="connector-base" d="M6,0 C11,28 1,72 6,100" pathLength="100"/>
@@ -44,7 +37,7 @@ function homeView() {
     <div class="wrap mode-${state.mode}">
       <header class="hero">
         <div class="idrow">
-          <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 工作思考 / 个人生活思考" aria-label="点击头像切换 工作思考 / 个人生活思考">
+          <button class="avatar-btn" id="avatarBtn" type="button" title="点击切换 产品 / 文章" aria-label="点击头像切换 产品 / 文章">
             <img class="avatar av-products" src="public/avatar-products.png" alt="𝓒𝓱𝓲𝓲 𝓜𝓪𝓰𝓷𝓾𝓼" />
             <img class="avatar av-articles" src="public/avatar.png" alt="Chii" />
           </button>
@@ -59,16 +52,10 @@ function homeView() {
         <div class="products">${productList}</div>
       </section>
 
-      <section class="block block-worknotes">
-        <h2 class="stitle">「手记」</h2>
-        <div class="entries">${workEntries}</div>
-        ${workMore}
-      </section>
-
       <section class="block block-articles">
         <h2 class="stitle">「文章」</h2>
-        <div class="entries">${lifeEntries}</div>
-        ${lifeMore}
+        <div class="entries">${articleEntries}</div>
+        ${articleMore}
       </section>
 
       <footer>
