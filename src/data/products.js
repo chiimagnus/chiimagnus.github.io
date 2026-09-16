@@ -16,8 +16,8 @@ window.PRODUCTS = [
     "status": "已发布",
     "links": [
       {
-        "text": "GitHub",
-        "url": "https://github.com/chiimagnus/SyncNos"
+        "text": "官网",
+        "url": "https://chiimagnus.github.io/SyncNos/"
       }
     ]
   },
