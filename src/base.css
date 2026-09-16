@@ -44,8 +44,9 @@ body{font-family:var(--sans);color:#1a1a1a;background:#fff;font-size:16px;line-h
 .wrap.mode-articles .about.articles{display:block}
 .wrap.mode-products .about.products,.wrap.mode-articles .about.articles{animation:fadein .4s ease}
 .social{display:flex;flex-wrap:wrap;gap:24px;margin-top:28px;font-size:13.5px;letter-spacing:.03em}
-.social a{color:var(--accent);text-decoration:none}
-.social a:hover{opacity:.66}
+.social a,.lang-switch{color:var(--accent);text-decoration:none}
+.social a:hover,.lang-switch:hover{opacity:.66}
+.lang-switch{font:inherit;letter-spacing:inherit;background:none;border:0;padding:0;cursor:pointer}
 
 .wrap.mode-products .block-articles{display:none}
 .wrap.mode-articles .block-products{display:none}

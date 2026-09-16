@@ -1,4 +1,5 @@
 function renderHome() {
+  document.documentElement.lang = state.lang === 'en' ? 'en' : 'zh-CN';
   $('#app').innerHTML = homeView();
   bindHome();
   if (window.initSky) window.initSky();
@@ -17,6 +18,15 @@ function setMode(m) {
   history.replaceState(null, '', url);
 }
 
+function setLanguage(lang) {
+  state.lang = lang;
+  const url = new URL(location.href);
+  if (lang === 'en') url.searchParams.set('lang', 'en');
+  else url.searchParams.delete('lang');
+  history.replaceState(null, '', url);
+  renderHome();
+}
+
 function bindHome() {
   document.querySelectorAll('.more').forEach((b) => b.addEventListener('click', () => {
     state.articlesExpanded = true;
@@ -24,6 +34,9 @@ function bindHome() {
   }));
   $('#avatarBtn')?.addEventListener('click', () => {
     setMode(state.mode === 'products' ? 'articles' : 'products');
+  });
+  $('#langBtn')?.addEventListener('click', () => {
+    setLanguage(state.lang === 'en' ? 'zh' : 'en');
   });
 }
 
