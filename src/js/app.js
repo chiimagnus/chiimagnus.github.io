@@ -1,5 +1,11 @@
+function updateFavicon() {
+  const icon = $('#siteIcon');
+  if (icon) icon.href = state.mode === 'articles' ? 'public/avatar.png' : 'public/avatar-products.png';
+}
+
 function renderHome() {
   document.documentElement.lang = state.lang === 'en' ? 'en' : 'zh-CN';
+  updateFavicon();
   $('#app').innerHTML = homeView();
   bindHome();
   if (window.initSky) window.initSky();
@@ -8,6 +14,7 @@ function renderHome() {
 
 function setMode(m) {
   state.mode = m;
+  updateFavicon();
   const wrap = document.querySelector('.wrap');
   if (wrap) {
     wrap.classList.remove('mode-products', 'mode-articles');
