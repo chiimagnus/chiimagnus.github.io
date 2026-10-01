@@ -23,7 +23,6 @@ jobs:
           cp index.html _site/index.html
           sed -E 's#(href|src)="(src|public)/#\1="/\2/#g' index.html > _site/404.html
           cp -R src public _site/
-          cp -R Richman3D _site/
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
